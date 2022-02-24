@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<spaceMarines>
+    <collection>
+        <entry>
+            <key>10</key>
+            <value>
+                <id>1</id>
+                <creationDate>2022-02-20T18:21:55.624+03:00</creationDate>
+                <name>biba</name>
+                <coordinates>
+                    <x>102.0</x>
+                    <y>-106</y>
+                </coordinates>
+                <health>102.6</health>
+                <category>CHAPLAIN</category>
+                <weaponType>PLASMA_GUN</weaponType>
+                <meleeWeapon>POWER_FIST</meleeWeapon>
+                <chapter>
+                    <name>boba</name>
+                    <world>pupa</world>
+                </chapter>
+            </value>
+        </entry>
+    </collection>
+</spaceMarines>

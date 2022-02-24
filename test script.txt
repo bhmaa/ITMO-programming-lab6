@@ -1,0 +1,12 @@
+show
+insert 101
+biba
+102
+20
+102.6
+chaplain
+plasma_gun
+power_fist
+boba
+pupa
+show
