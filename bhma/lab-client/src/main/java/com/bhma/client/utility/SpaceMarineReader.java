@@ -1,6 +1,8 @@
 package com.bhma.client.utility;
 
-import com.bhma.client.data.*;
+import com.bhma.client.data.AstartesCategory;
+import com.bhma.client.data.MeleeWeapon;
+import com.bhma.client.data.Weapon;
 import com.bhma.client.exceptions.IllegalValueException;
 
 import java.util.Locale;

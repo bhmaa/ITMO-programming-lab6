@@ -1,6 +1,22 @@
 package com.bhma.client.utility;
 
-import com.bhma.client.commands.*;
+import com.bhma.client.commands.AverageOfHealthCommand;
+import com.bhma.client.commands.ClearCommand;
+import com.bhma.client.commands.Command;
+import com.bhma.client.commands.CountByChapterCommand;
+import com.bhma.client.commands.ExecuteScriptCommand;
+import com.bhma.client.commands.ExitCommand;
+import com.bhma.client.commands.HelpCommand;
+import com.bhma.client.commands.InfoCommand;
+import com.bhma.client.commands.InsertCommand;
+import com.bhma.client.commands.RemoveAnyByWeaponTypeCommand;
+import com.bhma.client.commands.RemoveGraterCommand;
+import com.bhma.client.commands.RemoveKeyCommand;
+import com.bhma.client.commands.RemoveLowerKeyCommand;
+import com.bhma.client.commands.ReplaceIfLoweCommand;
+import com.bhma.client.commands.SaveCommand;
+import com.bhma.client.commands.ShowCommand;
+import com.bhma.client.commands.UpdateCommand;
 
 import java.util.ArrayList;
 
