@@ -35,7 +35,7 @@ public class CommandManager {
         commands.add(new ExitCommand());
         commands.add(new InfoCommand(collectionManager));
         commands.add(new InsertCommand(collectionManager, spaceMarineFiller));
-        commands.add(new RemoveAnyByWeaponTypeCommand(collectionManager));
+        commands.add(new RemoveAnyByWeaponTypeCommand(collectionManager, spaceMarineFiller));
         commands.add(new RemoveGraterCommand(collectionManager, spaceMarineFiller));
         commands.add(new RemoveKeyCommand(collectionManager));
         commands.add(new RemoveLowerKeyCommand(collectionManager));
