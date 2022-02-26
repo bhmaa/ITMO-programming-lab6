@@ -4,7 +4,7 @@ import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.utility.CollectionManager;
 
 public class SaveCommand extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public SaveCommand(CollectionManager collectionManager) {
         super("save", "сохранить коллекцию в файл");

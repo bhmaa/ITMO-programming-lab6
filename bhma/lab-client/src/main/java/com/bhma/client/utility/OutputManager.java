@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class OutputManager {
-    private OutputStream outputStream;
+    private final OutputStream outputStream;
     private MessageNotifications messageNotifications = MessageNotifications.ON;
 
     private enum MessageNotifications {

@@ -7,7 +7,7 @@ import com.bhma.client.utility.InputManager;
  * execute_script command
  */
 public class ExecuteScriptCommand extends Command {
-    private InputManager inputManager;
+    private final InputManager inputManager;
 
     public ExecuteScriptCommand(InputManager inputManager) {
         super("execute_script", "считать и исполнить скрипт из указанного файла");

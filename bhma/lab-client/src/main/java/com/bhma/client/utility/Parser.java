@@ -6,7 +6,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -22,9 +21,7 @@ public final class Parser {
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileName));
             marshaller.marshal(collectionManager, bufferedOutputStream);
             bufferedOutputStream.close();
-        } catch (JAXBException | FileNotFoundException e) {
-            System.out.println("Error during converting java object to xml");
-        } catch (IOException e) {
+        } catch (JAXBException | IOException e) {
             System.out.println("Error during converting java object to xml");
         }
     }

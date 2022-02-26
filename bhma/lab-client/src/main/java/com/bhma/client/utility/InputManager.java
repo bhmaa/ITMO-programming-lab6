@@ -6,10 +6,10 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class InputManager {
-    private Scanner defaultScanner;
+    private final Scanner defaultScanner;
     private Scanner fileScanner;
     private boolean scriptMode = false;
-    private OutputManager outputManager;
+    private final OutputManager outputManager;
 
     public InputManager(InputStream inputStream, OutputManager outputManager) {
         this.defaultScanner = new Scanner(inputStream);

@@ -7,7 +7,7 @@ import com.bhma.client.utility.CollectionManager;
 import java.util.Locale;
 
 public class RemoveAnyByWeaponTypeCommand extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public RemoveAnyByWeaponTypeCommand(CollectionManager collectionManager) {
         super("remove_any_by_weapon_type", "удалить из коллекции один элемент, значение поля weaponType которого эквивалентно заданному");
