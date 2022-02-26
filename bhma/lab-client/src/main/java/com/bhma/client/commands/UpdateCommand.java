@@ -1,6 +1,7 @@
 package com.bhma.client.commands;
 
 import com.bhma.client.data.SpaceMarine;
+import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -16,13 +17,13 @@ public class UpdateCommand extends Command {
         this.spaceMarineFiller = spaceMarineFiller;
     }
 
-    public void execute(String argument) throws ScriptException, NumberFormatException, NoSuchCommandException {
+    public void execute(String argument) throws ScriptException, NumberFormatException, NoSuchCommandException, IllegalKeyException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }
         Long id = Long.valueOf(argument);
         if (!collectionManager.containsId(id)) {
-            System.out.println("There's no value with that id.");
+            throw new IllegalKeyException("There's no value with that id.");
         } else {
             SpaceMarine instance = collectionManager.getById(id);
             instance.setName(spaceMarineFiller.fillName());

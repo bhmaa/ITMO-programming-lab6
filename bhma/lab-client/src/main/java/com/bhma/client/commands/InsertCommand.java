@@ -2,6 +2,7 @@ package com.bhma.client.commands;
 
 
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -17,12 +18,12 @@ public class InsertCommand extends Command {
         this.spaceMarineFiller = spaceMarineFiller;
     }
 
-    public void execute(String argument) throws ScriptException, NoSuchCommandException, NumberFormatException, IllegalValueException {
+    public void execute(String argument) throws ScriptException, NoSuchCommandException, NumberFormatException, IllegalKeyException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }
         if (collectionManager.getCollection().containsKey(Long.valueOf(argument))) {
-            throw new IllegalValueException("Element with this ID is already exist");
+            throw new IllegalKeyException("Element with this ID is already exist");
         }
         collectionManager.addToCollection(Long.valueOf(argument), spaceMarineFiller.fillSpaceMarine());
     }

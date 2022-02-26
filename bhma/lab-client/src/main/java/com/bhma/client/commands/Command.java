@@ -2,6 +2,7 @@ package com.bhma.client.commands;
 
 
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 
@@ -18,7 +19,7 @@ public abstract class Command {
         this.description = description;
     }
 
-    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalValueException;
+    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalValueException, IllegalKeyException;
 
     public String getName() {
         return name;

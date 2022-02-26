@@ -2,6 +2,7 @@ package com.bhma.client.commands;
 
 import com.bhma.client.data.SpaceMarine;
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -17,12 +18,12 @@ public class ReplaceIfLoweCommand extends Command {
         this.spaceMarineFiller = spaceMarineFiller;
     }
 
-    public void execute(String argument) throws NoSuchCommandException, ScriptException, NumberFormatException, IllegalValueException {
+    public void execute(String argument) throws NoSuchCommandException, ScriptException, NumberFormatException, IllegalKeyException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }
         if (!collectionManager.containsKey(Long.valueOf(argument))) {
-            throw new IllegalValueException("There's no element with that key");
+            throw new IllegalKeyException("There's no element with that key");
         }
         SpaceMarine newSpaceMarine = spaceMarineFiller.fillSpaceMarine();
         SpaceMarine oldSpaceMarine = collectionManager.getByKey(Long.valueOf(argument));

@@ -2,6 +2,7 @@ package com.bhma.client.utility;
 
 import com.bhma.client.commands.Command;
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 
@@ -43,7 +44,7 @@ public class ConsoleManager {
                         outputManager.println(e.getMessage());
                     } catch (IllegalArgumentException e) {
                         outputManager.println("No such field in enum");
-                    } catch (IllegalValueException e) {
+                    } catch (IllegalKeyException e) {
                         if (inputManager.getScriptMode()) {
                             inputManager.finishReadScript();
                         }
