@@ -1,12 +1,9 @@
 package com.bhma.client.commands;
 
-import com.bhma.client.data.Weapon;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
 import com.bhma.client.utility.SpaceMarineFiller;
-
-import java.util.Locale;
 
 /**
  * remove_any_by_weapon_type command

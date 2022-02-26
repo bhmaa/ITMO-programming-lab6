@@ -9,6 +9,7 @@ import java.util.Locale;
 
 public class SpaceMarineReader {
     private final InputManager inputManager;
+    private final int minX = -685;
 
     public SpaceMarineReader(InputManager inputManager) {
         this.inputManager = inputManager;
@@ -19,7 +20,6 @@ public class SpaceMarineReader {
         String stringX;
         stringX = inputManager.read();
         x = Double.parseDouble(stringX);
-        int minX = -685;
         if (x <= minX) {
             throw new IllegalValueException("Value must be greater than " + minX);
         }
