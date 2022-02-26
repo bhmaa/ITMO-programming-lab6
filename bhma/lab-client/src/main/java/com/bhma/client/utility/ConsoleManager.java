@@ -1,7 +1,6 @@
 package com.bhma.client.utility;
 
 import com.bhma.client.commands.Command;
-import com.bhma.client.exceptions.IllegalValueException;
 import com.bhma.client.exceptions.IllegalKeyException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;

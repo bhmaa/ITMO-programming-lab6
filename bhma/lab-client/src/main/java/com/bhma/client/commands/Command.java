@@ -19,7 +19,7 @@ public abstract class Command {
         this.description = description;
     }
 
-    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalValueException, IllegalKeyException;
+    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalKeyException;
 
     public String getName() {
         return name;
