@@ -11,7 +11,7 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * sets execute flag (false).
+     * sets execute flag to false
      * @param argument must be empty
      * @throws NoSuchCommandException if argument isn't empty
      */

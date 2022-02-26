@@ -7,6 +7,9 @@ import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
 import com.bhma.client.utility.SpaceMarineFiller;
 
+/**
+ * update command
+ */
 public class UpdateCommand extends Command {
     private final CollectionManager collectionManager;
     private final SpaceMarineFiller spaceMarineFiller;
@@ -17,6 +20,14 @@ public class UpdateCommand extends Command {
         this.spaceMarineFiller = spaceMarineFiller;
     }
 
+    /**
+     * updates element of collection whose id equal entered one
+     * @param argument must be a number
+     * @throws ScriptException if entered in script element didn't meet the requirements
+     * @throws NumberFormatException if argument is not a number
+     * @throws NoSuchCommandException if argument is empty
+     * @throws IllegalKeyException if there's no element with entered id
+     */
     public void execute(String argument) throws ScriptException, NumberFormatException, NoSuchCommandException, IllegalKeyException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();

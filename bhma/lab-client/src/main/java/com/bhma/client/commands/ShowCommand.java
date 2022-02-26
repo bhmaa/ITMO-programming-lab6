@@ -3,6 +3,9 @@ package com.bhma.client.commands;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.utility.CollectionManager;
 
+/**
+ * show command
+ */
 public class ShowCommand extends Command {
     private final CollectionManager collectionManager;
 
@@ -11,6 +14,11 @@ public class ShowCommand extends Command {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * print all elements of collection in a string representation
+     * @param argument must be empty
+     * @throws NoSuchCommandException if argument isn't empty
+     */
     public void execute(String argument) throws NoSuchCommandException {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();

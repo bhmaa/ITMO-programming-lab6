@@ -22,7 +22,7 @@ public class CountByChapterCommand extends Command {
     }
 
     /**
-     * print number of elements witch have the same value of chapter field
+     * print number of elements which have the same value of chapter field
      * @param argument must be empty
      * @throws ScriptException while script execution was entered invalid value of chapter
      * @throws NoSuchCommandException if argument isn't empty

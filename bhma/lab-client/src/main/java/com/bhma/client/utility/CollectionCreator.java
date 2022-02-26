@@ -7,6 +7,13 @@ import java.util.Hashtable;
 public final class CollectionCreator {
     private CollectionCreator() {
     };
+
+    /**
+     * builds new Collection Manager from xml-file
+     * @param filePath to the xml-file
+     * @return new Collection Manager
+     * @throws JAXBException if xml-file cannot be converted to java object
+     */
     public static CollectionManager load(String filePath) throws JAXBException {
         File file = new File(filePath);
         CollectionManager collectionManager;

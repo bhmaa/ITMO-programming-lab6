@@ -16,6 +16,12 @@ public class RemoveGraterCommand extends Command {
         this.spaceMarineFiller = spaceMarineFiller;
     }
 
+    /**
+     * removes all elements that greater than entered one
+     * @param argument must be empty
+     * @throws NoSuchCommandException if argument isn't empty
+     * @throws ScriptException if entered in script element didn't meet the requirements
+     */
     public void execute(String argument) throws NoSuchCommandException, ScriptException {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();

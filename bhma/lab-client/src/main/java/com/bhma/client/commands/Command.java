@@ -31,6 +31,9 @@ public abstract class Command {
         return executeFlag;
     }
 
+    /**
+     * @param executeFlag false if it is an exit command and true if it is not
+     */
     public void setExecuteFlag(boolean executeFlag) {
         this.executeFlag = executeFlag;
     }

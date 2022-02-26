@@ -15,8 +15,7 @@ public class ClearCommand extends Command {
     }
 
     /**
-     * clear collection
-     *
+     * removes all elements from collection
      * @param argument must be empty
      * @throws NoSuchCommandException if argument isn't empty
      */

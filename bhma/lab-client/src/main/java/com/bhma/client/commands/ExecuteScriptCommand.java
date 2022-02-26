@@ -15,7 +15,7 @@ public class ExecuteScriptCommand extends Command {
     }
 
     /**
-     * read and execute script from entered file
+     * switches input manager to a script mode
      * @param argument mustn't be empty
      * @throws NoSuchCommandException if argument is empty
      */
