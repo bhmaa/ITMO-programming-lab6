@@ -30,7 +30,8 @@ public final class Client {
                 CollectionManager collectionManager = CollectionCreator.load(filePath);
                 OutputManager outputManager = new OutputManager(System.out);
                 InputManager inputManager = new InputManager(System.in, outputManager);
-                SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(new SpaceMarineReader(inputManager), inputManager, outputManager);
+                SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(new SpaceMarineReader(inputManager),
+                        inputManager, outputManager, collectionManager);
                 CommandManager commandManager = new CommandManager(collectionManager, spaceMarineFiller, inputManager, outputManager);
                 ConsoleManager consoleManager = new ConsoleManager(commandManager, inputManager, outputManager);
                 consoleManager.start();

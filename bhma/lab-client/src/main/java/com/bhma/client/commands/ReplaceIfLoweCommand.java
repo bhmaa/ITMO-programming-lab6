@@ -37,7 +37,7 @@ public class ReplaceIfLoweCommand extends Command {
         }
         SpaceMarine newSpaceMarine = spaceMarineFiller.fillSpaceMarine();
         SpaceMarine oldSpaceMarine = collectionManager.getByKey(Long.valueOf(argument));
-        if (oldSpaceMarine.compare(newSpaceMarine) < 0) {
+        if (oldSpaceMarine.compareTo(newSpaceMarine) < 0) {
             collectionManager.addToCollection(Long.valueOf(argument), newSpaceMarine);
         }
     }

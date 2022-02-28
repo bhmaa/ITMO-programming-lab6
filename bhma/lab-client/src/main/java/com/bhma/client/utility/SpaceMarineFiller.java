@@ -9,69 +9,76 @@ import com.bhma.client.data.Weapon;
 import com.bhma.client.exceptions.IllegalValueException;
 import com.bhma.client.exceptions.ScriptException;
 
-public class SpaceMarineFiller {
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class SpaceMarineFiller <T> {
     private final SpaceMarineReader reader;
     private final InputManager inputManager;
     private final OutputManager outputManager;
+    private final CollectionManager collectionManager;
 
-    public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager, OutputManager outputManager) {
+    public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager,
+                             OutputManager outputManager, CollectionManager collectionManager) {
         this.reader = reader;
         this.inputManager = inputManager;
         this.outputManager = outputManager;
+        this.collectionManager = collectionManager;
     }
-
-    public String fillName() throws ScriptException {
-        String name;
+    public T fill(String message, Method read) throws ScriptException {
+        T returns;
         while (true) {
             try {
-                outputManager.print("Enter name: ");
-                name = reader.readNotNullString();
+                outputManager.print(message + ": ");
+                returns = (T) read.invoke(reader);
                 break;
-            } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
+            } catch (InvocationTargetException e) {
+                if (e.getCause() instanceof NumberFormatException) {
+                    outputManager.println("Value must be a number");
+                } else {
+                    if (e.getCause() instanceof IllegalArgumentException) {
+                        outputManager.println("Chose anything from list");
+                    }
+                    if (e.getCause() instanceof IllegalValueException) {
+                        outputManager.println(e.getCause().getMessage());
+                    }
+                }
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException();
                 }
+            } catch (IllegalAccessException e) {
+                outputManager.println("Something went wrong...");
             }
+        }
+        return returns;
+    }
+
+    public String fillName() throws ScriptException {
+        String name = null;
+        try {
+            name = (String) fill("Enter name", SpaceMarineReader.class.getMethod("readNotNullString"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return name;
     }
 
     public double fillX() throws ScriptException {
-        double x;
-        while (true) {
-            try {
-                outputManager.print("Enter x coordinate: ");
-                x = reader.readX();
-                break;
-            } catch (NumberFormatException ex) {
-                outputManager.println("Value must be a number");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        Double x = null;
+        try {
+            x = (double) fill("Enter x coordinate", SpaceMarineReader.class.getMethod("readX"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return x;
     }
 
     public long fillY() throws ScriptException {
-        long y;
-        while (true) {
-            try {
-                outputManager.print("Enter y coordinate: ");
-                y = reader.readY();
-                break;
-            } catch (NumberFormatException ex) {
-                outputManager.println("Value must be a number");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        Long y = null;
+        try {
+            y = (long) fill("Enter y coordinate", SpaceMarineReader.class.getMethod("readY"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return y;
     }
@@ -81,108 +88,64 @@ public class SpaceMarineFiller {
     }
 
     public Double fillHealth() throws ScriptException {
-        Double health;
-        while (true) {
-            try {
-                outputManager.print("Enter health: ");
-                health = reader.readHealth();
-                break;
-            } catch (NumberFormatException ex) {
-                outputManager.println("Value must be a number");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        Double health = null;
+        try {
+            health = (Double) fill("Enter health", SpaceMarineReader.class.getMethod("readHealth"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return health;
     }
 
     public AstartesCategory fillCategory() throws ScriptException {
-        AstartesCategory category;
-        while (true) {
-            try {
-                outputManager.print("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN: ");
-                category = reader.readCategory();
-                break;
-            } catch (IllegalArgumentException e) {
-                outputManager.println("Chose anything from list");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        AstartesCategory category = null;
+        try {
+            category = (AstartesCategory) fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
+                    SpaceMarineReader.class.getMethod("readCategory"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return category;
     }
 
     public Weapon fillWeaponType() throws ScriptException {
-        Weapon weapon;
-        while (true) {
-            try {
-                outputManager.print("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL: ");
-                weapon = reader.readWeaponType();
-                break;
-            } catch (IllegalArgumentException e) {
-                outputManager.println("Chose anything from list");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        Weapon weapon = null;
+        try {
+            weapon = (Weapon) fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL",
+                    SpaceMarineReader.class.getMethod("readWeaponType"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return weapon;
     }
 
     public MeleeWeapon fillMeleeWeapon() throws ScriptException {
-        MeleeWeapon meleeWeapon;
-        while (true) {
-            try {
-                outputManager.print("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST: ");
-                meleeWeapon = reader.readMeleeWeapon();
-                break;
-            } catch (IllegalArgumentException e) {
-                outputManager.println("Chose anything from list");
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        MeleeWeapon meleeWeapon = null;
+        try {
+            meleeWeapon = (MeleeWeapon) fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST",
+                    SpaceMarineReader.class.getMethod("readMeleeWeapon"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return meleeWeapon;
     }
 
     public String fillChapterName() throws ScriptException {
-        String chapterName;
-        while (true) {
-            try {
-                outputManager.print("Enter chapter's name: ");
-                chapterName = reader.readNotNullString();
-                break;
-            } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        String chapterName = null;
+        try {
+            chapterName = (String) fill("Enter chapter's name", SpaceMarineReader.class.getMethod("readNotNullString"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return chapterName;
     }
 
     public String fillChapterWorld() throws ScriptException {
-        String chapterWorld;
-        while (true) {
-            try {
-                outputManager.print("Enter chapter's world: ");
-                chapterWorld = reader.readNotNullString();
-                break;
-            } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            }
+        String chapterWorld = null;
+        try {
+            chapterWorld = (String) fill("Enter chapter's world", SpaceMarineReader.class.getMethod("readNotNullString"));
+        } catch (NoSuchMethodException e) {
+            outputManager.println("Something went wrong...");
         }
         return chapterWorld;
     }
@@ -193,6 +156,6 @@ public class SpaceMarineFiller {
 
     public SpaceMarine fillSpaceMarine() throws ScriptException {
         return new SpaceMarine(this.fillName(), this.fillCoordinates(), this.fillHealth(),
-                this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter());
+                this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter(), collectionManager);
     }
 }

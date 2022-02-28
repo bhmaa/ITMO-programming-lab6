@@ -1,5 +1,7 @@
 package com.bhma.client.data;
 
+import com.bhma.client.utility.CollectionManager;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -11,8 +13,7 @@ import java.util.Objects;
  */
 @XmlRootElement(name = "spaceMarine")
 @XmlType(propOrder = {"id", "creationDate", "name", "coordinates", "health", "category", "weaponType", "meleeWeapon", "chapter"})
-public class SpaceMarine {
-    private static long maxId = 0;
+public class SpaceMarine implements Comparable<SpaceMarine> {
     private Long id;
     private String name;
     private Coordinates coordinates;
@@ -25,15 +26,18 @@ public class SpaceMarine {
 
     /**
      * builds new object and generate id and current date as date of creation
-     * @param name name of the space marine (cannot be null)
-     * @param coordinates coordinates of the space marine
-     * @param health health of the space marine (can be null or must be greater than 0)
-     * @param category asartes category of the space marine (cannot be null)
-     * @param weaponType weapon type of the space marine (cannot be null)
-     * @param meleeWeapon melee weapon type of the space marine (can be null)
-     * @param chapter chapter of the space marine
+     *
+     * @param name              name of the space marine (cannot be null)
+     * @param coordinates       coordinates of the space marine
+     * @param health            health of the space marine (can be null or must be greater than 0)
+     * @param category          asartes category of the space marine (cannot be null)
+     * @param weaponType        weapon type of the space marine (cannot be null)
+     * @param meleeWeapon       melee weapon type of the space marine (can be null)
+     * @param chapter           chapter of the space marine
+     * @param collectionManager needs for generation id
      */
-    public SpaceMarine(String name, Coordinates coordinates, Double health, AstartesCategory category, Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter) {
+    public SpaceMarine(String name, Coordinates coordinates, Double health, AstartesCategory category,
+                       Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter, CollectionManager collectionManager) {
         this.name = name;
         this.coordinates = coordinates;
         this.health = health;
@@ -41,21 +45,12 @@ public class SpaceMarine {
         this.weaponType = weaponType;
         this.meleeWeapon = meleeWeapon;
         this.chapter = chapter;
-        id = SpaceMarine.generateNextId();
+        id = collectionManager.getMaxId() + 1;
         creationDate = new Date();
     }
 
     public SpaceMarine() {
     };
-
-    /**
-     * generate next id value
-     *
-     * @return next id value
-     */
-    public static long generateNextId() {
-        return ++maxId;
-    }
 
     @XmlElement
     public Long getId() {
@@ -185,7 +180,8 @@ public class SpaceMarine {
      * @param o the object to compare against
      * @return difference between this object's and other's hashcode
      */
-    public int compare(Object o) {
+    @Override
+    public int compareTo(SpaceMarine o) {
         return this.hashCode() - o.hashCode();
     }
 }

@@ -95,7 +95,7 @@ public class CollectionManager {
 
     public void removeGreater(SpaceMarine spaceMarine) {
         for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
-            if (element.getValue().compare(spaceMarine) > 0) {
+            if (element.getValue().compareTo(spaceMarine) > 0) {
                 collection.remove(element.getKey());
             }
         }
@@ -147,5 +147,17 @@ public class CollectionManager {
             }
         }
         return result;
+    }
+
+    public long getMaxId() {
+        long maxId = 0;
+        if (collection.size() > 0) {
+            for (SpaceMarine spaceMarine : collection.values()) {
+                if (spaceMarine.getId() > maxId) {
+                    maxId = spaceMarine.getId();
+                }
+            }
+        }
+        return maxId;
     }
 }
