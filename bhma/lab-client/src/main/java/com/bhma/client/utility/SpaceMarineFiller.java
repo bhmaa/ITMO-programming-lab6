@@ -12,7 +12,7 @@ import com.bhma.client.exceptions.ScriptException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class SpaceMarineFiller <T> {
+public class SpaceMarineFiller<T> {
     private final SpaceMarineReader reader;
     private final InputManager inputManager;
     private final OutputManager outputManager;
