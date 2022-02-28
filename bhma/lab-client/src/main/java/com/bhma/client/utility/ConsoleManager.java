@@ -18,6 +18,9 @@ public class ConsoleManager {
         this.outputManager = outputManager;
     }
 
+    /**
+     * starts read commands and execute it while it is not an exit command
+     */
     public void start() {
         boolean executeFlag = true;
         while (executeFlag) {

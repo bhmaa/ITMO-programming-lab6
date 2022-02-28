@@ -9,9 +9,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * responsible for converting xml files to the collection manager instance and converting collection manager instance
+ * to the xml file
+ */
 public final class Parser {
     private Parser() {
     };
+
+    /**
+     * converts the collection manager instance to the file
+     * @param collectionManager
+     * @param fileName where will be saves this xml-file
+     */
     public static void convertToXML(CollectionManager collectionManager, String fileName) {
         try {
             JAXBContext context = JAXBContext.newInstance(CollectionManager.class);
@@ -26,6 +36,12 @@ public final class Parser {
         }
     }
 
+    /**
+     * converts xml-file to the collection manager instance
+     * @param fileName where is the file
+     * @return collection manager instance
+     * @throws JAXBException if xml-file cannot be converted to java object
+     */
     public static CollectionManager convertToJavaObject(File fileName) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(CollectionManager.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();

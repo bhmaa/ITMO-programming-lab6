@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * responsible for input
+ */
 public class InputManager {
     private final Scanner defaultScanner;
     private Scanner fileScanner;
@@ -16,6 +19,10 @@ public class InputManager {
         this.outputManager = outputManager;
     }
 
+    /**
+     * reads one line
+     * @return the line that was read
+     */
     public String read() {
         if (!scriptMode) {
             return defaultScanner.nextLine();
@@ -30,6 +37,10 @@ public class InputManager {
         }
     }
 
+    /**
+     * starts read from the file
+     * @param fileName
+     */
     public void startReadScript(String fileName) {
         try {
             outputManager.println("Start reading from file " + fileName + "...");
@@ -41,10 +52,16 @@ public class InputManager {
         }
     }
 
+    /**
+     * @return true if input manager is reading from file now, and false otherwise
+     */
     public boolean getScriptMode() {
         return scriptMode;
     }
 
+    /**
+     * finish read from the file and starts read from input stream that set in the constructor
+     */
     public void finishReadScript() {
         scriptMode = false;
         outputManager.enableNotifications();

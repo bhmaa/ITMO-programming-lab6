@@ -55,6 +55,10 @@ public class CollectionManager {
         return stringJoiner.toString();
     }
 
+    /**
+     * @param id id of a spacemarine instance
+     * @return spacemarine instance whose id is equal to the entered one
+     */
     public SpaceMarine getById(Long id) {
         SpaceMarine spaceMarineById = null;
         for (SpaceMarine spaceMarine : collection.values()) {
@@ -66,6 +70,10 @@ public class CollectionManager {
         return spaceMarineById;
     }
 
+    /**
+     * @param id checking id
+     * @return true if the collection has an element with that id, and false otherwise
+     */
     public boolean containsId(Long id) {
         boolean contains = false;
         for (SpaceMarine spaceMarine : collection.values()) {
@@ -77,22 +85,40 @@ public class CollectionManager {
         return contains;
     }
 
+    /**
+     * @param key checking key
+     * @return true if the collection has a key which is equal to the checking one, and false otherwise
+     */
     public boolean containsKey(Long key) {
         return collection.containsKey(key);
     }
 
+    /**
+     * @param key
+     * @return an element in collection which is the value for the entered key
+     */
     public SpaceMarine getByKey(Long key) {
         return collection.get(key);
     }
 
+    /**
+     * @param key key to the element that will be removed from the collection
+     */
     public void remove(Long key) {
         collection.remove(key);
     }
 
+    /**
+     * removes all elements from the collection
+     */
     public void clear() {
         collection.clear();
     }
 
+    /**
+     * removes all elements which is greater than param from the collection
+     * @param spaceMarine
+     */
     public void removeGreater(SpaceMarine spaceMarine) {
         for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
             if (element.getValue().compareTo(spaceMarine) > 0) {
@@ -101,6 +127,10 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * removes all elements which have key that lower than param
+     * @param key
+     */
     public void removeLowerKey(Long key) {
         for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
             if (element.getKey() < key) {
@@ -109,10 +139,17 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * convert collection to xml and saves it to the file by filePath
+     */
     public void save() {
         Parser.convertToXML(this, filePath);
     }
 
+    /**
+     * removes one element whose weapon type is equals to param
+     * @param weapon
+     */
     public void removeAnyByWeaponType(Weapon weapon) {
         for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
             if (element.getValue().getWeaponType().equals(weapon)) {
@@ -122,6 +159,9 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * @return average value of the health field in collection
+     */
     public double averageOfHealth() {
         if (collection.size() > 0) {
             double result = 0.0;
@@ -139,6 +179,10 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * @param chapter
+     * @return number of elements whose value of chapter field is equal to the param
+     */
     public long countByChapter(Chapter chapter) {
         long result = 0;
         for (SpaceMarine spaceMarine : collection.values()) {
@@ -149,6 +193,9 @@ public class CollectionManager {
         return result;
     }
 
+    /**
+     * @return max id from the collection
+     */
     public long getMaxId() {
         long maxId = 0;
         if (collection.size() > 0) {

@@ -12,6 +12,9 @@ import com.bhma.client.exceptions.ScriptException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * responsible for the selection correct values of SpaceMarine fields
+ */
 public class SpaceMarineFiller<T> {
     private final SpaceMarineReader reader;
     private final InputManager inputManager;
@@ -25,6 +28,14 @@ public class SpaceMarineFiller<T> {
         this.outputManager = outputManager;
         this.collectionManager = collectionManager;
     }
+
+    /**
+     * selection correct values of some SpaceMarine field
+     * @param message message that will be written if input manager is not reading from a file now
+     * @param read method of SpaceMarineReader that will be invoked
+     * @return correct value of field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public T fill(String message, Method read) throws ScriptException {
         T returns;
         while (true) {
@@ -53,6 +64,11 @@ public class SpaceMarineFiller<T> {
         return returns;
     }
 
+    /**
+     * selection correct values of name field in SpaceMarine
+     * @return correct value of name field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public String fillName() throws ScriptException {
         String name = null;
         try {
@@ -63,6 +79,11 @@ public class SpaceMarineFiller<T> {
         return name;
     }
 
+    /**
+     * selection correct values of x field in Coordinates
+     * @return correct value of x field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public double fillX() throws ScriptException {
         Double x = null;
         try {
@@ -73,6 +94,11 @@ public class SpaceMarineFiller<T> {
         return x;
     }
 
+    /**
+     * selection correct values of y field in Coordinates
+     * @return correct value of y field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public long fillY() throws ScriptException {
         Long y = null;
         try {
@@ -83,10 +109,20 @@ public class SpaceMarineFiller<T> {
         return y;
     }
 
+    /**
+     * selection correct values of coordinates field in SpaceMarine
+     * @return correct value of coordinates field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public Coordinates fillCoordinates() throws ScriptException {
         return new Coordinates(this.fillX(), this.fillY());
     }
 
+    /**
+     * selection correct values of health field in SpaceMarine
+     * @return correct value of health field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public Double fillHealth() throws ScriptException {
         Double health = null;
         try {
@@ -97,6 +133,11 @@ public class SpaceMarineFiller<T> {
         return health;
     }
 
+    /**
+     * selection correct values of category field in SpaceMarine
+     * @return correct value of category field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public AstartesCategory fillCategory() throws ScriptException {
         AstartesCategory category = null;
         try {
@@ -108,6 +149,11 @@ public class SpaceMarineFiller<T> {
         return category;
     }
 
+    /**
+     * selection correct values of weaponType field in SpaceMarine
+     * @return correct value of weaponType field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public Weapon fillWeaponType() throws ScriptException {
         Weapon weapon = null;
         try {
@@ -119,6 +165,11 @@ public class SpaceMarineFiller<T> {
         return weapon;
     }
 
+    /**
+     * selection correct values of meleeWeapon field in SpaceMarine
+     * @return correct value of meleeWeapon field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public MeleeWeapon fillMeleeWeapon() throws ScriptException {
         MeleeWeapon meleeWeapon = null;
         try {
@@ -130,6 +181,11 @@ public class SpaceMarineFiller<T> {
         return meleeWeapon;
     }
 
+    /**
+     * selection correct values of name field in Chapter
+     * @return correct value of name field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public String fillChapterName() throws ScriptException {
         String chapterName = null;
         try {
@@ -140,6 +196,11 @@ public class SpaceMarineFiller<T> {
         return chapterName;
     }
 
+    /**
+     * selection correct values of world field in Chapter
+     * @return correct value of world field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public String fillChapterWorld() throws ScriptException {
         String chapterWorld = null;
         try {
@@ -150,10 +211,20 @@ public class SpaceMarineFiller<T> {
         return chapterWorld;
     }
 
+    /**
+     * selection correct values of chapter field in SpaceMarine
+     * @return correct value of chapter field
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public Chapter fillChapter() throws ScriptException {
         return new Chapter(this.fillChapterName(), this.fillChapterWorld());
     }
 
+    /**
+     * selection correct values of all fields in SpaceMarine
+     * @return new object with entered values
+     * @throws ScriptException if the value was incorrect and input manager read from a file
+     */
     public SpaceMarine fillSpaceMarine() throws ScriptException {
         return new SpaceMarine(this.fillName(), this.fillCoordinates(), this.fillHealth(),
                 this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter(), collectionManager);

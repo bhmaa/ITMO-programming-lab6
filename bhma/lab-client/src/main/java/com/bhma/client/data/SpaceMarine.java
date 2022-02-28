@@ -30,7 +30,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      * @param name              name of the space marine (cannot be null)
      * @param coordinates       coordinates of the space marine
      * @param health            health of the space marine (can be null or must be greater than 0)
-     * @param category          asartes category of the space marine (cannot be null)
+     * @param category          astartes category of the space marine (cannot be null)
      * @param weaponType        weapon type of the space marine (cannot be null)
      * @param meleeWeapon       melee weapon type of the space marine (can be null)
      * @param chapter           chapter of the space marine
