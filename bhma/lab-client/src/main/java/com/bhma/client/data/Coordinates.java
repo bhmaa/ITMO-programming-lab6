@@ -24,7 +24,7 @@ public class Coordinates {
     }
 
     public Coordinates() {
-    };
+    }
 
     @XmlElement
     public double getX() {

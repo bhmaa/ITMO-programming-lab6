@@ -50,7 +50,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
     }
 
     public SpaceMarine() {
-    };
+    }
 
     @XmlElement
     public Long getId() {

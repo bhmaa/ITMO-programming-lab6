@@ -24,7 +24,7 @@ public class Chapter {
     }
 
     public Chapter() {
-    };
+    }
 
     @XmlElement
     public String getName() {
