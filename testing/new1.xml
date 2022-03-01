@@ -5,78 +5,77 @@
             <key>5</key>
             <value>
                 <id>1</id>
-                <creationDate>2022-02-24T12:45:09.857+03:00</creationDate>
-                <name>ddddddddd</name>
+                <creationDate>2022-03-01T15:34:58.138+03:00</creationDate>
+                <name>name1</name>
                 <coordinates>
-                    <x>10.0</x>
-                    <y>-6</y>
+                    <x>-90.0</x>
+                    <y>6</y>
                 </coordinates>
-                <health>1007.0</health>
-                <category>SCOUT</category>
-                <weaponType>BOLT_RIFLE</weaponType>
-                <meleeWeapon>LIGHTING_CLAW</meleeWeapon>
+                <health>100.0</health>
+                <category>CHAPLAIN</category>
+                <weaponType>INFERNO_PISTOL</weaponType>
+                <meleeWeapon>POWER_FIST</meleeWeapon>
                 <chapter>
-                    <name>a</name>
-                    <world>s</world>
+                    <name>chaptername1</name>
+                    <world>chapterworld1</world>
                 </chapter>
             </value>
         </entry>
         <entry>
             <key>3</key>
             <value>
-                <id>1</id>
-                <creationDate>2022-02-22T21:19:24.818+03:00</creationDate>
-                <name>fdbfbf</name>
+                <id>2</id>
+                <creationDate>2022-03-01T15:36:00.200+03:00</creationDate>
+                <name>name2</name>
                 <coordinates>
-                    <x>6.0</x>
-                    <y>3</y>
+                    <x>-684.0</x>
+                    <y>10</y>
                 </coordinates>
+                <category>TACTICAL</category>
+                <weaponType>PLASMA_GUN</weaponType>
+                <meleeWeapon>POWER_BLADE</meleeWeapon>
+                <chapter>
+                    <name>chaptername2</name>
+                    <world>chapterworld2</world>
+                </chapter>
+            </value>
+        </entry>
+        <entry>
+            <key>1</key>
+            <value>
+                <id>4</id>
+                <creationDate>2022-03-01T15:37:42.576+03:00</creationDate>
+                <name>name4</name>
+                <coordinates>
+                    <x>8.5</x>
+                    <y>0</y>
+                </coordinates>
+                <health>98.0</health>
                 <category>SCOUT</category>
-                <weaponType>INFERNO_PISTOL</weaponType>
+                <weaponType>HEAVY_BOLTGUN</weaponType>
                 <meleeWeapon>MANREAPER</meleeWeapon>
                 <chapter>
-                    <name>ff</name>
-                    <world>press</world>
+                    <name>chaptername4</name>
+                    <world>chapterworld4</world>
                 </chapter>
             </value>
         </entry>
         <entry>
-            <key>2</key>
+            <key>33</key>
             <value>
-                <id>624271064</id>
-                <creationDate>2022-02-19T00:28:18.007+03:00</creationDate>
-                <name>name</name>
+                <id>3</id>
+                <creationDate>2022-03-01T15:36:51.646+03:00</creationDate>
+                <name>name3</name>
                 <coordinates>
-                    <x>1.0</x>
-                    <y>10000</y>
+                    <x>-4.6</x>
+                    <y>100</y>
                 </coordinates>
-                <health>19.0</health>
-                <category>SCOUT</category>
+                <health>108.0</health>
+                <category>INCEPTOR</category>
                 <weaponType>BOLT_RIFLE</weaponType>
-                <meleeWeapon>CHAIN_AXE</meleeWeapon>
                 <chapter>
-                    <name>bfdbf</name>
-                    <world>dfbbf</world>
-                </chapter>
-            </value>
-        </entry>
-        <entry>
-            <key>101</key>
-            <value>
-                <id>1</id>
-                <creationDate>2022-02-23T18:54:54.358+03:00</creationDate>
-                <name>biba</name>
-                <coordinates>
-                    <x>102.0</x>
-                    <y>20</y>
-                </coordinates>
-                <health>102.6</health>
-                <category>CHAPLAIN</category>
-                <weaponType>PLASMA_GUN</weaponType>
-                <meleeWeapon>POWER_FIST</meleeWeapon>
-                <chapter>
-                    <name>boba</name>
-                    <world>pupa</world>
+                    <name>chaptername3</name>
+                    <world>chapterworld3</world>
                 </chapter>
             </value>
         </entry>

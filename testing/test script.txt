@@ -1,12 +1,13 @@
 show
-insert 101
-biba
-102
-20
-102.6
-chaplain
-plasma_gun
-power_fist
-boba
-pupa
-show
+remove_any_by_weapon_type
+HEAVY_BOLTGUN
+insert 10
+name10
+10.9
+10
+
+INCEPTOR
+HEAVY_BOLTGUN
+
+chaptername10
+chapterworld10
