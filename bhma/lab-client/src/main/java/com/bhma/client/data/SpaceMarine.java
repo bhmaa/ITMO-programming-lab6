@@ -23,7 +23,6 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
     private Weapon weaponType;
     private MeleeWeapon meleeWeapon;
     private Chapter chapter;
-
     /**
      * builds new object and generate id and current date as date of creation
      *
