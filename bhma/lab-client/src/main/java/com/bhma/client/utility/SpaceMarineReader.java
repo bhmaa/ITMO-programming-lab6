@@ -11,8 +11,8 @@ import java.util.Locale;
  * responsible for reading and checking values of fields in SpaceMarine
  */
 public class SpaceMarineReader {
+    private static final int MIN_X = -685;
     private final InputManager inputManager;
-    private final int minX = -685;
 
     public SpaceMarineReader(InputManager inputManager) {
         this.inputManager = inputManager;
@@ -28,8 +28,8 @@ public class SpaceMarineReader {
         String stringX;
         stringX = inputManager.read();
         x = Double.parseDouble(stringX);
-        if (x <= minX) {
-            throw new IllegalValueException("Value must be greater than " + minX);
+        if (x <= MIN_X) {
+            throw new IllegalValueException("Value must be greater than " + MIN_X);
         }
         return x;
     }

@@ -6,16 +6,13 @@ import com.bhma.client.data.Coordinates;
 import com.bhma.client.data.MeleeWeapon;
 import com.bhma.client.data.SpaceMarine;
 import com.bhma.client.data.Weapon;
-import com.bhma.client.exceptions.IllegalValueException;
 import com.bhma.client.exceptions.ScriptException;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * responsible for the selection correct values of SpaceMarine fields
  */
-public class SpaceMarineFiller<T> {
+public class SpaceMarineFiller {
+    private static final String READ_STRING = "readNotNullString";
     private final SpaceMarineReader reader;
     private final InputManager inputManager;
     private final OutputManager outputManager;
@@ -30,53 +27,13 @@ public class SpaceMarineFiller<T> {
     }
 
     /**
-     * selection correct values of some SpaceMarine field
-     * @param message message that will be written if input manager is not reading from a file now
-     * @param read method of SpaceMarineReader that will be invoked
-     * @return correct value of field
-     * @throws ScriptException if the value was incorrect and input manager read from a file
-     */
-    public T fill(String message, Method read) throws ScriptException {
-        T returns;
-        while (true) {
-            try {
-                outputManager.print(message + ": ");
-                returns = (T) read.invoke(reader);
-                break;
-            } catch (InvocationTargetException e) {
-                if (e.getCause() instanceof NumberFormatException) {
-                    outputManager.println("Value must be a number");
-                } else {
-                    if (e.getCause() instanceof IllegalArgumentException) {
-                        outputManager.println("Chose anything from list");
-                    }
-                    if (e.getCause() instanceof IllegalValueException) {
-                        outputManager.println(e.getCause().getMessage());
-                    }
-                }
-                if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
-                }
-            } catch (IllegalAccessException e) {
-                outputManager.println("Something went wrong...");
-            }
-        }
-        return returns;
-    }
-
-    /**
      * selection correct values of name field in SpaceMarine
      * @return correct value of name field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillName() throws ScriptException {
-        String name = null;
-        try {
-            name = (String) fill("Enter name", SpaceMarineReader.class.getMethod("readNotNullString"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return name;
+        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter name", READ_STRING);
     }
 
     /**
@@ -85,13 +42,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public double fillX() throws ScriptException {
-        Double x = null;
-        try {
-            x = (double) fill("Enter x coordinate", SpaceMarineReader.class.getMethod("readX"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return x;
+        SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter x coordinate", "readX");
     }
 
     /**
@@ -100,13 +52,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public long fillY() throws ScriptException {
-        Long y = null;
-        try {
-            y = (long) fill("Enter y coordinate", SpaceMarineReader.class.getMethod("readY"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return y;
+        SimpleSpaceMarineFiller<Long> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter y coordinate", "readY");
     }
 
     /**
@@ -124,13 +71,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public Double fillHealth() throws ScriptException {
-        Double health = null;
-        try {
-            health = (Double) fill("Enter health", SpaceMarineReader.class.getMethod("readHealth"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return health;
+        SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter health", "readHealth");
     }
 
     /**
@@ -139,14 +81,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public AstartesCategory fillCategory() throws ScriptException {
-        AstartesCategory category = null;
-        try {
-            category = (AstartesCategory) fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
-                    SpaceMarineReader.class.getMethod("readCategory"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return category;
+        SimpleSpaceMarineFiller<AstartesCategory> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN", "readCategory");
     }
 
     /**
@@ -155,14 +91,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public Weapon fillWeaponType() throws ScriptException {
-        Weapon weapon = null;
-        try {
-            weapon = (Weapon) fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL",
-                    SpaceMarineReader.class.getMethod("readWeaponType"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return weapon;
+        SimpleSpaceMarineFiller<Weapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL", "readWeaponType");
     }
 
     /**
@@ -171,14 +101,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public MeleeWeapon fillMeleeWeapon() throws ScriptException {
-        MeleeWeapon meleeWeapon = null;
-        try {
-            meleeWeapon = (MeleeWeapon) fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST",
-                    SpaceMarineReader.class.getMethod("readMeleeWeapon"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return meleeWeapon;
+        SimpleSpaceMarineFiller<MeleeWeapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST", "readMeleeWeapon");
     }
 
     /**
@@ -187,13 +111,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillChapterName() throws ScriptException {
-        String chapterName = null;
-        try {
-            chapterName = (String) fill("Enter chapter's name", SpaceMarineReader.class.getMethod("readNotNullString"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return chapterName;
+        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter chapter's name", READ_STRING);
     }
 
     /**
@@ -202,13 +121,8 @@ public class SpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillChapterWorld() throws ScriptException {
-        String chapterWorld = null;
-        try {
-            chapterWorld = (String) fill("Enter chapter's world", SpaceMarineReader.class.getMethod("readNotNullString"));
-        } catch (NoSuchMethodException e) {
-            outputManager.println("Something went wrong...");
-        }
-        return chapterWorld;
+        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
+        return filler.fill("Enter chapter's world", READ_STRING);
     }
 
     /**
