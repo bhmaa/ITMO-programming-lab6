@@ -1,16 +1,17 @@
-package com.bhma.client.run;
+package com.bhma.client;
 
-import com.bhma.client.utility.CollectionManager;
-import com.bhma.client.utility.CollectionCreator;
-import com.bhma.client.utility.OutputManager;
-import com.bhma.client.utility.SpaceMarineFiller;
-import com.bhma.client.utility.InputManager;
-import com.bhma.client.utility.CommandManager;
-import com.bhma.client.utility.SpaceMarineReader;
-import com.bhma.client.utility.ConsoleManager;
+import java.util.StringJoiner;
 
 import javax.xml.bind.JAXBException;
-import java.util.StringJoiner;
+
+import com.bhma.client.utility.CollectionCreator;
+import com.bhma.client.utility.CollectionManager;
+import com.bhma.client.utility.CommandManager;
+import com.bhma.client.utility.ConsoleManager;
+import com.bhma.client.utility.InputManager;
+import com.bhma.client.utility.OutputManager;
+import com.bhma.client.utility.SpaceMarineFiller;
+import com.bhma.client.utility.SpaceMarineReader;
 
 public final class Client {
     private Client() {
