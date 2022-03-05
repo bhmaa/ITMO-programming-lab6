@@ -24,7 +24,7 @@ public class CollectionManager {
     }
 
     public CollectionManager() {
-    };
+    }
 
     public void setFilePath(String filePath) {
        this.filePath = filePath;
