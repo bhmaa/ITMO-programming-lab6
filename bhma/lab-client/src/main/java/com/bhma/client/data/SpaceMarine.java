@@ -35,7 +35,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      * @param chapter           chapter of the space marine
      * @param collectionManager needs for generation id
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("parameternumber")
     public SpaceMarine(String name, Coordinates coordinates, Double health, AstartesCategory category,
                        Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter, CollectionManager collectionManager) {
         this.name = name;
