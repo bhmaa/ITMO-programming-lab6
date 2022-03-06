@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="activation-1.0.2">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/javax/xml/bind/activation/1.0.2/activation-1.0.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
