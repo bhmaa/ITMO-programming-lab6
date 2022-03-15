@@ -17,7 +17,7 @@ public final class CollectionCreator {
     public static CollectionManager load(String filePath) throws JAXBException {
         File file = new File(filePath);
         CollectionManager collectionManager;
-        if (file.exists()) {
+        if (file.exists() && file.length() != 0) {
             collectionManager = Parser.convertToJavaObject(file);
             collectionManager.setFilePath(filePath);
             System.out.println("The collection was successfully loaded from the file " + filePath);
