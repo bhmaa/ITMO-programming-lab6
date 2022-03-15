@@ -12,7 +12,6 @@ import com.bhma.client.exceptions.ScriptException;
  * responsible for the selection correct values of SpaceMarine fields
  */
 public class SpaceMarineFiller {
-    private static final String READ_STRING = "readNotNullString";
     private final SpaceMarineReader reader;
     private final InputManager inputManager;
     private final OutputManager outputManager;
@@ -33,7 +32,7 @@ public class SpaceMarineFiller {
      */
     public String fillName() throws ScriptException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter name", READ_STRING);
+        return filler.fill("Enter name", reader::readNotNullString);
     }
 
     /**
@@ -43,7 +42,7 @@ public class SpaceMarineFiller {
      */
     public double fillX() throws ScriptException {
         SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter x coordinate", "readX");
+        return filler.fill("Enter x coordinate", reader::readX);
     }
 
     /**
@@ -53,7 +52,7 @@ public class SpaceMarineFiller {
      */
     public long fillY() throws ScriptException {
         SimpleSpaceMarineFiller<Long> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter y coordinate", "readY");
+        return filler.fill("Enter y coordinate", reader::readY);
     }
 
     /**
@@ -72,7 +71,7 @@ public class SpaceMarineFiller {
      */
     public Double fillHealth() throws ScriptException {
         SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter health", "readHealth");
+        return filler.fill("Enter health", reader::readHealth);
     }
 
     /**
@@ -82,7 +81,8 @@ public class SpaceMarineFiller {
      */
     public AstartesCategory fillCategory() throws ScriptException {
         SimpleSpaceMarineFiller<AstartesCategory> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN", "readCategory");
+        return filler.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
+                reader::readCategory);
     }
 
     /**
@@ -92,7 +92,8 @@ public class SpaceMarineFiller {
      */
     public Weapon fillWeaponType() throws ScriptException {
         SimpleSpaceMarineFiller<Weapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL", "readWeaponType");
+        return filler.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL",
+                reader::readWeaponType);
     }
 
     /**
@@ -102,7 +103,8 @@ public class SpaceMarineFiller {
      */
     public MeleeWeapon fillMeleeWeapon() throws ScriptException {
         SimpleSpaceMarineFiller<MeleeWeapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST", "readMeleeWeapon");
+        return filler.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST",
+                reader::readMeleeWeapon);
     }
 
     /**
@@ -112,7 +114,7 @@ public class SpaceMarineFiller {
      */
     public String fillChapterName() throws ScriptException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter chapter's name", READ_STRING);
+        return filler.fill("Enter chapter's name", reader::readNotNullString);
     }
 
     /**
@@ -122,7 +124,7 @@ public class SpaceMarineFiller {
      */
     public String fillChapterWorld() throws ScriptException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter chapter's world", READ_STRING);
+        return filler.fill("Enter chapter's world", reader::readNotNullString);
     }
 
     /**
