@@ -51,15 +51,12 @@ public class SpaceMarineReader {
      * @throws IllegalValueException if entered value was lower than 0
      * @throws NumberFormatException if entered value was not a number
      */
-    public Double readHealth() throws IllegalValueException, NumberFormatException {
-        Double health = null;
+    public double readHealth() throws IllegalValueException, NumberFormatException {
         String stringHealth;
         stringHealth = inputManager.read();
-        if (!stringHealth.isEmpty()) {
-            health = Double.parseDouble(stringHealth);
-            if (health <= 0) {
-                throw new IllegalValueException("Value must be greater than 0");
-            }
+        double health = Double.parseDouble(stringHealth);
+        if (health <= 0) {
+            throw new IllegalValueException("Value must be greater than 0");
         }
         return health;
     }
@@ -106,6 +103,15 @@ public class SpaceMarineReader {
         string = inputManager.read();
         if (string.isEmpty()) {
             throw new IllegalValueException("This field cannot be null");
+        }
+        return string;
+    }
+
+    public String readNotEmptyString() throws IllegalValueException {
+        String string;
+        string = readNotNullString();
+        if (string.trim().isEmpty()) {
+            throw new IllegalValueException("This field cannot be empty");
         }
         return string;
     }
