@@ -21,7 +21,6 @@ public class ConsoleManager {
     /**
      * starts read commands and execute it while it is not an exit command
      */
-    @SuppressWarnings("methodlength")
     public void start() {
         boolean executeFlag = true;
         while (executeFlag) {
@@ -53,8 +52,6 @@ public class ConsoleManager {
                             inputManager.finishReadScript();
                         }
                         outputManager.println("Wrong number format");
-                    } catch (IllegalArgumentException e) {
-                        outputManager.println("No such field in enum");
                     }
                 }
             }
