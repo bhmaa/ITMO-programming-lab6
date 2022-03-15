@@ -2,19 +2,16 @@ package com.bhma.client.commands;
 
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.utility.CollectionManager;
-import com.bhma.client.utility.OutputManager;
 
 /**
  * info command
  */
 public class InfoCommand extends Command {
     private final CollectionManager collectionManager;
-    private final OutputManager outputManager;
 
-    public InfoCommand(CollectionManager collectionManager, OutputManager outputManager) {
+    public InfoCommand(CollectionManager collectionManager) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
         this.collectionManager = collectionManager;
-        this.outputManager = outputManager;
     }
 
     /**
@@ -26,6 +23,6 @@ public class InfoCommand extends Command {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();
         }
-        outputManager.println(collectionManager.collectionInfo());
+        System.out.println(collectionManager.collectionInfo());
     }
 }
