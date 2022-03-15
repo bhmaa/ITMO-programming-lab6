@@ -182,6 +182,14 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      */
     @Override
     public int compareTo(SpaceMarine o) {
-        return this.hashCode() - o.hashCode();
+        if (this.name.compareTo(o.name) != 0) {
+            return this.name.compareTo(o.name);
+        } else {
+            if (this.health.compareTo(o.health) != 0) {
+                return this.health.compareTo(o.health);
+            } else {
+                return this.id.compareTo(o.id);
+            }
+        }
     }
 }
