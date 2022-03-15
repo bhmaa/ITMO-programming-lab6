@@ -18,7 +18,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
     private String name;
     private Coordinates coordinates;
     private Date creationDate;
-    private Double health;
+    private double health;
     private AstartesCategory category;
     private Weapon weaponType;
     private MeleeWeapon meleeWeapon;
@@ -36,7 +36,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      * @param collectionManager needs for generation id
      */
     @SuppressWarnings("parameternumber")
-    public SpaceMarine(String name, Coordinates coordinates, Double health, AstartesCategory category,
+    public SpaceMarine(String name, Coordinates coordinates, double health, AstartesCategory category,
                        Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter, CollectionManager collectionManager) {
         this.name = name;
         this.coordinates = coordinates;
@@ -70,7 +70,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return coordinates;
     }
 
-    public Double getHealth() {
+    public double getHealth() {
         return health;
     }
 
@@ -95,7 +95,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         this.creationDate = creationDate;
     }
 
-    public void setHealth(Double health) {
+    public void setHealth(double health) {
         this.health = health;
     }
 
@@ -110,10 +110,6 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
 
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
     }
 
     public void setCategory(AstartesCategory category) {
@@ -182,14 +178,13 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      */
     @Override
     public int compareTo(SpaceMarine o) {
-        if (this.name.compareTo(o.name) != 0) {
-            return this.name.compareTo(o.name);
-        } else {
-            if (this.health.compareTo(o.health) != 0) {
-                return this.health.compareTo(o.health);
-            } else {
-                return this.id.compareTo(o.id);
+        int value = this.name.compareTo(o.name);
+        if (value == 0) {
+            value = Double.valueOf(this.health).compareTo(Double.valueOf(o.health));
+            if (value == 0) {
+                value = this.id.compareTo(o.id);
             }
         }
+        return value;
     }
 }
