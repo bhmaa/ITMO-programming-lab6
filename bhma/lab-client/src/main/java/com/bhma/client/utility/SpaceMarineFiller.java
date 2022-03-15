@@ -32,7 +32,7 @@ public class SpaceMarineFiller {
      */
     public String fillName() throws ScriptException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter name", reader::readNotNullString);
+        return filler.fill("Enter name", reader::readNotEmptyString);
     }
 
     /**
@@ -114,7 +114,7 @@ public class SpaceMarineFiller {
      */
     public String fillChapterName() throws ScriptException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
-        return filler.fill("Enter chapter's name", reader::readNotNullString);
+        return filler.fill("Enter chapter's name", reader::readNotEmptyString);
     }
 
     /**
