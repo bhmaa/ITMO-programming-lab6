@@ -23,7 +23,11 @@ public final class CollectionCreator {
             System.out.println("The collection was successfully loaded from the file " + filePath);
         } else {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
-            System.out.println("No file with this name was found. A new empty collection has been created.");
+            if (!file.exists()) {
+                System.out.println("No file with this name was found. A new empty collection has been created.");
+            } else {
+                System.out.println("The collection was successfully loaded from the file" + filePath);
+            }
         }
         return collectionManager;
     }
