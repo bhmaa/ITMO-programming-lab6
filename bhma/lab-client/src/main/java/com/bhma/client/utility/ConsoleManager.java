@@ -21,6 +21,7 @@ public class ConsoleManager {
     /**
      * starts read commands and execute it while it is not an exit command
      */
+    @SuppressWarnings("methodlength")
     public void start() {
         boolean executeFlag = true;
         while (executeFlag) {
@@ -42,15 +43,18 @@ public class ConsoleManager {
                     } catch (ScriptException e) {
                         inputManager.finishReadScript();
                         outputManager.println(e.getMessage());
-                    } catch (NoSuchCommandException e) {
-                        outputManager.println(e.getMessage());
-                    } catch (IllegalArgumentException e) {
-                        outputManager.println("No such field in enum");
-                    } catch (IllegalKeyException e) {
+                    } catch (NoSuchCommandException | IllegalKeyException e) {
                         if (inputManager.getScriptMode()) {
                             inputManager.finishReadScript();
                         }
                         outputManager.println(e.getMessage());
+                    } catch (NumberFormatException e) {
+                        if (inputManager.getScriptMode()) {
+                            inputManager.finishReadScript();
+                        }
+                        outputManager.println("Wrong number format");
+                    } catch (IllegalArgumentException e) {
+                        outputManager.println("No such field in enum");
                     }
                 }
             }
