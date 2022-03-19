@@ -20,7 +20,7 @@ public final class Client {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Please enter the file path as command line argument");
+            System.out.println("Please enter the file path as a command line argument");
         } else {
             StringJoiner stringJoiner = new StringJoiner(" ");
             for (String arg : args) {

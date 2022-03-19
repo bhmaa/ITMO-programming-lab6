@@ -6,10 +6,7 @@ import com.bhma.client.data.Weapon;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 @XmlRootElement(name = "spaceMarines")
 public class CollectionManager {
@@ -60,14 +57,7 @@ public class CollectionManager {
      * @return spacemarine instance whose id is equal to the entered one
      */
     public SpaceMarine getById(Long id) {
-        SpaceMarine spaceMarineById = null;
-        for (SpaceMarine spaceMarine : collection.values()) {
-            if (spaceMarine.getId().equals(id)) {
-                spaceMarineById = spaceMarine;
-                break;
-            }
-        }
-        return spaceMarineById;
+        return collection.values().stream().filter(v -> v.getId().equals(id)).findFirst().get();
     }
 
     /**
@@ -75,14 +65,7 @@ public class CollectionManager {
      * @return true if the collection has an element with that id, and false otherwise
      */
     public boolean containsId(Long id) {
-        boolean contains = false;
-        for (SpaceMarine spaceMarine : collection.values()) {
-            if (spaceMarine.getId().equals(id)) {
-                contains = true;
-                break;
-            }
-        }
-        return contains;
+        return collection.values().stream().anyMatch(v -> v.getId().equals(id));
     }
 
     /**
@@ -120,11 +103,7 @@ public class CollectionManager {
      * @param spaceMarine
      */
     public void removeGreater(SpaceMarine spaceMarine) {
-        for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
-            if (element.getValue().compareTo(spaceMarine) > 0) {
-                collection.remove(element.getKey());
-            }
-        }
+        collection.entrySet().removeIf(e -> e.getValue().compareTo(spaceMarine) > 0);
     }
 
     /**
@@ -132,11 +111,7 @@ public class CollectionManager {
      * @param key
      */
     public void removeLowerKey(Long key) {
-        for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
-            if (element.getKey() < key) {
-                collection.remove(element.getKey());
-            }
-        }
+        collection.entrySet().removeIf(e -> e.getKey() < key);
     }
 
     /**
@@ -151,28 +126,15 @@ public class CollectionManager {
      * @param weapon
      */
     public void removeAnyByWeaponType(Weapon weapon) {
-        for (Map.Entry<Long, SpaceMarine> element : collection.entrySet()) {
-            if (element.getValue().getWeaponType().equals(weapon)) {
-                collection.remove(element.getKey());
-                break;
-            }
-        }
+        collection.entrySet().stream().filter(e -> e.getValue().getWeaponType().equals(weapon))
+                .findFirst().map(e -> collection.remove(e.getKey()));
     }
 
     /**
      * @return average value of the health field in collection
      */
     public double averageOfHealth() {
-        if (collection.size() > 0) {
-            double result = 0.0;
-            for (SpaceMarine spaceMarine : collection.values()) {
-                result = result + spaceMarine.getHealth();
-            }
-            result = result / collection.size();
-            return result;
-        } else {
-            return 0;
-        }
+        return collection.values().stream().mapToDouble(SpaceMarine::getHealth).average().orElse(0);
     }
 
     /**
@@ -180,27 +142,17 @@ public class CollectionManager {
      * @return number of elements whose value of chapter field is equal to the param
      */
     public long countByChapter(Chapter chapter) {
-        long result = 0;
-        for (SpaceMarine spaceMarine : collection.values()) {
-            if (spaceMarine.getChapter().equals(chapter)) {
-                result++;
-            }
-        }
-        return result;
+        return collection.values().stream().filter(v -> v.getChapter().equals(chapter)).count();
     }
 
     /**
      * @return max id from the collection
      */
     public long getMaxId() {
-        long maxId = 0;
-        if (collection.size() > 0) {
-            for (SpaceMarine spaceMarine : collection.values()) {
-                if (spaceMarine.getId() > maxId) {
-                    maxId = spaceMarine.getId();
-                }
-            }
+        if(collection.size() > 0) {
+            return collection.values().stream().max(Comparator.comparing(SpaceMarine::getId)).get().getId();
+        } else {
+            return 0;
         }
-        return maxId;
     }
 }
