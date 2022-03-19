@@ -27,6 +27,9 @@ public class CollectionManager {
         this.filePath = filePath;
     }
 
+    /**
+     * @return string with collection's class, date of creation and size
+     */
     public String collectionInfo() {
         return "Collection type: " + collection.getClass().getName() + "\n"
                 + "Date of initialization: " + dateOfInitialization + "\n"
