@@ -59,7 +59,7 @@ public class ConsoleManager {
                     outputManager.println("No such command. Type \"help\" to get all commands with their names and descriptions");
                 }
             } else {
-                outputManager.println("Plese type any command. To see list of command type \"help\"");
+                outputManager.println("Please type any command. To see list of command type \"help\"");
             }
         }
     }

@@ -5,5 +5,5 @@ import com.bhma.client.exceptions.InvalidInputException;
 
 @FunctionalInterface
 public interface Reader<T> {
-    T read() throws IllegalValueException, NumberFormatException, IllegalArgumentException, InvalidInputException;
+    T read() throws IllegalValueException, IllegalArgumentException, InvalidInputException;
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public final class Parser {
     private Parser() {
-    };
+    }
 
     /**
      * converts the collection manager instance to the file

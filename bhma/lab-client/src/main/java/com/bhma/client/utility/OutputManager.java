@@ -12,7 +12,7 @@ public class OutputManager {
 
     private enum MessageNotifications {
         ON,
-        OFF;
+        OFF
     }
 
     public OutputManager(OutputStream outputStream) {

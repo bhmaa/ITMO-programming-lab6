@@ -59,8 +59,8 @@ public class CollectionManager {
     }
 
     /**
-     * @param id id of a spacemarine instance
-     * @return spacemarine instance whose id is equal to the entered one
+     * @param id id of a space-marine instance
+     * @return space-marine instance whose id is equal to the entered one
      */
     public SpaceMarine getById(Long id) {
         return collection.values().stream().filter(v -> v.getId().equals(id)).findFirst().get();

@@ -8,7 +8,7 @@ public class SimpleSpaceMarineFiller<T> {
     private final OutputManager outputManager;
     private final InputManager inputManager;
 
-    public SimpleSpaceMarineFiller(InputManager inputManager, OutputManager outputManager, SpaceMarineReader reader) {
+    public SimpleSpaceMarineFiller(InputManager inputManager, OutputManager outputManager) {
         this.inputManager = inputManager;
         this.outputManager = outputManager;
     }

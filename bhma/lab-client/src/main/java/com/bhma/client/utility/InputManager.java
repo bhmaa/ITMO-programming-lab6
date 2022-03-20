@@ -12,7 +12,7 @@ import java.util.Stack;
  * responsible for input
  */
 public class InputManager {
-    private Stack<Scanner> scanners = new Stack<>();
+    private final Stack<Scanner> scanners = new Stack<>();
     private boolean scriptMode = false;
     private final OutputManager outputManager;
 
