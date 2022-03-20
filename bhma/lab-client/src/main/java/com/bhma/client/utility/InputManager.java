@@ -65,7 +65,7 @@ public class InputManager {
      * finish read from the file and starts read from input stream that set in the constructor
      */
     public void finishReadScript() {
-        if(scanners.size() == 2) {
+        if (scanners.size() == 2) {
             scriptMode = false;
             outputManager.enableNotifications();
         }

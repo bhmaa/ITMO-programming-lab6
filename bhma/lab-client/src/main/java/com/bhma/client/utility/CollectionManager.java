@@ -155,7 +155,7 @@ public class CollectionManager {
      * @return max id from the collection
      */
     public long getMaxId() {
-        if(collection.size() > 0) {
+        if (collection.size() > 0) {
             return collection.values().stream().max(Comparator.comparing(SpaceMarine::getId)).get().getId();
         } else {
             return 0;
