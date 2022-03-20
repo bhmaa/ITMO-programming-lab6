@@ -1,21 +1,23 @@
 package com.bhma.client.utility;
 
+import com.bhma.client.exceptions.InvalidInputException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * responsible for input
  */
 public class InputManager {
-    private final Scanner defaultScanner;
-    private Scanner fileScanner;
+    private Stack<Scanner> scanners = new Stack<>();
     private boolean scriptMode = false;
     private final OutputManager outputManager;
 
     public InputManager(InputStream inputStream, OutputManager outputManager) {
-        this.defaultScanner = new Scanner(inputStream);
+        scanners.push(new Scanner(inputStream));
         this.outputManager = outputManager;
     }
 
@@ -23,16 +25,16 @@ public class InputManager {
      * reads one line
      * @return the line that was read
      */
-    public String read() {
-        if (!scriptMode) {
-            return defaultScanner.nextLine();
+    public String read() throws InvalidInputException {
+        if (scanners.peek().hasNextLine()) {
+            return scanners.peek().nextLine();
         } else {
-            if (fileScanner.hasNext()) {
-                return fileScanner.nextLine();
-            } else {
+            if (scriptMode) {
                 finishReadScript();
                 outputManager.println("Reached the end of the file.");
-                return defaultScanner.nextLine();
+                return read();
+            }  else {
+                throw new InvalidInputException();
             }
         }
     }
@@ -44,7 +46,7 @@ public class InputManager {
     public void startReadScript(String fileName) {
         try {
             outputManager.println("Start reading from file " + fileName + "...");
-            fileScanner = new Scanner(Paths.get(fileName));
+            scanners.push(new Scanner(Paths.get(fileName)));
             scriptMode = true;
             outputManager.muteNotifications();
         } catch (IOException e) {
@@ -63,8 +65,11 @@ public class InputManager {
      * finish read from the file and starts read from input stream that set in the constructor
      */
     public void finishReadScript() {
-        scriptMode = false;
-        outputManager.enableNotifications();
+        if(scanners.size() == 2) {
+            scriptMode = false;
+            outputManager.enableNotifications();
+        }
+        scanners.pop();
         outputManager.println("Reading from file was finished");
     }
 }

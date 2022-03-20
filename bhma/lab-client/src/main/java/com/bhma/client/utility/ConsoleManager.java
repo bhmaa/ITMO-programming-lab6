@@ -2,10 +2,12 @@ package com.bhma.client.utility;
 
 import com.bhma.client.commands.Command;
 import com.bhma.client.exceptions.IllegalKeyException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public class ConsoleManager {
     private final CommandManager commandManager;
@@ -21,24 +23,24 @@ public class ConsoleManager {
     /**
      * starts read commands and execute it while it is not an exit command
      */
-    public void start() {
+    public void start() throws InvalidInputException {
         boolean executeFlag = true;
         while (executeFlag) {
             String input = inputManager.read();
-            String inputCommand = input.split(" ")[0];
-            String argument = "";
-            boolean completed = false;
-            if (input.split(" ").length > 1) {
-                argument = input.replaceFirst(inputCommand + " ", "");
-            }
-            for (Command command : commandManager.getCommands()) {
-                if (command.getName().equals(inputCommand.toLowerCase(Locale.ROOT))) {
+            if (!input.trim().isEmpty()) {
+                String inputCommand = input.split(" ")[0].toLowerCase(Locale.ROOT);
+                String argument = "";
+                if (input.split(" ").length > 1) {
+                    argument = input.replaceFirst(inputCommand + " ", "");
+                }
+                Optional<Command> optional = commandManager.getCommands().stream()
+                        .filter(v -> v.getName().equals(inputCommand)).findFirst();
+                if (optional.isPresent()) {
                     try {
-                        completed = true;
+                        Command command = optional.get();
                         command.execute(argument);
                         executeFlag = command.getExecuteFlag();
                         outputManager.println("The command completed");
-                        break;
                     } catch (ScriptException e) {
                         inputManager.finishReadScript();
                         outputManager.println(e.getMessage());
@@ -53,10 +55,11 @@ public class ConsoleManager {
                         }
                         outputManager.println("Wrong number format");
                     }
+                } else {
+                    outputManager.println("No such command. Type \"help\" to get all commands with their names and descriptions");
                 }
-            }
-            if (!completed) {
-                outputManager.println("No such command. Type \"help\" to get all commands with their names and descriptions");
+            } else {
+                outputManager.println("Plese type any command. To see list of command type \"help\"");
             }
         }
     }

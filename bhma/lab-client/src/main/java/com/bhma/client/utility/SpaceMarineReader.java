@@ -4,6 +4,7 @@ import com.bhma.client.data.AstartesCategory;
 import com.bhma.client.data.MeleeWeapon;
 import com.bhma.client.data.Weapon;
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.InvalidInputException;
 
 import java.util.Locale;
 
@@ -23,7 +24,7 @@ public class SpaceMarineReader {
      * @throws IllegalValueException if entered value was lower than -685
      * @throws NumberFormatException if entered value was not a number
      */
-    public double readX() throws IllegalValueException, NumberFormatException {
+    public double readX() throws IllegalValueException, NumberFormatException, InvalidInputException {
         double x;
         String stringX;
         stringX = inputManager.read();
@@ -38,7 +39,7 @@ public class SpaceMarineReader {
      * @return entered value of y field in Coordinates if it was correct
      * @throws NumberFormatException if entered value was not a number
      */
-    public long readY() throws NumberFormatException {
+    public long readY() throws NumberFormatException, InvalidInputException {
         long y;
         String stringY;
         stringY = inputManager.read();
@@ -51,7 +52,7 @@ public class SpaceMarineReader {
      * @throws IllegalValueException if entered value was lower than 0
      * @throws NumberFormatException if entered value was not a number
      */
-    public double readHealth() throws IllegalValueException, NumberFormatException {
+    public double readHealth() throws IllegalValueException, NumberFormatException, InvalidInputException {
         String stringHealth;
         stringHealth = inputManager.read();
         double health = Double.parseDouble(stringHealth);
@@ -65,7 +66,7 @@ public class SpaceMarineReader {
      * @return entered value of category field in SpaceMarine if it was correct
      * @throws IllegalArgumentException if entered value isn't one of values in AstartesCategory
      */
-    public AstartesCategory readCategory() throws IllegalArgumentException {
+    public AstartesCategory readCategory() throws IllegalArgumentException, InvalidInputException {
         AstartesCategory category;
         category = AstartesCategory.valueOf(inputManager.read().toUpperCase(Locale.ROOT));
         return category;
@@ -75,7 +76,7 @@ public class SpaceMarineReader {
      * @return entered value of weaponType field in SpaceMarine if it was correct
      * @throws IllegalArgumentException if entered value isn't one of values in Weapon
      */
-    public Weapon readWeaponType() throws IllegalArgumentException {
+    public Weapon readWeaponType() throws IllegalArgumentException, InvalidInputException {
         Weapon weapon;
         weapon = Weapon.valueOf(inputManager.read().toUpperCase(Locale.ROOT));
         return weapon;
@@ -85,7 +86,7 @@ public class SpaceMarineReader {
      * @return entered value of meleeWeapon field in SpaceMarine if it was correct (or null)
      * @throws IllegalArgumentException if entered value isn't one of values in MeleeWeapon and isn't empty
      */
-    public MeleeWeapon readMeleeWeapon() throws IllegalArgumentException {
+    public MeleeWeapon readMeleeWeapon() throws IllegalArgumentException, InvalidInputException {
         MeleeWeapon meleeWeapon = null;
         String stringMeleeWeapon = inputManager.read();
         if (!stringMeleeWeapon.isEmpty()) {
@@ -98,7 +99,7 @@ public class SpaceMarineReader {
      * @return entered value if it was not empty
      * @throws IllegalValueException if entered value was empty
      */
-    public String readNotNullString() throws IllegalValueException {
+    public String readNotNullString() throws IllegalValueException, InvalidInputException {
         String string;
         string = inputManager.read();
         if (string.isEmpty()) {
@@ -107,7 +108,7 @@ public class SpaceMarineReader {
         return string;
     }
 
-    public String readNotEmptyString() throws IllegalValueException {
+    public String readNotEmptyString() throws IllegalValueException, InvalidInputException {
         String string;
         string = readNotNullString();
         if (string.trim().isEmpty()) {

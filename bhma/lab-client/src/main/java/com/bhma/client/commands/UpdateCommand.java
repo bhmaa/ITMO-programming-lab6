@@ -2,6 +2,7 @@ package com.bhma.client.commands;
 
 import com.bhma.client.data.SpaceMarine;
 import com.bhma.client.exceptions.IllegalKeyException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -28,7 +29,7 @@ public class UpdateCommand extends Command {
      * @throws NoSuchCommandException if argument is empty
      * @throws IllegalKeyException if there's no element with entered id
      */
-    public void execute(String argument) throws ScriptException, NumberFormatException, NoSuchCommandException, IllegalKeyException {
+    public void execute(String argument) throws ScriptException, NumberFormatException, NoSuchCommandException, IllegalKeyException, InvalidInputException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

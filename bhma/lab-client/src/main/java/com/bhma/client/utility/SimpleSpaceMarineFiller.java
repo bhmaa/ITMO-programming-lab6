@@ -1,6 +1,7 @@
 package com.bhma.client.utility;
 
 import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.ScriptException;
 
 public class SimpleSpaceMarineFiller<T> {
@@ -19,7 +20,7 @@ public class SimpleSpaceMarineFiller<T> {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
 
-    public T fill(String message, Reader<T> reader) throws ScriptException {
+    public T fill(String message, Reader<T> reader) throws ScriptException, InvalidInputException {
         T returns;
         while (true) {
             try {

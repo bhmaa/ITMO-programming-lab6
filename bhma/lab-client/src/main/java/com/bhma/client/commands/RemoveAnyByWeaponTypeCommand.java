@@ -1,5 +1,6 @@
 package com.bhma.client.commands;
 
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -24,7 +25,7 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
      * @throws NoSuchCommandException if argument isn't empty
      * @throws ScriptException if string entered in a file wasn't one of the values from enum WeaponType
      */
-    public void execute(String argument) throws NoSuchCommandException, ScriptException {
+    public void execute(String argument) throws NoSuchCommandException, ScriptException, InvalidInputException {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

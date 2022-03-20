@@ -1,5 +1,6 @@
 package com.bhma.client.commands;
 
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -27,7 +28,7 @@ public class CountByChapterCommand extends Command {
      * @throws ScriptException while script execution was entered invalid value of chapter
      * @throws NoSuchCommandException if argument isn't empty
      */
-    public void execute(String argument) throws ScriptException, NoSuchCommandException {
+    public void execute(String argument) throws ScriptException, NoSuchCommandException, InvalidInputException {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

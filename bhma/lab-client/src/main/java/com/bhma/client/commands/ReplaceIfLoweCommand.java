@@ -2,6 +2,7 @@ package com.bhma.client.commands;
 
 import com.bhma.client.data.SpaceMarine;
 import com.bhma.client.exceptions.IllegalKeyException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -28,7 +29,7 @@ public class ReplaceIfLoweCommand extends Command {
      * @throws NumberFormatException if argument isn't a number
      * @throws IllegalKeyException if there's no element with entered key in collection
      */
-    public void execute(String argument) throws NoSuchCommandException, ScriptException, NumberFormatException, IllegalKeyException {
+    public void execute(String argument) throws NoSuchCommandException, ScriptException, NumberFormatException, IllegalKeyException, InvalidInputException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

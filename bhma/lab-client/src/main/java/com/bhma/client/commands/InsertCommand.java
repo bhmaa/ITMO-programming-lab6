@@ -1,6 +1,7 @@
 package com.bhma.client.commands;
 
 import com.bhma.client.exceptions.IllegalKeyException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -27,7 +28,7 @@ public class InsertCommand extends Command {
      * @throws IllegalKeyException if there is an element with equal key in collection
      * @throws ScriptException if entered in script element didn't meet the requirements
      */
-    public void execute(String argument) throws ScriptException, NoSuchCommandException, NumberFormatException, IllegalKeyException {
+    public void execute(String argument) throws ScriptException, NoSuchCommandException, NumberFormatException, IllegalKeyException, InvalidInputException {
         if (argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

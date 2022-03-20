@@ -6,6 +6,7 @@ import com.bhma.client.data.Coordinates;
 import com.bhma.client.data.MeleeWeapon;
 import com.bhma.client.data.SpaceMarine;
 import com.bhma.client.data.Weapon;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.ScriptException;
 
 /**
@@ -30,7 +31,7 @@ public class SpaceMarineFiller {
      * @return correct value of name field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public String fillName() throws ScriptException {
+    public String fillName() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter name", reader::readNotEmptyString);
     }
@@ -40,7 +41,7 @@ public class SpaceMarineFiller {
      * @return correct value of x field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public double fillX() throws ScriptException {
+    public double fillX() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter x coordinate", reader::readX);
     }
@@ -50,7 +51,7 @@ public class SpaceMarineFiller {
      * @return correct value of y field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public long fillY() throws ScriptException {
+    public long fillY() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<Long> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter y coordinate", reader::readY);
     }
@@ -60,7 +61,7 @@ public class SpaceMarineFiller {
      * @return correct value of coordinates field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public Coordinates fillCoordinates() throws ScriptException {
+    public Coordinates fillCoordinates() throws ScriptException, InvalidInputException {
         return new Coordinates(this.fillX(), this.fillY());
     }
 
@@ -69,7 +70,7 @@ public class SpaceMarineFiller {
      * @return correct value of health field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public Double fillHealth() throws ScriptException {
+    public Double fillHealth() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter health", reader::readHealth);
     }
@@ -79,7 +80,7 @@ public class SpaceMarineFiller {
      * @return correct value of category field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public AstartesCategory fillCategory() throws ScriptException {
+    public AstartesCategory fillCategory() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<AstartesCategory> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
                 reader::readCategory);
@@ -90,7 +91,7 @@ public class SpaceMarineFiller {
      * @return correct value of weaponType field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public Weapon fillWeaponType() throws ScriptException {
+    public Weapon fillWeaponType() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<Weapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL",
                 reader::readWeaponType);
@@ -101,7 +102,7 @@ public class SpaceMarineFiller {
      * @return correct value of meleeWeapon field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public MeleeWeapon fillMeleeWeapon() throws ScriptException {
+    public MeleeWeapon fillMeleeWeapon() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<MeleeWeapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST",
                 reader::readMeleeWeapon);
@@ -112,7 +113,7 @@ public class SpaceMarineFiller {
      * @return correct value of name field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public String fillChapterName() throws ScriptException {
+    public String fillChapterName() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter chapter's name", reader::readNotEmptyString);
     }
@@ -122,7 +123,7 @@ public class SpaceMarineFiller {
      * @return correct value of world field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public String fillChapterWorld() throws ScriptException {
+    public String fillChapterWorld() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager, reader);
         return filler.fill("Enter chapter's world", reader::readNotNullString);
     }
@@ -132,7 +133,7 @@ public class SpaceMarineFiller {
      * @return correct value of chapter field
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public Chapter fillChapter() throws ScriptException {
+    public Chapter fillChapter() throws ScriptException, InvalidInputException {
         return new Chapter(this.fillChapterName(), this.fillChapterWorld());
     }
 
@@ -141,7 +142,7 @@ public class SpaceMarineFiller {
      * @return new object with entered values
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
-    public SpaceMarine fillSpaceMarine() throws ScriptException {
+    public SpaceMarine fillSpaceMarine() throws ScriptException, InvalidInputException {
         return new SpaceMarine(this.fillName(), this.fillCoordinates(), this.fillHealth(),
                 this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter(), collectionManager);
     }

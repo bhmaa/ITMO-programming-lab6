@@ -1,6 +1,7 @@
 package com.bhma.client.commands;
 
 import com.bhma.client.data.SpaceMarine;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 import com.bhma.client.utility.CollectionManager;
@@ -22,7 +23,7 @@ public class RemoveGraterCommand extends Command {
      * @throws NoSuchCommandException if argument isn't empty
      * @throws ScriptException if entered in script element didn't meet the requirements
      */
-    public void execute(String argument) throws NoSuchCommandException, ScriptException {
+    public void execute(String argument) throws NoSuchCommandException, ScriptException, InvalidInputException {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();
         }

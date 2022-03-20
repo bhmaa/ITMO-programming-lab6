@@ -4,6 +4,7 @@ import java.util.StringJoiner;
 
 import javax.xml.bind.JAXBException;
 
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.utility.CollectionCreator;
 import com.bhma.client.utility.CollectionManager;
 import com.bhma.client.utility.CommandManager;
@@ -38,6 +39,8 @@ public final class Client {
                 consoleManager.start();
             } catch (JAXBException e) {
                 System.out.println("Error during converting xml file " + filePath + " to java object.");
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
             }
 
         }

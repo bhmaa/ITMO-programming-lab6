@@ -1,6 +1,7 @@
 package com.bhma.client.commands;
 
 import com.bhma.client.exceptions.IllegalKeyException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoSuchCommandException;
 import com.bhma.client.exceptions.ScriptException;
 
@@ -17,7 +18,7 @@ public abstract class Command {
         this.description = description;
     }
 
-    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalKeyException;
+    public abstract void execute(String argument) throws NoSuchCommandException, ScriptException, IllegalKeyException, InvalidInputException;
 
     public String getName() {
         return name;
