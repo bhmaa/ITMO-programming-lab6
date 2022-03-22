@@ -125,7 +125,7 @@ public class SpaceMarineFiller {
      */
     public String fillChapterWorld() throws ScriptException, InvalidInputException {
         SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter chapter's world", reader::readNotNullString);
+        return filler.fill("Enter chapter's world", reader::readString);
     }
 
     /**

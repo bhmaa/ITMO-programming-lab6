@@ -96,6 +96,18 @@ public class SpaceMarineReader {
     }
 
     /**
+     * @return entered value, null if it is empty
+     * @throws InvalidInputException
+     */
+    public String readString() throws InvalidInputException {
+        String string = inputManager.read();
+        if (string.isEmpty()) {
+            string = null;
+        }
+        return string;
+    }
+
+    /**
      * @return entered value if it was not empty
      * @throws IllegalValueException if entered value was empty
      */

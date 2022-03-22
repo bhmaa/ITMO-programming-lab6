@@ -6,7 +6,7 @@ import java.util.Hashtable;
 
 public final class CollectionCreator {
     private CollectionCreator() {
-    };
+    }
 
     /**
      * builds new Collection Manager from xml-file
