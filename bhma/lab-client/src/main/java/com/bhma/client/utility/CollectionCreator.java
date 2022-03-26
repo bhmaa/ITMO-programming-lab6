@@ -14,19 +14,19 @@ public final class CollectionCreator {
      * @return new Collection Manager
      * @throws JAXBException if xml-file cannot be converted to java object
      */
-    public static CollectionManager load(String filePath) throws JAXBException {
+    public static CollectionManager load(String filePath, OutputManager outputManager) throws JAXBException {
         File file = new File(filePath);
         CollectionManager collectionManager;
         if (file.exists() && file.length() != 0) {
             collectionManager = Parser.convertToJavaObject(file);
             collectionManager.setFilePath(filePath);
-            System.out.println("The collection was successfully loaded from the file " + filePath);
+            outputManager.printlnImportantMessage("The collection was successfully loaded from the file " + filePath);
         } else {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
             if (!file.exists()) {
-                System.out.println("No file with this name was found. A new empty collection has been created.");
+                outputManager.printlnImportantMessage("No file with this name was found. A new empty collection has been created.");
             } else {
-                System.out.println("The collection was successfully loaded from the file" + filePath);
+                outputManager.printlnImportantMessage("The collection was successfully loaded from the file" + filePath);
             }
         }
         return collectionManager;

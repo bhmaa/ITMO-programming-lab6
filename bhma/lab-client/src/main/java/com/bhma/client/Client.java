@@ -20,27 +20,26 @@ public final class Client {
     }
 
     public static void main(String[] args) {
+        OutputManager outputManager = new OutputManager(System.out);
+        InputManager inputManager = new InputManager(System.in, outputManager);
         if (args.length == 0) {
-            System.out.println("Please enter the file path as a command line argument");
+            outputManager.printlnImportantMessage("Please enter the file path as a command line argument");
         } else {
-            StringJoiner stringJoiner = new StringJoiner(" ");
+            StringJoiner filepath = new StringJoiner(" ");
             for (String arg : args) {
-                stringJoiner.add(arg);
+                filepath.add(arg);
             }
-            String filePath = stringJoiner.toString();
             try {
-                CollectionManager collectionManager = CollectionCreator.load(filePath);
-                OutputManager outputManager = new OutputManager(System.out);
-                InputManager inputManager = new InputManager(System.in, outputManager);
+                CollectionManager collectionManager = CollectionCreator.load(filepath.toString(), outputManager);
                 SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(new SpaceMarineReader(inputManager),
                         inputManager, outputManager, collectionManager);
                 CommandManager commandManager = new CommandManager(collectionManager, spaceMarineFiller, inputManager, outputManager);
                 ConsoleManager consoleManager = new ConsoleManager(commandManager, inputManager, outputManager);
                 consoleManager.start();
             } catch (JAXBException e) {
-                System.out.println("Error during converting xml file " + filePath + " to java object.");
+                outputManager.printlnImportantMessage("Error during converting xml file " + filepath.toString() + " to java object.");
             } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
+                outputManager.printlnImportantMessage(e.getMessage());
             }
 
         }

@@ -22,7 +22,7 @@ public final class Parser {
      * @param collectionManager
      * @param fileName where will be saves this xml-file
      */
-    public static void convertToXML(CollectionManager collectionManager, String fileName) {
+    public static void convertToXML(CollectionManager collectionManager, String fileName, OutputManager outputManager) {
         try {
             JAXBContext context = JAXBContext.newInstance(CollectionManager.class);
             Marshaller marshaller = context.createMarshaller();
@@ -32,7 +32,7 @@ public final class Parser {
             marshaller.marshal(collectionManager, bufferedOutputStream);
             bufferedOutputStream.close();
         } catch (JAXBException | IOException e) {
-            System.out.println("Error during converting java object to xml");
+            outputManager.printlnImportantMessage("Error during converting java object to xml");
         }
     }
 

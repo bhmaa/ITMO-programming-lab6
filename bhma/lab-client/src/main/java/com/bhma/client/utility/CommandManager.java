@@ -40,7 +40,7 @@ public class CommandManager {
         commands.add(new RemoveKeyCommand(collectionManager));
         commands.add(new RemoveLowerKeyCommand(collectionManager));
         commands.add(new ReplaceIfLoweCommand(collectionManager, spaceMarineFiller));
-        commands.add(new SaveCommand(collectionManager));
+        commands.add(new SaveCommand(collectionManager, outputManager));
         commands.add(new ShowCommand(collectionManager, outputManager));
         commands.add(new UpdateCommand(collectionManager, spaceMarineFiller));
         commands.add(new ExecuteScriptCommand(inputManager));
