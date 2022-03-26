@@ -35,6 +35,19 @@ public class OutputManager {
     }
 
     /**
+     * writes a string with a new string symbol in the end to the output stream that set in the constructor even if notification is off
+     * @param string
+     */
+    public void printlnImportantMessage(String string) {
+        try {
+            outputStream.write(string.getBytes());
+            outputStream.write("\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * writes a string to the output stream that set in the constructor if notification is on
      * @param string
      */

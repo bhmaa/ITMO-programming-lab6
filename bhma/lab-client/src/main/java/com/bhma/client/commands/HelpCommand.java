@@ -27,9 +27,9 @@ public class HelpCommand extends Command {
         if (!argument.isEmpty()) {
             throw new NoSuchCommandException();
         }
-        outputManager.println("Список доступных команд:");
+        outputManager.printlnImportantMessage("Список доступных команд:");
         for (Command command : commands) {
-            outputManager.println(command.getName() + ": " + command.getDescription());
+            outputManager.printlnImportantMessage(command.getName() + ": " + command.getDescription());
         }
     }
 }
