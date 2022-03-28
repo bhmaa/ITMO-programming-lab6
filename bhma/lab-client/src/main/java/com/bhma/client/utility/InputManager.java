@@ -2,6 +2,7 @@ package com.bhma.client.utility;
 
 import com.bhma.client.exceptions.InvalidInputException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -12,7 +13,8 @@ import java.util.Stack;
  * responsible for input
  */
 public class InputManager {
-    private final Stack<Scanner> scanners = new Stack<>();
+    private final Stack<Scanner> scanners = new Stack<Scanner>();
+    private final Stack<File> files = new Stack<File>();
     private boolean scriptMode = false;
     private final OutputManager outputManager;
 
@@ -40,17 +42,24 @@ public class InputManager {
     }
 
     /**
-     * starts read from the file
+     * starts reading from the file if there is no recursion, otherwise print a message about the detected recursion
      * @param fileName
      */
     public void startReadScript(String fileName) {
-        try {
-            outputManager.println("Start reading from file " + fileName + "...");
-            scanners.push(new Scanner(Paths.get(fileName)));
-            scriptMode = true;
-            outputManager.muteNotifications();
-        } catch (IOException e) {
-            outputManager.println("Cannot find file with this name");
+        File scriptFile = new File(fileName);
+        if (files.contains(scriptFile)) {
+            outputManager.printlnImportantMessage("Recursion detected in file " + files.peek().getName()
+                    + ". The script " + scriptFile.getName() + " will not be executed twice!");
+        } else {
+            try {
+                outputManager.println("Start reading from file " + scriptFile.getName() + "...");
+                scanners.push(new Scanner(scriptFile));
+                files.push(scriptFile);
+                scriptMode = true;
+                outputManager.muteNotifications();
+            } catch (IOException e) {
+                outputManager.printlnImportantMessage("Cannot find file " + scriptFile.getName());
+            }
         }
     }
 
@@ -70,6 +79,6 @@ public class InputManager {
             outputManager.enableNotifications();
         }
         scanners.pop();
-        outputManager.println("Reading from file was finished");
+        outputManager.println("Reading from file " + files.pop().getName() + " was finished");
     }
 }
