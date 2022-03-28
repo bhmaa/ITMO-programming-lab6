@@ -40,26 +40,26 @@ public class ConsoleManager {
                         Command command = optional.get();
                         command.execute(argument);
                         executeFlag = command.getExecuteFlag();
-                        outputManager.println("The command completed");
+                        outputManager.printLnSuccessMessage("The command completed");
                     } catch (ScriptException e) {
                         inputManager.finishReadScript();
-                        outputManager.println(e.getMessage());
+                        outputManager.printlnImportantWarning(e.getMessage());
                     } catch (NoSuchCommandException | IllegalKeyException e) {
                         if (inputManager.getScriptMode()) {
                             inputManager.finishReadScript();
                         }
-                        outputManager.println(e.getMessage());
+                        outputManager.printlnImportantWarning(e.getMessage());
                     } catch (NumberFormatException e) {
                         if (inputManager.getScriptMode()) {
                             inputManager.finishReadScript();
                         }
-                        outputManager.println("Wrong number format");
+                        outputManager.printlnImportantWarning("Wrong number format");
                     }
                 } else {
-                    outputManager.println("No such command. Type \"help\" to get all commands with their names and descriptions");
+                    outputManager.printlnWarning("No such command. Type \"help\" to get all commands with their names and descriptions");
                 }
             } else {
-                outputManager.println("Please type any command. To see list of command type \"help\"");
+                outputManager.printlnWarning("Please type any command. To see list of command type \"help\"");
             }
         }
     }

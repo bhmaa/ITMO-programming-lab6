@@ -28,17 +28,17 @@ public class SimpleSpaceMarineFiller {
                 returns = reader.read();
                 break;
             } catch (NumberFormatException e) {
-                outputManager.println("Value must be a number");
+                outputManager.printlnWarning("Value must be a number");
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException();
                 }
             } catch (IllegalArgumentException e) {
-                outputManager.println("Chose anything from list");
+                outputManager.printlnWarning("Chose anything from list");
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException();
                 }
             } catch (IllegalValueException e) {
-                outputManager.println(e.getMessage());
+                outputManager.printlnWarning(e.getMessage());
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException();
                 }

@@ -24,13 +24,8 @@ public class OutputManager {
      * @param string
      */
     public void println(String string) {
-        try {
-            if (messageNotifications.equals(MessageNotifications.ON)) {
-                outputStream.write(string.getBytes());
-                outputStream.write("\n".getBytes());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (messageNotifications.equals(MessageNotifications.ON)) {
+            printlnImportantMessage(string);
         }
     }
 
@@ -48,6 +43,30 @@ public class OutputManager {
     }
 
     /**
+     * writes string with a red color
+     * @param string
+     */
+    public void printlnImportantWarning(String string) {
+        try {
+            outputStream.write("\u001B[31m".getBytes());
+            printlnImportantMessage(string);
+            outputStream.write("\u001B[0m".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * writes string with a red color if notification is on
+     * @param string
+     */
+    public void printlnWarning(String string) {
+        if (messageNotifications.equals(MessageNotifications.ON)) {
+            printlnImportantWarning(string);
+        }
+    }
+
+    /**
      * writes a string to the output stream that set in the constructor if notification is on
      * @param string
      */
@@ -58,6 +77,18 @@ public class OutputManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void printLnSuccessMessage(String string) {
+        if (messageNotifications.equals(MessageNotifications.ON)) {
+            try {
+                outputStream.write("\u001B[32m".getBytes());
+                printlnImportantMessage(string);
+                outputStream.write("\u001B[0m".getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

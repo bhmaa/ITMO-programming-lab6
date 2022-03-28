@@ -12,8 +12,8 @@ import java.util.Stack;
  * responsible for input
  */
 public class InputManager {
-    private final Stack<Scanner> scanners = new Stack<Scanner>();
-    private final Stack<File> files = new Stack<File>();
+    private final Stack<Scanner> scanners = new Stack<>();
+    private final Stack<File> files = new Stack<>();
     private boolean scriptMode = false;
     private final OutputManager outputManager;
 
@@ -32,7 +32,7 @@ public class InputManager {
         } else {
             if (scriptMode) {
                 finishReadScript();
-                outputManager.println("Reached the end of the file.");
+                outputManager.printLnSuccessMessage("Reached the end of the file.");
                 return read();
             }  else {
                 throw new InvalidInputException();
@@ -47,7 +47,7 @@ public class InputManager {
     public void startReadScript(String fileName) {
         File scriptFile = new File(fileName);
         if (files.contains(scriptFile)) {
-            outputManager.printlnImportantMessage("Recursion detected in file " + files.peek().getName()
+            outputManager.printlnImportantWarning("Recursion detected in file " + files.peek().getName()
                     + ". The script " + scriptFile.getName() + " will not be executed twice!");
         } else {
             try {
@@ -57,7 +57,7 @@ public class InputManager {
                 scriptMode = true;
                 outputManager.muteNotifications();
             } catch (IOException e) {
-                outputManager.printlnImportantMessage("Cannot find file " + scriptFile.getName());
+                outputManager.printlnImportantWarning("Cannot find file " + scriptFile.getName());
             }
         }
     }

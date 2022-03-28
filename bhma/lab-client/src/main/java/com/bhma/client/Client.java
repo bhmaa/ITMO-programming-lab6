@@ -23,7 +23,7 @@ public final class Client {
         OutputManager outputManager = new OutputManager(System.out);
         InputManager inputManager = new InputManager(System.in, outputManager);
         if (args.length == 0) {
-            outputManager.printlnImportantMessage("Please enter the file path as a command line argument");
+            outputManager.printlnImportantWarning("Please enter the file path as a command line argument");
         } else {
             StringJoiner filepath = new StringJoiner(" ");
             for (String arg : args) {
@@ -37,9 +37,9 @@ public final class Client {
                 ConsoleManager consoleManager = new ConsoleManager(commandManager, inputManager, outputManager);
                 consoleManager.start();
             } catch (JAXBException e) {
-                outputManager.printlnImportantMessage("Error during converting xml file " + filepath.toString() + " to java object.");
+                outputManager.printlnImportantWarning("Error during converting xml file " + filepath.toString() + " to java object.");
             } catch (InvalidInputException e) {
-                outputManager.printlnImportantMessage(e.getMessage());
+                outputManager.printlnImportantWarning(e.getMessage());
             }
 
         }
