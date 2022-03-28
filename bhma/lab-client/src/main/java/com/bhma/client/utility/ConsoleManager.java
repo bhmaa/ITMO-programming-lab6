@@ -33,30 +33,27 @@ public class ConsoleManager {
                 if (input.split(" ").length > 1) {
                     argument = input.replaceFirst(inputCommand + " ", "");
                 }
-                Optional<Command> optional = commandManager.getCommands().stream()
-                        .filter(v -> v.getName().equals(inputCommand)).findFirst();
+                Optional<Command> optional = commandManager.getCommands().stream().filter(v -> v.getName().equals(inputCommand)).findFirst();
                 if (optional.isPresent()) {
                     try {
                         Command command = optional.get();
                         command.execute(argument);
                         executeFlag = command.getExecuteFlag();
-                        outputManager.printLnSuccessMessage("The command completed");
-                    } catch (ScriptException e) {
+                        outputManager.printlnSuccessMessage("The command completed");
+                    } catch (ScriptException | NoSuchCommandException | IllegalKeyException e) {
                         inputManager.finishReadScript();
                         outputManager.printlnImportantWarning(e.getMessage());
-                    } catch (NoSuchCommandException | IllegalKeyException e) {
-                        if (inputManager.getScriptMode()) {
-                            inputManager.finishReadScript();
-                        }
-                        outputManager.printlnImportantWarning(e.getMessage());
                     } catch (NumberFormatException e) {
-                        if (inputManager.getScriptMode()) {
-                            inputManager.finishReadScript();
-                        }
+                        inputManager.finishReadScript();
                         outputManager.printlnImportantWarning("Wrong number format");
                     }
                 } else {
-                    outputManager.printlnWarning("No such command. Type \"help\" to get all commands with their names and descriptions");
+                    if (inputManager.getScriptMode()) {
+                        inputManager.finishReadScript();
+                        outputManager.printlnImportantWarning("Unknown command detected: " + inputCommand);
+                    } else {
+                        outputManager.printlnWarning("No such command. Type \"help\" to get all commands with their names and descriptions");
+                    }
                 }
             } else {
                 outputManager.printlnWarning("Please type any command. To see list of command type \"help\"");

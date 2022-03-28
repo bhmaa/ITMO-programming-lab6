@@ -32,7 +32,7 @@ public class InputManager {
         } else {
             if (scriptMode) {
                 finishReadScript();
-                outputManager.printLnSuccessMessage("Reached the end of the file.");
+                outputManager.printlnSuccessMessage("Reached the end of the file.");
                 return read();
             }  else {
                 throw new InvalidInputException();
@@ -73,11 +73,13 @@ public class InputManager {
      * finish read from the file and starts read from input stream that set in the constructor
      */
     public void finishReadScript() {
-        if (scanners.size() == 2) {
-            scriptMode = false;
-            outputManager.enableNotifications();
+        if (scriptMode) {
+            if (scanners.size() == 2) {
+                scriptMode = false;
+                outputManager.enableNotifications();
+            }
+            scanners.pop();
+            outputManager.println("Reading from file " + files.pop().getName() + " was finished");
         }
-        scanners.pop();
-        outputManager.println("Reading from file " + files.pop().getName() + " was finished");
     }
 }

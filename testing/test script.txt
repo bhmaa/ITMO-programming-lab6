@@ -3,10 +3,10 @@ remove_any_by_weapon_type
 HEAVY_BOLTGUN
 insert 10
 name10
-10.9
+-9
 10
 58
-INCEPTOR
+dgdd
 HEAVY_BOLTGUN
 
 chaptername10

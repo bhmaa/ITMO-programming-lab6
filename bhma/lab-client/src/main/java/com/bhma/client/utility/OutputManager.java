@@ -80,15 +80,27 @@ public class OutputManager {
         }
     }
 
-    public void printLnSuccessMessage(String string) {
+    /**
+     * writes a string with green color if notification is on
+     * @param string
+     */
+    public void printlnSuccessMessage(String string) {
         if (messageNotifications.equals(MessageNotifications.ON)) {
-            try {
-                outputStream.write("\u001B[32m".getBytes());
-                printlnImportantMessage(string);
-                outputStream.write("\u001B[0m".getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            printlnImportantSuccessMessage(string);
+        }
+    }
+
+    /**
+     * writes a string with green color
+     * @param string
+     */
+    public void printlnImportantSuccessMessage(String string) {
+        try {
+            outputStream.write("\u001B[32m".getBytes());
+            printlnImportantMessage(string);
+            outputStream.write("\u001B[0m".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -30,17 +30,17 @@ public class SimpleSpaceMarineFiller {
             } catch (NumberFormatException e) {
                 outputManager.printlnWarning("Value must be a number");
                 if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
+                    throw new ScriptException("Number expected");
                 }
             } catch (IllegalArgumentException e) {
                 outputManager.printlnWarning("Chose anything from list");
                 if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
+                    throw new ScriptException("An enum value was expected");
                 }
             } catch (IllegalValueException e) {
                 outputManager.printlnWarning(e.getMessage());
                 if (inputManager.getScriptMode()) {
-                    throw new ScriptException();
+                    throw new ScriptException(e.getMessage());
                 }
             }
         }
