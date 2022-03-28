@@ -17,6 +17,7 @@ public class SpaceMarineFiller {
     private final InputManager inputManager;
     private final OutputManager outputManager;
     private final CollectionManager collectionManager;
+    private final SimpleSpaceMarineFiller simpleSpaceMarineFiller;
 
     public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager,
                              OutputManager outputManager, CollectionManager collectionManager) {
@@ -24,6 +25,7 @@ public class SpaceMarineFiller {
         this.inputManager = inputManager;
         this.outputManager = outputManager;
         this.collectionManager = collectionManager;
+        simpleSpaceMarineFiller = new SimpleSpaceMarineFiller(inputManager, outputManager);
     }
 
     /**
@@ -32,8 +34,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillName() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter name", reader::readNotEmptyString);
+        return simpleSpaceMarineFiller.fill("Enter name", reader::readNotEmptyString);
     }
 
     /**
@@ -42,8 +43,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public double fillX() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter x coordinate", reader::readX);
+        return simpleSpaceMarineFiller.fill("Enter x coordinate", reader::readX);
     }
 
     /**
@@ -52,8 +52,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public long fillY() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<Long> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter y coordinate", reader::readY);
+        return simpleSpaceMarineFiller.fill("Enter y coordinate", reader::readY);
     }
 
     /**
@@ -71,8 +70,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public Double fillHealth() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<Double> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter health", reader::readHealth);
+        return simpleSpaceMarineFiller.fill("Enter health", reader::readHealth);
     }
 
     /**
@@ -81,8 +79,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public AstartesCategory fillCategory() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<AstartesCategory> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
+        return simpleSpaceMarineFiller.fill("Chose the astartes category. Type SCOUT, INCEPTOR, TACTICAL or CHAPLAIN",
                 reader::readCategory);
     }
 
@@ -92,9 +89,8 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public Weapon fillWeaponType() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<Weapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN or INFERNO_PISTOL",
-                reader::readWeaponType);
+        return simpleSpaceMarineFiller.fill("Chose the weapon type. Type HEAVY_BOLTGUN, BOLT_RIFLE, PLASMA_GUN"
+                + " or INFERNO_PISTOL", reader::readWeaponType);
     }
 
     /**
@@ -103,9 +99,8 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public MeleeWeapon fillMeleeWeapon() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<MeleeWeapon> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW, POWER_BLADE or POWER_FIST",
-                reader::readMeleeWeapon);
+        return simpleSpaceMarineFiller.fill("Chose the melee weapon. Type CHAIN_AXE, MANREAPER, LIGHTING_CLAW,"
+                        + " POWER_BLADE or POWER_FIST", reader::readMeleeWeapon);
     }
 
     /**
@@ -114,8 +109,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillChapterName() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter chapter's name", reader::readNotEmptyString);
+        return simpleSpaceMarineFiller.fill("Enter chapter's name", reader::readNotEmptyString);
     }
 
     /**
@@ -124,8 +118,7 @@ public class SpaceMarineFiller {
      * @throws ScriptException if the value was incorrect and input manager read from a file
      */
     public String fillChapterWorld() throws ScriptException, InvalidInputException {
-        SimpleSpaceMarineFiller<String> filler = new SimpleSpaceMarineFiller<>(inputManager, outputManager);
-        return filler.fill("Enter chapter's world", reader::readString);
+        return simpleSpaceMarineFiller.fill("Enter chapter's world", reader::readString);
     }
 
     /**
