@@ -5,7 +5,15 @@ import java.util.StringJoiner;
 import javax.xml.bind.JAXBException;
 
 import com.bhma.client.exceptions.InvalidInputException;
-import com.bhma.client.utility.*;
+import com.bhma.client.utility.CollectionCreator;
+import com.bhma.client.utility.CollectionManager;
+import com.bhma.client.utility.Color;
+import com.bhma.client.utility.CommandManager;
+import com.bhma.client.utility.ConsoleManager;
+import com.bhma.client.utility.InputManager;
+import com.bhma.client.utility.OutputManager;
+import com.bhma.client.utility.SpaceMarineFiller;
+import com.bhma.client.utility.SpaceMarineReader;
 
 public final class Client {
     private Client() {
