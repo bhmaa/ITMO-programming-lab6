@@ -32,7 +32,7 @@ public class InputManager {
         } else {
             if (scriptMode) {
                 finishReadScript();
-                outputManager.printlnSuccessMessage("Reached the end of the file.");
+                outputManager.printlnColorMessage("Reached the end of the file", Color.GREEN);
                 return read();
             }  else {
                 throw new InvalidInputException();
@@ -47,8 +47,8 @@ public class InputManager {
     public void startReadScript(String fileName) {
         File scriptFile = new File(fileName);
         if (files.contains(scriptFile)) {
-            outputManager.printlnImportantWarning("Recursion detected in file " + files.peek().getName()
-                    + ". The script " + scriptFile.getName() + " will not be executed twice!");
+            outputManager.printlnImportantColorMessage("Recursion detected in file " + files.peek().getName()
+                    + ". The script " + scriptFile.getName() + " will not be executed twice!", Color.RED);
         } else {
             try {
                 outputManager.println("Start reading from file " + scriptFile.getName() + "...");
@@ -57,7 +57,7 @@ public class InputManager {
                 scriptMode = true;
                 outputManager.muteNotifications();
             } catch (IOException e) {
-                outputManager.printlnImportantWarning("Cannot find file " + scriptFile.getName());
+                outputManager.printlnImportantColorMessage("Cannot find file " + scriptFile.getName(), Color.RED);
             }
         }
     }

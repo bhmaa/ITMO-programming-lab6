@@ -28,17 +28,17 @@ public class SimpleSpaceMarineFiller {
                 returns = reader.read();
                 break;
             } catch (NumberFormatException e) {
-                outputManager.printlnWarning("Value must be a number");
+                outputManager.printlnColorMessage("Value must be a number", Color.RED);
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException("Number expected");
                 }
             } catch (IllegalArgumentException e) {
-                outputManager.printlnWarning("Chose anything from list");
+                outputManager.printlnColorMessage("Chose anything from list", Color.RED);
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException("An enum value was expected");
                 }
             } catch (IllegalValueException e) {
-                outputManager.printlnWarning(e.getMessage());
+                outputManager.printlnColorMessage(e.getMessage(), Color.RED);
                 if (inputManager.getScriptMode()) {
                     throw new ScriptException(e.getMessage());
                 }

@@ -29,6 +29,16 @@ public class OutputManager {
         }
     }
 
+    public void printlnColorMessage(String string, Color color) {
+        if (messageNotifications.equals(MessageNotifications.ON)) {
+            printlnImportantColorMessage(string, color);
+        }
+    }
+
+    public void printlnImportantColorMessage(String string, Color color) {
+        printlnImportantMessage(color.toString() + string + "\u001B[0m");
+    }
+
     /**
      * writes a string with a new string symbol in the end to the output stream that set in the constructor even if notification is off
      * @param string
@@ -43,30 +53,6 @@ public class OutputManager {
     }
 
     /**
-     * writes string with a red color
-     * @param string
-     */
-    public void printlnImportantWarning(String string) {
-        try {
-            outputStream.write("\u001B[31m".getBytes());
-            printlnImportantMessage(string);
-            outputStream.write("\u001B[0m".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * writes string with a red color if notification is on
-     * @param string
-     */
-    public void printlnWarning(String string) {
-        if (messageNotifications.equals(MessageNotifications.ON)) {
-            printlnImportantWarning(string);
-        }
-    }
-
-    /**
      * writes a string to the output stream that set in the constructor if notification is on
      * @param string
      */
@@ -75,30 +61,6 @@ public class OutputManager {
             if (messageNotifications.equals(MessageNotifications.ON)) {
                 outputStream.write(string.getBytes());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * writes a string with green color if notification is on
-     * @param string
-     */
-    public void printlnSuccessMessage(String string) {
-        if (messageNotifications.equals(MessageNotifications.ON)) {
-            printlnImportantSuccessMessage(string);
-        }
-    }
-
-    /**
-     * writes a string with green color
-     * @param string
-     */
-    public void printlnImportantSuccessMessage(String string) {
-        try {
-            outputStream.write("\u001B[32m".getBytes());
-            printlnImportantMessage(string);
-            outputStream.write("\u001B[0m".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

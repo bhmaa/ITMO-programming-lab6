@@ -1,0 +1,16 @@
+package com.bhma.client.utility;
+
+public enum Color {
+    RED("\u001B[31m"),
+    GREEN("\u001B[32m");
+
+    private String code;
+
+    Color(String code) {
+        this.code = code;
+    }
+
+    public String toString() {
+        return code;
+    }
+}

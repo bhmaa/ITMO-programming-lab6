@@ -20,13 +20,16 @@ public final class CollectionCreator {
         if (file.exists() && file.length() != 0) {
             collectionManager = Parser.convertToJavaObject(file);
             collectionManager.setFilePath(filePath);
-            outputManager.printlnImportantSuccessMessage("The collection was successfully loaded from the file " + filePath);
+            outputManager.printlnImportantColorMessage("The collection was successfully loaded from the file " + filePath,
+                    Color.GREEN);
         } else {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
             if (!file.exists()) {
-                outputManager.printlnImportantWarning("No file with this name was found. A new empty collection has been created.");
+                outputManager.printlnImportantColorMessage("No file with this name was found. A new empty collection"
+                        + "has been created", Color.RED);
             } else {
-                outputManager.printlnImportantSuccessMessage("The collection was successfully loaded from the file" + filePath);
+                outputManager.printlnImportantColorMessage("The collection was successfully loaded from the file"
+                        + filePath, Color.GREEN);
             }
         }
         return collectionManager;

@@ -32,7 +32,7 @@ public final class Parser {
             marshaller.marshal(collectionManager, bufferedOutputStream);
             bufferedOutputStream.close();
         } catch (JAXBException | IOException e) {
-            outputManager.printlnImportantWarning("Error during converting java object to xml");
+            outputManager.printlnImportantColorMessage("Error during converting java object to xml", Color.RED);
         }
     }
 

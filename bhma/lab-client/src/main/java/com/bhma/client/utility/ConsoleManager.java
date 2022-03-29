@@ -39,24 +39,27 @@ public class ConsoleManager {
                         Command command = optional.get();
                         command.execute(argument);
                         executeFlag = command.getExecuteFlag();
-                        outputManager.printlnSuccessMessage("The command completed");
+                        outputManager.printlnColorMessage("The command completed", Color.GREEN);
                     } catch (ScriptException | NoSuchCommandException | IllegalKeyException e) {
                         inputManager.finishReadScript();
-                        outputManager.printlnImportantWarning(e.getMessage());
+                        outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
                     } catch (NumberFormatException e) {
                         inputManager.finishReadScript();
-                        outputManager.printlnImportantWarning("Wrong number format");
+                        outputManager.printlnImportantColorMessage("Wrong number format", Color.RED);
                     }
                 } else {
                     if (inputManager.getScriptMode()) {
                         inputManager.finishReadScript();
-                        outputManager.printlnImportantWarning("Unknown command detected: " + inputCommand);
+                        outputManager.printlnImportantColorMessage("Unknown command detected: " + inputCommand,
+                                Color.RED);
                     } else {
-                        outputManager.printlnWarning("No such command. Type \"help\" to get all commands with their names and descriptions");
+                        outputManager.printlnColorMessage("No such command. Type \"help\" to get all commands with"
+                                + "their names and descriptions", Color.RED);
                     }
                 }
             } else {
-                outputManager.printlnWarning("Please type any command. To see list of command type \"help\"");
+                outputManager.printlnColorMessage("Please type any command. To see list of command type \"help\"",
+                        Color.RED);
             }
         }
     }

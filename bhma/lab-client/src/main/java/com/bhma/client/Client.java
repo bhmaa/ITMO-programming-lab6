@@ -5,14 +5,7 @@ import java.util.StringJoiner;
 import javax.xml.bind.JAXBException;
 
 import com.bhma.client.exceptions.InvalidInputException;
-import com.bhma.client.utility.CollectionCreator;
-import com.bhma.client.utility.CollectionManager;
-import com.bhma.client.utility.CommandManager;
-import com.bhma.client.utility.ConsoleManager;
-import com.bhma.client.utility.InputManager;
-import com.bhma.client.utility.OutputManager;
-import com.bhma.client.utility.SpaceMarineFiller;
-import com.bhma.client.utility.SpaceMarineReader;
+import com.bhma.client.utility.*;
 
 public final class Client {
     private Client() {
@@ -23,7 +16,8 @@ public final class Client {
         OutputManager outputManager = new OutputManager(System.out);
         InputManager inputManager = new InputManager(System.in, outputManager);
         if (args.length == 0) {
-            outputManager.printlnImportantWarning("Please enter the file path as a command line argument");
+            outputManager.printlnImportantColorMessage("Please enter the file path as a command line argument",
+                    Color.RED);
         } else {
             StringJoiner filepath = new StringJoiner(" ");
             for (String arg : args) {
@@ -37,9 +31,10 @@ public final class Client {
                 ConsoleManager consoleManager = new ConsoleManager(commandManager, inputManager, outputManager);
                 consoleManager.start();
             } catch (JAXBException e) {
-                outputManager.printlnImportantWarning("Error during converting xml file " + filepath.toString() + " to java object.");
+                outputManager.printlnImportantColorMessage("Error during converting xml file "
+                        + filepath.toString() + " to java object.", Color.RED);
             } catch (InvalidInputException e) {
-                outputManager.printlnImportantWarning(e.getMessage());
+                outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
             }
 
         }
