@@ -1,31 +1,33 @@
 package com.bhma.client.utility;
 
-import com.bhma.client.commands.Command;
-import com.bhma.client.exceptions.IllegalKeyException;
-import com.bhma.client.exceptions.InvalidInputException;
-import com.bhma.client.exceptions.NoSuchCommandException;
-import com.bhma.client.exceptions.ScriptException;
+import com.bhma.common.exceptions.InvalidInputException;
+import com.bhma.common.exceptions.ScriptException;
+import com.bhma.common.util.ClientRequest;
+import com.bhma.common.util.Color;
+import com.bhma.common.util.CommandRequirement;
+import com.bhma.common.util.ExecuteCode;
+import com.bhma.common.util.ServerRequest;
+import com.bhma.common.util.ServerResponse;
 
+import java.io.IOException;
 import java.util.Locale;
-import java.util.Optional;
 
 public class ConsoleManager {
-    private final CommandManager commandManager;
     private final InputManager inputManager;
     private final OutputManager outputManager;
+    private final SpaceMarineFiller spaceMarineFiller;
 
-    public ConsoleManager(CommandManager commandManager, InputManager inputManager, OutputManager outputManager) {
-        this.commandManager = commandManager;
+    public ConsoleManager(InputManager inputManager, OutputManager outputManager, SpaceMarineFiller spaceMarineFiller) {
         this.inputManager = inputManager;
         this.outputManager = outputManager;
+        this.spaceMarineFiller = spaceMarineFiller;
     }
 
     /**
      * starts read commands and execute it while it is not an exit command
      */
-    public void start() throws InvalidInputException {
-        boolean executeFlag = true;
-        while (executeFlag) {
+    public void start() throws IOException, ClassNotFoundException, InvalidInputException {
+        while (true) {
             String input = inputManager.read();
             if (!input.trim().isEmpty()) {
                 String inputCommand = input.split(" ")[0].toLowerCase(Locale.ROOT);
@@ -33,29 +35,47 @@ public class ConsoleManager {
                 if (input.split(" ").length > 1) {
                     argument = input.replaceFirst(inputCommand + " ", "");
                 }
-                Optional<Command> optional = commandManager.getCommands().stream().filter(v -> v.getName().equals(inputCommand)).findFirst();
-                if (optional.isPresent()) {
+                Sender.send(new ClientRequest(inputCommand, argument));
+                Object answer = Sender.receiveObject();
+                if (answer instanceof ServerRequest) {
+                    CommandRequirement requirement = ((ServerRequest) answer).getCommandRequirement();
                     try {
-                        Command command = optional.get();
-                        command.execute(argument);
-                        executeFlag = command.getExecuteFlag();
-                        outputManager.printlnColorMessage("The command completed", Color.GREEN);
-                    } catch (ScriptException | NoSuchCommandException | IllegalKeyException e) {
+                        if (requirement.equals(CommandRequirement.CHAPTER)) {
+                            Sender.send(spaceMarineFiller.fillChapter());
+                        }
+                        if (requirement.equals(CommandRequirement.SPACE_MARINE)) {
+                            Sender.send(spaceMarineFiller.fillSpaceMarine());
+                        }
+                        if (requirement.equals(CommandRequirement.WEAPON)) {
+                            Sender.send(spaceMarineFiller.fillWeaponType());
+                        }
+                    } catch (ScriptException e) {
                         inputManager.finishReadScript();
                         outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
-                    } catch (NumberFormatException e) {
-                        inputManager.finishReadScript();
-                        outputManager.printlnImportantColorMessage("Wrong number format", Color.RED);
                     }
-                } else {
-                    if (inputManager.getScriptMode()) {
-                        inputManager.finishReadScript();
-                        outputManager.printlnImportantColorMessage("Unknown command detected: " + inputCommand,
-                                Color.RED);
-                    } else {
-                        outputManager.printlnColorMessage("No such command. Type \"help\" to get all commands with"
-                                + "their names and descriptions", Color.RED);
-                    }
+                    answer = Sender.receiveObject();
+                }
+                ServerResponse serverResponse = (ServerResponse) answer;
+                ExecuteCode executeCode = serverResponse.getExecuteCode();
+                if (executeCode.equals(ExecuteCode.ERROR)) {
+                    inputManager.finishReadScript();
+                    outputManager.printlnColorMessage(executeCode.getMessage(), Color.RED);
+                    outputManager.printlnColorMessage(serverResponse.getMessage(), Color.RED);
+                }
+                if (executeCode.equals(ExecuteCode.SUCCESS)) {
+                    outputManager.printlnColorMessage(executeCode.getMessage(), Color.GREEN);
+                }
+                if (executeCode.equals(ExecuteCode.VALUE)) {
+                    outputManager.println(executeCode.getMessage());
+                    outputManager.println(serverResponse.getMessage());
+                }
+                if (executeCode.equals(ExecuteCode.READ_SCRIPT)) {
+                    outputManager.println(executeCode.getMessage());
+                    inputManager.startReadScript(serverResponse.getMessage());
+                }
+                if (executeCode.equals(ExecuteCode.EXIT)) {
+                    outputManager.printlnImportantColorMessage(executeCode.getMessage(), Color.RED);
+                    break;
                 }
             } else {
                 outputManager.printlnColorMessage("Please type any command. To see list of command type \"help\"",

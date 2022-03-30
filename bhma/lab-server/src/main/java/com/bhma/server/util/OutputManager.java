@@ -1,4 +1,4 @@
-package com.bhma.client.utility;
+package com.bhma.server.util;
 
 import com.bhma.common.util.Color;
 

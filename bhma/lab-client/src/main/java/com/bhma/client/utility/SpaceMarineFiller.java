@@ -1,13 +1,13 @@
 package com.bhma.client.utility;
 
-import com.bhma.client.data.AstartesCategory;
-import com.bhma.client.data.Chapter;
-import com.bhma.client.data.Coordinates;
-import com.bhma.client.data.MeleeWeapon;
-import com.bhma.client.data.SpaceMarine;
-import com.bhma.client.data.Weapon;
-import com.bhma.client.exceptions.InvalidInputException;
-import com.bhma.client.exceptions.ScriptException;
+import com.bhma.common.data.AstartesCategory;
+import com.bhma.common.data.Chapter;
+import com.bhma.common.data.Coordinates;
+import com.bhma.common.data.MeleeWeapon;
+import com.bhma.common.data.SpaceMarine;
+import com.bhma.common.data.Weapon;
+import com.bhma.common.exceptions.InvalidInputException;
+import com.bhma.common.exceptions.ScriptException;
 
 /**
  * responsible for the selection correct values of SpaceMarine fields
