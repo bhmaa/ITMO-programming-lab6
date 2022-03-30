@@ -1,7 +1,5 @@
 package com.bhma.client.data;
 
-import com.bhma.client.utility.CollectionManager;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -176,7 +174,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
     public int compareTo(SpaceMarine o) {
         int value = this.name.compareTo(o.name);
         if (value == 0) {
-            value = Double.valueOf(this.health).compareTo(Double.valueOf(o.health));
+            value = Double.compare(this.health, o.health);
             if (value == 0) {
                 value = this.id.compareTo(o.id);
             }

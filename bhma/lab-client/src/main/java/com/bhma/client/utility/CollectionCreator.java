@@ -18,7 +18,7 @@ public final class CollectionCreator {
         File file = new File(filePath);
         CollectionManager collectionManager;
         if (file.exists() && file.length() != 0) {
-            collectionManager = Parser.convertToJavaObject(file);
+            collectionManager = XMLParser.convertToJavaObject(file);
             collectionManager.setFilePath(filePath);
             outputManager.printlnImportantColorMessage("The collection was successfully loaded from the file " + filePath,
                     Color.GREEN);

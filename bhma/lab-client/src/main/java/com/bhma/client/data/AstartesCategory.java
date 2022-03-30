@@ -7,5 +7,5 @@ public enum AstartesCategory {
     SCOUT,
     INCEPTOR,
     TACTICAL,
-    CHAPLAIN;
+    CHAPLAIN
 }

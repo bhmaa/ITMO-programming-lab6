@@ -7,5 +7,5 @@ public enum Weapon {
     HEAVY_BOLTGUN,
     BOLT_RIFLE,
     PLASMA_GUN,
-    INFERNO_PISTOL;
+    INFERNO_PISTOL
 }

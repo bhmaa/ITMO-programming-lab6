@@ -126,7 +126,7 @@ public class CollectionManager {
      * convert collection to xml and saves it to the file by filePath
      */
     public void save(OutputManager outputManager) {
-        Parser.convertToXML(this, filePath, outputManager);
+        XMLParser.convertToXML(this, filePath, outputManager);
     }
 
     /**

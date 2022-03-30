@@ -14,17 +14,11 @@ import com.bhma.client.exceptions.ScriptException;
  */
 public class SpaceMarineFiller {
     private final SpaceMarineReader reader;
-    private final InputManager inputManager;
-    private final OutputManager outputManager;
-    private final CollectionManager collectionManager;
     private final SimpleSpaceMarineFiller simpleSpaceMarineFiller;
 
     public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager,
-                             OutputManager outputManager, CollectionManager collectionManager) {
+                             OutputManager outputManager) {
         this.reader = reader;
-        this.inputManager = inputManager;
-        this.outputManager = outputManager;
-        this.collectionManager = collectionManager;
         simpleSpaceMarineFiller = new SimpleSpaceMarineFiller(inputManager, outputManager);
     }
 

@@ -27,20 +27,21 @@ public final class Client {
             outputManager.printlnImportantColorMessage("Please enter the file path as a command line argument",
                     Color.RED);
         } else {
-            StringJoiner filepath = new StringJoiner(" ");
+            StringJoiner stringJoiner = new StringJoiner(" ");
             for (String arg : args) {
-                filepath.add(arg);
+                stringJoiner.add(arg);
             }
+            String filename = stringJoiner.toString();
             try {
-                CollectionManager collectionManager = CollectionCreator.load(filepath.toString(), outputManager);
+                CollectionManager collectionManager = CollectionCreator.load(filename, outputManager);
                 SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(new SpaceMarineReader(inputManager),
-                        inputManager, outputManager, collectionManager);
+                        inputManager, outputManager);
                 CommandManager commandManager = new CommandManager(collectionManager, spaceMarineFiller, inputManager, outputManager);
                 ConsoleManager consoleManager = new ConsoleManager(commandManager, inputManager, outputManager);
                 consoleManager.start();
             } catch (JAXBException e) {
                 outputManager.printlnImportantColorMessage("Error during converting xml file "
-                        + filepath.toString() + " to java object.", Color.RED);
+                        + filename + " to java object.", Color.RED);
             } catch (InvalidInputException e) {
                 outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
             }

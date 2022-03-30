@@ -13,8 +13,8 @@ import java.io.IOException;
  * responsible for converting xml files to the collection manager instance and converting collection manager instance
  * to the xml file
  */
-public final class Parser {
-    private Parser() {
+public final class XMLParser {
+    private XMLParser() {
     }
 
     /**
