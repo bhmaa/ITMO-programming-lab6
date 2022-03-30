@@ -137,6 +137,6 @@ public class SpaceMarineFiller {
      */
     public SpaceMarine fillSpaceMarine() throws ScriptException, InvalidInputException {
         return new SpaceMarine(this.fillName(), this.fillCoordinates(), this.fillHealth(),
-                this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter(), collectionManager);
+                this.fillCategory(), this.fillWeaponType(), this.fillMeleeWeapon(), this.fillChapter());
     }
 }

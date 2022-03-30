@@ -33,11 +33,9 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
      * @param weaponType        weapon type of the space marine (cannot be null)
      * @param meleeWeapon       melee weapon type of the space marine (can be null)
      * @param chapter           chapter of the space marine
-     * @param collectionManager needs for generation id
      */
-    @SuppressWarnings("parameternumber")
     public SpaceMarine(String name, Coordinates coordinates, double health, AstartesCategory category,
-                       Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter, CollectionManager collectionManager) {
+                       Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter) {
         this.name = name;
         this.coordinates = coordinates;
         this.health = health;
@@ -45,8 +43,6 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         this.weaponType = weaponType;
         this.meleeWeapon = meleeWeapon;
         this.chapter = chapter;
-        id = collectionManager.getMaxId() + 1;
-        creationDate = new Date();
     }
 
     public SpaceMarine() {

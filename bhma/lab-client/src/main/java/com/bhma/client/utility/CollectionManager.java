@@ -44,6 +44,8 @@ public class CollectionManager {
     }
 
     public void addToCollection(Long key, SpaceMarine spaceMarine) {
+        spaceMarine.setId(getMaxId() + 1);
+        spaceMarine.setCreationDate(new Date());
         collection.put(key, spaceMarine);
     }
 
