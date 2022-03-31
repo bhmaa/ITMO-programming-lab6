@@ -28,13 +28,13 @@ public final class CollectionCreator {
         } else {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
         }
-            if (file.exists()) {
-                Sender.send(channel, new ServerResponse("The collection was successfully loaded from the file "
-                        + filePath, ExecuteCode.SUCCESS));
-            } else {
-                Sender.send(channel, new ServerResponse("No file with this name was found. A new empty collection "
-                        + "has been created", ExecuteCode.SUCCESS));
-            }
+        if (file.exists()) {
+            Sender.send(channel, new ServerResponse("The collection was successfully loaded from the file "
+                    + filePath, ExecuteCode.SUCCESS));
+        } else {
+            Sender.send(channel, new ServerResponse("No file with this name was found. A new empty collection "
+                    + "has been created", ExecuteCode.SUCCESS));
+        }
         return collectionManager;
     }
 }

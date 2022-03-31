@@ -70,6 +70,13 @@ public class Chapter implements Serializable {
             return false;
         }
         Chapter chapter = (Chapter) o;
+        if (this.world == null) {
+            if (chapter.world != null) {
+                return false;
+            } else {
+                return name.equals(chapter.name) && chapter.world == null;
+            }
+        }
         return name.equals(chapter.name) && world.equals(chapter.world);
     }
 

@@ -20,33 +20,31 @@ public final class Client {
     private Client() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
     }
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        DatagramChannel channel = Sender.start();
+    public static void main(String[] args) {
         OutputManager outputManager = new OutputManager(System.out);
         InputManager inputManager = new InputManager(System.in, outputManager);
 
-        // LOADING FILE WITH DATA FROM COMMAND LINE ARGUMENT
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        for (String arg : args) {
-            stringJoiner.add(arg);
-        }
-        ClientRequest request = new ClientRequest(stringJoiner.toString(), "");
-        Sender.send(channel, request);
-        ServerResponse loadResponse = (ServerResponse) Sender.receiveObject(channel);
+        try (DatagramChannel channel = Sender.start()) {
+            // LOADING FILE WITH DATA FROM COMMAND LINE ARGUMENT
+            ClientRequest request = new ClientRequest("","");
+            Sender.send(channel, request);
+            ServerResponse loadResponse = Sender.receiveResponse(channel);
+            if (loadResponse.getExecuteCode().equals(ExecuteCode.SUCCESS)) {
+                outputManager.printlnImportantColorMessage(loadResponse.getMessage(), Color.GREEN);
 
-        if (loadResponse.getExecuteCode().equals(ExecuteCode.SUCCESS)) {
-            outputManager.printlnImportantColorMessage(loadResponse.getMessage(), Color.GREEN);
-            SpaceMarineReader spaceMarineReader = new SpaceMarineReader(inputManager);
-            SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(spaceMarineReader, inputManager, outputManager);
-            ConsoleManager consoleManager = new ConsoleManager(inputManager, outputManager, spaceMarineFiller, channel);
-            try {
-                consoleManager.start();
-            } catch (InvalidInputException e) {
-                outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
+                SpaceMarineReader spaceMarineReader = new SpaceMarineReader(inputManager);
+                SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(spaceMarineReader, inputManager, outputManager);
+                ConsoleManager consoleManager = new ConsoleManager(inputManager, outputManager, spaceMarineFiller, channel);
+                try {
+                    consoleManager.start();
+                } catch (InvalidInputException e) {
+                    outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
+                }
+            } else {
+                outputManager.printlnImportantColorMessage(loadResponse.getMessage(), Color.RED);
             }
-        } else {
-            outputManager.printlnImportantColorMessage(loadResponse.getMessage(), Color.RED);
+        } catch (IOException | ClassNotFoundException e) {
+            outputManager.printlnImportantColorMessage("error with server connection", Color.RED);
         }
-        channel.close();
     }
 }
