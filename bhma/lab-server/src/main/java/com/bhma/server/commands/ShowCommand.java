@@ -4,20 +4,22 @@ import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
-import com.bhma.server.util.OutputManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * show command
  */
 public class ShowCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public ShowCommand(CollectionManager collectionManager) {
+    public ShowCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -30,6 +32,6 @@ public class ShowCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerResponse(collectionManager.toString(), ExecuteCode.VALUE));
+        Sender.send(channel, new ServerResponse(collectionManager.toString(), ExecuteCode.VALUE));
     }
 }

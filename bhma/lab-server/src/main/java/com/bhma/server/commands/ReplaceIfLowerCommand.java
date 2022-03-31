@@ -13,16 +13,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * replace_if_lowe command
  */
 public class ReplaceIfLowerCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public ReplaceIfLowerCommand(CollectionManager collectionManager) {
+    public ReplaceIfLowerCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("replace_if_lower", "заменить значение по ключу, если новое значение меньше старого");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -41,12 +44,12 @@ public class ReplaceIfLowerCommand extends Command {
         if (!collectionManager.containsKey(Long.valueOf(argument))) {
             throw new IllegalKeyException("There's no element with that key");
         }
-        Sender.send(new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
-        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject();
+        Sender.send(channel, new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
+        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject(channel);
         SpaceMarine oldSpaceMarine = collectionManager.getByKey(Long.valueOf(argument));
         if (oldSpaceMarine.compareTo(spaceMarine) < 0) {
             collectionManager.addToCollection(Long.valueOf(argument), spaceMarine);
         }
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

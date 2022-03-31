@@ -8,16 +8,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * remove_key command
  */
 public class RemoveKeyCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public RemoveKeyCommand(CollectionManager collectionManager) {
+    public RemoveKeyCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("remove_key", "удалить элемент из коллекции по его ключу");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -36,6 +39,6 @@ public class RemoveKeyCommand extends Command {
             throw new IllegalKeyException("There's no value with that key.");
         }
         collectionManager.remove(Long.valueOf(argument));
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

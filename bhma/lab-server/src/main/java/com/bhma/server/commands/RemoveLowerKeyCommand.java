@@ -7,16 +7,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * remove_lower_key command
  */
 public class RemoveLowerKeyCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public RemoveLowerKeyCommand(CollectionManager collectionManager) {
+    public RemoveLowerKeyCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("remove_lower_key", "удалить из коллекции все элементы, ключ которых меньше, чем заданный");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -30,6 +33,6 @@ public class RemoveLowerKeyCommand extends Command {
             throw new InvalidCommandArguments();
         }
         collectionManager.removeLowerKey(Long.valueOf(argument));
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

@@ -7,16 +7,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * clear command
  */
 public class ClearCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public ClearCommand(CollectionManager collectionManager) {
+    public ClearCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("clear", "очистить коллекцию");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -29,6 +32,6 @@ public class ClearCommand extends Command {
             throw new InvalidCommandArguments();
         }
         collectionManager.clear();
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

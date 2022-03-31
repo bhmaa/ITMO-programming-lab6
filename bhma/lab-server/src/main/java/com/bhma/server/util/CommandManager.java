@@ -17,6 +17,7 @@ import com.bhma.server.commands.ReplaceIfLowerCommand;
 import com.bhma.server.commands.ShowCommand;
 import com.bhma.server.commands.UpdateCommand;
 
+import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 
 /**
@@ -26,22 +27,22 @@ import java.util.ArrayList;
 public class CommandManager {
     private final ArrayList<Command> commands = new ArrayList<>();
 
-    public CommandManager(CollectionManager collectionManager) {
-        commands.add(new AverageOfHealthCommand(collectionManager));
-        commands.add(new ClearCommand(collectionManager));
-        commands.add(new CountByChapterCommand(collectionManager));
-        commands.add(new ExitCommand(collectionManager));
-        commands.add(new InfoCommand(collectionManager));
-        commands.add(new InsertCommand(collectionManager));
-        commands.add(new RemoveAnyByWeaponTypeCommand(collectionManager));
-        commands.add(new RemoveGreaterKeyCommand(collectionManager));
-        commands.add(new RemoveKeyCommand(collectionManager));
-        commands.add(new RemoveLowerKeyCommand(collectionManager));
-        commands.add(new ReplaceIfLowerCommand(collectionManager));
-        commands.add(new ShowCommand(collectionManager));
-        commands.add(new UpdateCommand(collectionManager));
-        commands.add(new ExecuteScriptCommand());
-        commands.add(new HelpCommand(commands));
+    public CommandManager(CollectionManager collectionManager, DatagramChannel channel) {
+        commands.add(new AverageOfHealthCommand(collectionManager, channel));
+        commands.add(new ClearCommand(collectionManager, channel));
+        commands.add(new CountByChapterCommand(collectionManager, channel));
+        commands.add(new ExitCommand(collectionManager, channel));
+        commands.add(new InfoCommand(collectionManager, channel));
+        commands.add(new InsertCommand(collectionManager, channel));
+        commands.add(new RemoveAnyByWeaponTypeCommand(collectionManager, channel));
+        commands.add(new RemoveGreaterKeyCommand(collectionManager, channel));
+        commands.add(new RemoveKeyCommand(collectionManager, channel));
+        commands.add(new RemoveLowerKeyCommand(collectionManager, channel));
+        commands.add(new ReplaceIfLowerCommand(collectionManager, channel));
+        commands.add(new ShowCommand(collectionManager, channel));
+        commands.add(new UpdateCommand(collectionManager, channel));
+        commands.add(new ExecuteScriptCommand(channel));
+        commands.add(new HelpCommand(commands, channel));
     }
 
     public ArrayList<Command> getCommands() {

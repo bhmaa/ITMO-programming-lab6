@@ -1,4 +1,4 @@
-package com.bhma.common.util;
+package com.bhma.client.utility;
 
 public enum Color {
     RED("\u001B[31m"),

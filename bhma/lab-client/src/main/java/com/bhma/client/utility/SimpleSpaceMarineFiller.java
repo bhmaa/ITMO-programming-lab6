@@ -3,7 +3,6 @@ package com.bhma.client.utility;
 import com.bhma.common.exceptions.IllegalValueException;
 import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
-import com.bhma.common.util.Color;
 
 public class SimpleSpaceMarineFiller {
     private final OutputManager outputManager;

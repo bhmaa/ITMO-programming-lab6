@@ -7,16 +7,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * average_of_health command.
  */
 public class AverageOfHealthCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public AverageOfHealthCommand(CollectionManager collectionManager) {
+    public AverageOfHealthCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("average_of_health", "вывести среднее значение поля health для всех элементов коллекции");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -29,6 +32,6 @@ public class AverageOfHealthCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerResponse(String.valueOf(collectionManager.averageOfHealth()), ExecuteCode.VALUE));
+        Sender.send(channel, new ServerResponse(String.valueOf(collectionManager.averageOfHealth()), ExecuteCode.VALUE));
     }
 }

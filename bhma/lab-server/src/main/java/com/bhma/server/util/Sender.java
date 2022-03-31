@@ -8,39 +8,41 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-public class Sender {
+public final class Sender {
     private static final int SERVER_PORT = 9990;
     private static final int CLIENT_PORT = 9999;
-    private final static int BUFFER_SIZE = 2048;
+    private static final int BUFFER_SIZE = 2048;
 
-    public static ClientRequest receiveRequest() throws IOException, ClassNotFoundException {
-        DatagramChannel datagramChannel = DatagramChannel.open();
-        datagramChannel.bind(new InetSocketAddress("127.0.0.1", SERVER_PORT));
-        byte[] bytes = new byte[BUFFER_SIZE];
-        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        datagramChannel.receive(byteBuffer);
-        return (ClientRequest) deserialize(bytes);
+    private Sender() {
     }
 
-    public static Object receiveObject() throws IOException, ClassNotFoundException {
-        DatagramChannel datagramChannel = DatagramChannel.open();
-        datagramChannel.bind(new InetSocketAddress("127.0.0.1", SERVER_PORT));
+    public static DatagramChannel start() throws IOException {
+        DatagramChannel channel = DatagramChannel.open();
+        channel.bind(new InetSocketAddress(SERVER_PORT));
+        // channel.configureBlocking(false);
+        return channel;
+    }
+
+    public static ClientRequest receiveRequest(DatagramChannel channel) throws IOException, ClassNotFoundException {
+        return (ClientRequest) receiveObject(channel);
+    }
+
+    public static Object receiveObject(DatagramChannel channel) throws IOException, ClassNotFoundException {
         byte[] bytes = new byte[BUFFER_SIZE];
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        datagramChannel.receive(byteBuffer);
+        channel.receive(byteBuffer);
         return deserialize(bytes);
     }
 
-    public static void send(Object object) throws IOException {
-        DatagramChannel datagramChannel = DatagramChannel.open();
-        datagramChannel.bind(new InetSocketAddress("127.0.0.1", SERVER_PORT));
+    public static void send(DatagramChannel channel, Object object) throws IOException {
         byte[] bytes = serialize(object);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        InetSocketAddress inetSocketAddress = new InetSocketAddress("127.0.0.1", CLIENT_PORT);
-        datagramChannel.send(byteBuffer, inetSocketAddress);
+        SocketAddress receiverAddress = new InetSocketAddress("127.0.0.1", CLIENT_PORT);
+        channel.send(byteBuffer, receiverAddress);
     }
 
     public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {

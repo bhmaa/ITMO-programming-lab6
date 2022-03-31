@@ -6,14 +6,17 @@ import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * execute_script command
  */
 public class ExecuteScriptCommand extends Command {
+    private final DatagramChannel channel;
 
-    public ExecuteScriptCommand() {
+    public ExecuteScriptCommand(DatagramChannel channel) {
         super("execute_script", "считать и исполнить скрипт из указанного файла");
+        this.channel = channel;
     }
 
     /**
@@ -25,6 +28,6 @@ public class ExecuteScriptCommand extends Command {
         if (argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerResponse(argument, ExecuteCode.READ_SCRIPT));
+        Sender.send(channel, new ServerResponse(argument, ExecuteCode.READ_SCRIPT));
     }
 }

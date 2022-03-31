@@ -12,16 +12,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * remove_any_by_weapon_type command
  */
 public class RemoveAnyByWeaponTypeCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public RemoveAnyByWeaponTypeCommand(CollectionManager collectionManager) {
+    public RemoveAnyByWeaponTypeCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("remove_any_by_weapon_type", "удалить из коллекции один элемент, значение поля weaponType которого эквивалентно заданному");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -35,9 +38,9 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerRequest("server requests weapon value...", CommandRequirement.WEAPON));
-        Weapon weapon = (Weapon) Sender.receiveObject();
+        Sender.send(channel, new ServerRequest("server requests weapon value...", CommandRequirement.WEAPON));
+        Weapon weapon = (Weapon) Sender.receiveObject(channel);
         collectionManager.removeAnyByWeaponType(weapon);
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

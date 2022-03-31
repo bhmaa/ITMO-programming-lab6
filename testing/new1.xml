@@ -2,6 +2,44 @@
 <spaceMarines>
     <collection>
         <entry>
+            <key>109</key>
+            <value>
+                <id>6</id>
+                <creationDate>2022-03-31T11:55:49.957+03:00</creationDate>
+                <name>biba</name>
+                <coordinates>
+                    <x>-9.0</x>
+                    <y>20</y>
+                </coordinates>
+                <health>102.6</health>
+                <category>CHAPLAIN</category>
+                <weaponType>PLASMA_GUN</weaponType>
+                <meleeWeapon>POWER_FIST</meleeWeapon>
+                <chapter>
+                    <name>boba</name>
+                    <world>pupa</world>
+                </chapter>
+            </value>
+        </entry>
+        <entry>
+            <key>6</key>
+            <value>
+                <id>5</id>
+                <creationDate>2022-03-31T11:44:04.097+03:00</creationDate>
+                <name>fe</name>
+                <coordinates>
+                    <x>4.0</x>
+                    <y>3</y>
+                </coordinates>
+                <health>10.0</health>
+                <category>CHAPLAIN</category>
+                <weaponType>HEAVY_BOLTGUN</weaponType>
+                <chapter>
+                    <name>fe</name>
+                </chapter>
+            </value>
+        </entry>
+        <entry>
             <key>5</key>
             <value>
                 <id>1</id>
@@ -31,6 +69,7 @@
                     <x>-684.0</x>
                     <y>10</y>
                 </coordinates>
+                <health>0.0</health>
                 <category>TACTICAL</category>
                 <weaponType>PLASMA_GUN</weaponType>
                 <meleeWeapon>POWER_BLADE</meleeWeapon>
@@ -65,17 +104,16 @@
             <value>
                 <id>3</id>
                 <creationDate>2022-03-01T15:36:51.646+03:00</creationDate>
-                <name>name3</name>
+                <name>boop</name>
                 <coordinates>
-                    <x>-4.6</x>
-                    <y>100</y>
+                    <x>3.0</x>
+                    <y>1</y>
                 </coordinates>
-                <health>108.0</health>
-                <category>INCEPTOR</category>
-                <weaponType>BOLT_RIFLE</weaponType>
+                <health>10.0</health>
+                <category>CHAPLAIN</category>
+                <weaponType>PLASMA_GUN</weaponType>
                 <chapter>
-                    <name>chaptername3</name>
-                    <world>chapterworld3</world>
+                    <name>d</name>
                 </chapter>
             </value>
         </entry>

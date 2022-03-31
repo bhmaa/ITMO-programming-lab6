@@ -12,13 +12,16 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 public class RemoveGreaterKeyCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public RemoveGreaterKeyCommand(CollectionManager collectionManager) {
+    public RemoveGreaterKeyCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("remove_greater_key", "удалить из коллекции все элементы, превышающие заданный");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -32,9 +35,9 @@ public class RemoveGreaterKeyCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
-        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject();
+        Sender.send(channel, new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
+        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject(channel);
         collectionManager.removeGreater(spaceMarine);
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

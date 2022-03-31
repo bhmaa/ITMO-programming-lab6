@@ -3,10 +3,10 @@ package com.bhma.server.commands;
 import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
-import com.bhma.server.util.OutputManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
@@ -15,10 +15,12 @@ import java.util.StringJoiner;
  */
 public class HelpCommand extends Command {
     private final ArrayList<Command> commands;
+    private final DatagramChannel channel;
 
-    public HelpCommand(ArrayList<Command> commands) {
+    public HelpCommand(ArrayList<Command> commands, DatagramChannel channel) {
         super("help", "вывести справку по доступным командам");
         this.commands = commands;
+        this.channel = channel;
     }
 
     /**
@@ -35,6 +37,6 @@ public class HelpCommand extends Command {
         for (Command command : commands) {
             message.add(command.getName() + ": " + command.getDescription());
         }
-        Sender.send(new ServerResponse(message.toString(), ExecuteCode.VALUE));
+        Sender.send(channel, new ServerResponse(message.toString(), ExecuteCode.VALUE));
     }
 }

@@ -1,7 +1,5 @@
 package com.bhma.client.utility;
 
-import com.bhma.common.util.Color;
-
 import java.io.IOException;
 import java.io.OutputStream;
 

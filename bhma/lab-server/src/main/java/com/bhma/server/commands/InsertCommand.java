@@ -13,16 +13,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * insert command
  */
 public class InsertCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public InsertCommand(CollectionManager collectionManager) {
+    public InsertCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("insert", "добавить новый элемент с заданным ключом");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -41,9 +44,9 @@ public class InsertCommand extends Command {
         if (collectionManager.getCollection().containsKey(Long.valueOf(argument))) {
             throw new IllegalKeyException("Element with this ID is already exist");
         }
-        Sender.send(new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
-        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject();
+        Sender.send(channel, new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
+        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject(channel);
         collectionManager.addToCollection(Long.valueOf(argument), spaceMarine);
-        Sender.send(new ServerResponse(ExecuteCode.SUCCESS));
+        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
     }
 }

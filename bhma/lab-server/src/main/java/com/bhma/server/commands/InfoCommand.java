@@ -4,20 +4,22 @@ import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
-import com.bhma.server.util.OutputManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * info command
  */
 public class InfoCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public InfoCommand(CollectionManager collectionManager) {
+    public InfoCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -29,6 +31,6 @@ public class InfoCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerResponse(collectionManager.collectionInfo(), ExecuteCode.VALUE));
+        Sender.send(channel, new ServerResponse(collectionManager.collectionInfo(), ExecuteCode.VALUE));
     }
 }

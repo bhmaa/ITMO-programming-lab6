@@ -10,16 +10,19 @@ import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.Sender;
 
 import java.io.IOException;
+import java.nio.channels.DatagramChannel;
 
 /**
  * count_by_chapter command
  */
 public class CountByChapterCommand extends Command {
     private final CollectionManager collectionManager;
+    private final DatagramChannel channel;
 
-    public CountByChapterCommand(CollectionManager collectionManager) {
+    public CountByChapterCommand(CollectionManager collectionManager, DatagramChannel channel) {
         super("count_by_chapter", "вывести количество элементов, значение поля chapter которых равно заданному");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     /**
@@ -31,8 +34,8 @@ public class CountByChapterCommand extends Command {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
-        Sender.send(new ServerRequest("server requests a chapter value...", CommandRequirement.CHAPTER));
-        Chapter chapter = (Chapter) Sender.receiveObject();
-        Sender.send(new ServerResponse(String.valueOf(collectionManager.countByChapter(chapter)), ExecuteCode.VALUE));
+        Sender.send(channel, new ServerRequest("server requests a chapter value...", CommandRequirement.CHAPTER));
+        Chapter chapter = (Chapter) Sender.receiveObject(channel);
+        Sender.send(channel, new ServerResponse(String.valueOf(collectionManager.countByChapter(chapter)), ExecuteCode.VALUE));
     }
 }

@@ -1,7 +1,6 @@
 package com.bhma.client.utility;
 
 import com.bhma.common.exceptions.InvalidInputException;
-import com.bhma.common.util.Color;
 
 import java.io.File;
 import java.io.IOException;
