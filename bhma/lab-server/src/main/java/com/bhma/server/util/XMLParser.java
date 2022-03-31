@@ -1,8 +1,5 @@
 package com.bhma.server.util;
 
-import com.bhma.common.util.ExecuteCode;
-import com.bhma.common.util.ServerResponse;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -11,7 +8,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
 
 /**
  * responsible for converting xml files to the collection manager instance and converting collection manager instance
@@ -26,8 +22,7 @@ public final class XMLParser {
      * @param collectionManager
      * @param fileName where will be saves this xml-file
      */
-    public static void convertToXML(CollectionManager collectionManager, String fileName, DatagramChannel channel) throws IOException {
-        try {
+    public static void convertToXML(CollectionManager collectionManager, String fileName) throws IOException, JAXBException {
             JAXBContext context = JAXBContext.newInstance(CollectionManager.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -35,9 +30,6 @@ public final class XMLParser {
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileName));
             marshaller.marshal(collectionManager, bufferedOutputStream);
             bufferedOutputStream.close();
-        } catch (JAXBException | IOException e) {
-            Sender.send(channel, new ServerResponse("Error during converting java object to xml", ExecuteCode.ERROR));
-        }
     }
 
     /**

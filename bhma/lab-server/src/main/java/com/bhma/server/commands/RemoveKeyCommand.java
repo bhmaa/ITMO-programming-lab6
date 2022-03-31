@@ -2,25 +2,21 @@ package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
-import com.bhma.server.util.Sender;
-
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
 
 /**
  * remove_key command
  */
 public class RemoveKeyCommand extends Command {
     private final CollectionManager collectionManager;
-    private final DatagramChannel channel;
 
-    public RemoveKeyCommand(CollectionManager collectionManager, DatagramChannel channel) {
-        super("remove_key", "удалить элемент из коллекции по его ключу");
+    public RemoveKeyCommand(CollectionManager collectionManager) {
+        super("remove_key", "удалить элемент из коллекции по его ключу", CommandRequirement.NONE);
         this.collectionManager = collectionManager;
-        this.channel = channel;
     }
 
     /**
@@ -30,7 +26,7 @@ public class RemoveKeyCommand extends Command {
      * @throws NumberFormatException if argument is not a number
      * @throws IllegalKeyException if there's no element with entered key
      */
-    public void execute(String argument) throws InvalidCommandArguments,
+    public ServerResponse execute(String argument) throws InvalidCommandArguments,
             NumberFormatException, IllegalKeyException, IOException {
         if (argument.isEmpty()) {
             throw new InvalidCommandArguments();
@@ -39,6 +35,6 @@ public class RemoveKeyCommand extends Command {
             throw new IllegalKeyException("There's no value with that key.");
         }
         collectionManager.remove(Long.valueOf(argument));
-        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
+        return new ServerResponse(ExecuteCode.SUCCESS);
     }
 }

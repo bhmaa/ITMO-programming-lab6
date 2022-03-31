@@ -7,25 +7,20 @@ import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
-import com.bhma.common.util.ServerRequest;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
-import com.bhma.server.util.Sender;
-
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
 
 /**
  * replace_if_lowe command
  */
 public class ReplaceIfLowerCommand extends Command {
     private final CollectionManager collectionManager;
-    private final DatagramChannel channel;
 
-    public ReplaceIfLowerCommand(CollectionManager collectionManager, DatagramChannel channel) {
-        super("replace_if_lower", "заменить значение по ключу, если новое значение меньше старого");
+    public ReplaceIfLowerCommand(CollectionManager collectionManager) {
+        super("replace_if_lower", "заменить значение по ключу, если новое значение меньше старого",
+                CommandRequirement.SPACE_MARINE, "server requests space marine value...");
         this.collectionManager = collectionManager;
-        this.channel = channel;
     }
 
     /**
@@ -36,20 +31,18 @@ public class ReplaceIfLowerCommand extends Command {
      * @throws NumberFormatException if argument isn't a number
      * @throws IllegalKeyException if there's no element with entered key in collection
      */
-    public void execute(String argument) throws InvalidCommandArguments, ScriptException,
+    public ServerResponse execute(String argument, Object spaceMarine) throws InvalidCommandArguments, ScriptException,
             NumberFormatException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
-        if (argument.isEmpty()) {
+        if (argument.isEmpty() || spaceMarine == null) {
             throw new InvalidCommandArguments();
         }
         if (!collectionManager.containsKey(Long.valueOf(argument))) {
             throw new IllegalKeyException("There's no element with that key");
         }
-        Sender.send(channel, new ServerRequest("server requests space marine value...", CommandRequirement.SPACE_MARINE));
-        SpaceMarine spaceMarine = (SpaceMarine) Sender.receiveObject(channel);
         SpaceMarine oldSpaceMarine = collectionManager.getByKey(Long.valueOf(argument));
-        if (oldSpaceMarine.compareTo(spaceMarine) < 0) {
-            collectionManager.addToCollection(Long.valueOf(argument), spaceMarine);
+        if (oldSpaceMarine.compareTo((SpaceMarine) spaceMarine) < 0) {
+            collectionManager.addToCollection(Long.valueOf(argument), (SpaceMarine) spaceMarine);
         }
-        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
+        return new ServerResponse(ExecuteCode.SUCCESS);
     }
 }

@@ -1,21 +1,19 @@
 package com.bhma.server;
 
 import com.bhma.common.exceptions.InvalidInputException;
-import com.bhma.common.util.ClientRequest;
-import com.bhma.common.util.ExecuteCode;
-import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionCreator;
 import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.CommandManager;
 import com.bhma.server.util.ExecuteManager;
-import com.bhma.server.util.Sender;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.util.StringJoiner;
 
 public final class Server {
+    private static final int PORT = 9990;
 
     private Server() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
@@ -28,28 +26,22 @@ public final class Server {
             stringJoiner.add(arg);
         }
         String filename = stringJoiner.toString();
-
-        while (true) {
-            try (DatagramChannel channel = Sender.start()) {
-                ClientRequest clientRequest = Sender.receiveRequest(channel);
-                if (!filename.trim().isEmpty()) {
-                    try {
-                        CollectionManager collectionManager = CollectionCreator.load(filename, channel);
-                        CommandManager commandManager = new CommandManager(collectionManager, channel);
-                        ExecuteManager executeManager = new ExecuteManager(commandManager, channel);
-                        executeManager.start();
-                    } catch (JAXBException e) {
-                        Sender.send(channel, new ServerResponse("Error during converting file " + filename
-                                + " to java object", ExecuteCode.ERROR));
-                    } catch (InvalidInputException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Sender.send(channel, new ServerResponse("there's no filepath in server",
-                            ExecuteCode.ERROR));
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        if (filename.trim().isEmpty()) {
+            System.out.println("no data file");
+        } else {
+            try {
+                CollectionManager collectionManager = CollectionCreator.load(filename);
+                DatagramChannel channel = DatagramChannel.open();
+                channel.bind(new InetSocketAddress("127.0.0.1", PORT));
+                CommandManager commandManager = new CommandManager(collectionManager);
+                ExecuteManager executeManager = new ExecuteManager(commandManager, channel);
+                executeManager.start();
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.out.println("wrong data");
+            } catch (JAXBException | IOException e) {
+                System.out.println("Error during converting xml " + filename + " to java object");
             }
         }
     }

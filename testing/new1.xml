@@ -2,6 +2,24 @@
 <spaceMarines>
     <collection>
         <entry>
+            <key>10</key>
+            <value>
+                <id>6</id>
+                <creationDate>2022-03-31T21:31:47.788+03:00</creationDate>
+                <name>bla</name>
+                <coordinates>
+                    <x>10.0</x>
+                    <y>12</y>
+                </coordinates>
+                <health>167.0</health>
+                <category>CHAPLAIN</category>
+                <weaponType>BOLT_RIFLE</weaponType>
+                <chapter>
+                    <name>chaap</name>
+                </chapter>
+            </value>
+        </entry>
+        <entry>
             <key>6</key>
             <value>
                 <id>5</id>

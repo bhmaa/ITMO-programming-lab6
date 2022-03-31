@@ -4,10 +4,10 @@ import com.bhma.common.data.Chapter;
 import com.bhma.common.data.SpaceMarine;
 import com.bhma.common.data.Weapon;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.StringJoiner;
@@ -138,8 +138,8 @@ public class CollectionManager {
     /**
      * convert collection to xml and saves it to the file by filePath
      */
-    public void save(DatagramChannel channel) throws IOException {
-        XMLParser.convertToXML(this, filePath, channel);
+    public void save() throws IOException, JAXBException {
+        XMLParser.convertToXML(this, filePath);
     }
 
     /**

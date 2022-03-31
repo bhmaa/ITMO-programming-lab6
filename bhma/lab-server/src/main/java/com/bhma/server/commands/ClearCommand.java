@@ -1,25 +1,21 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
-import com.bhma.server.util.Sender;
-
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
 
 /**
  * clear command
  */
 public class ClearCommand extends Command {
     private final CollectionManager collectionManager;
-    private final DatagramChannel channel;
 
-    public ClearCommand(CollectionManager collectionManager, DatagramChannel channel) {
-        super("clear", "очистить коллекцию");
+    public ClearCommand(CollectionManager collectionManager) {
+        super("clear", "очистить коллекцию", CommandRequirement.NONE);
         this.collectionManager = collectionManager;
-        this.channel = channel;
     }
 
     /**
@@ -27,11 +23,11 @@ public class ClearCommand extends Command {
      * @param argument must be empty
      * @throws InvalidCommandArguments if argument isn't empty
      */
-    public void execute(String argument) throws InvalidCommandArguments, IOException {
+    public ServerResponse execute(String argument) throws InvalidCommandArguments, IOException {
         if (!argument.isEmpty()) {
             throw new InvalidCommandArguments();
         }
         collectionManager.clear();
-        Sender.send(channel, new ServerResponse(ExecuteCode.SUCCESS));
+        return new ServerResponse(ExecuteCode.SUCCESS);
     }
 }

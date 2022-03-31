@@ -32,6 +32,7 @@ public class ConsoleManager {
     public void start() throws IOException, ClassNotFoundException, InvalidInputException {
         boolean executeFlag = true;
         while (executeFlag) {
+            outputManager.print(">>");
             String input = inputManager.read();
             if (!input.trim().isEmpty()) {
                 String inputCommand = input.split(" ")[0].toLowerCase(Locale.ROOT);
@@ -39,11 +40,9 @@ public class ConsoleManager {
                 if (input.split(" ").length > 1) {
                     argument = input.replaceFirst(inputCommand + " ", "");
                 }
-                Sender.send(channel, new ClientRequest(inputCommand, argument));
-                Object answer = Sender.receiveObject(channel);
+                Object answer = Sender.send(channel, new ClientRequest(inputCommand, argument));
                 if (answer instanceof ServerRequest) {
-                    processServerRequest((ServerRequest) answer);
-                    answer = Sender.receiveResponse(channel);
+                    answer = processServerRequest((ServerRequest) answer);
                 }
                 executeFlag = processServerResponse((ServerResponse) answer);
             } else {
@@ -53,22 +52,24 @@ public class ConsoleManager {
         }
     }
 
-    public void processServerRequest(ServerRequest serverRequest) throws IOException {
-        CommandRequirement requirement = ((ServerRequest) serverRequest).getCommandRequirement();
+    public Object processServerRequest(ServerRequest serverRequest) throws IOException {
+        CommandRequirement requirement = serverRequest.getCommandRequirement();
+        Object answer = null;
         try {
             if (requirement.equals(CommandRequirement.CHAPTER)) {
-                Sender.send(channel, spaceMarineFiller.fillChapter());
+                answer = Sender.send(channel, spaceMarineFiller.fillChapter());
             }
             if (requirement.equals(CommandRequirement.SPACE_MARINE)) {
-                Sender.send(channel, spaceMarineFiller.fillSpaceMarine());
+                answer = Sender.send(channel, spaceMarineFiller.fillSpaceMarine());
             }
             if (requirement.equals(CommandRequirement.WEAPON)) {
-                Sender.send(channel, spaceMarineFiller.fillWeaponType());
+                answer = Sender.send(channel, spaceMarineFiller.fillWeaponType());
             }
-        } catch (ScriptException | InvalidInputException e) {
+        } catch (ScriptException | InvalidInputException | ClassNotFoundException e) {
             inputManager.finishReadScript();
             outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
         }
+        return answer;
     }
 
     public boolean processServerResponse(ServerResponse serverResponse) {
