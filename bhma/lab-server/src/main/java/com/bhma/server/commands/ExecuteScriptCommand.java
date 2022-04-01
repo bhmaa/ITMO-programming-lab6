@@ -1,7 +1,6 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.io.IOException;
 public class ExecuteScriptCommand extends Command {
 
     public ExecuteScriptCommand() {
-        super("execute_script", "считать и исполнить скрипт из указанного файла", CommandRequirement.NONE);
+        super("execute_script", "считать и исполнить скрипт из указанного файла");
     }
 
     /**
@@ -20,8 +19,8 @@ public class ExecuteScriptCommand extends Command {
      * @param argument mustn't be empty
      * @throws InvalidCommandArguments if argument is empty
      */
-    public ServerResponse execute(String argument) throws InvalidCommandArguments, IOException {
-        if (argument.isEmpty()) {
+    public ServerResponse execute(String argument, Object object) throws InvalidCommandArguments, IOException {
+        if (argument.isEmpty() || object != null) {
             throw new InvalidCommandArguments();
         }
         return new ServerResponse(argument, ExecuteCode.READ_SCRIPT);

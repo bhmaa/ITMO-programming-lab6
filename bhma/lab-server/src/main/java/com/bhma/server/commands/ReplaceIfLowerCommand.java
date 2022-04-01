@@ -5,7 +5,6 @@ import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -18,8 +17,8 @@ public class ReplaceIfLowerCommand extends Command {
     private final CollectionManager collectionManager;
 
     public ReplaceIfLowerCommand(CollectionManager collectionManager) {
-        super("replace_if_lower", "заменить значение по ключу, если новое значение меньше старого",
-                CommandRequirement.SPACE_MARINE, "server requests space marine value...");
+        super("replace_if_lower", "заменить значение по ключу, если новое значение меньше старого"
+        );
         this.collectionManager = collectionManager;
     }
 
@@ -33,7 +32,7 @@ public class ReplaceIfLowerCommand extends Command {
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws InvalidCommandArguments, ScriptException,
             NumberFormatException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
-        if (argument.isEmpty() || spaceMarine == null) {
+        if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }
         if (!collectionManager.containsKey(Long.valueOf(argument))) {

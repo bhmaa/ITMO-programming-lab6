@@ -4,7 +4,6 @@ import com.bhma.common.data.Weapon;
 import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -18,7 +17,7 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
 
     public RemoveAnyByWeaponTypeCommand(CollectionManager collectionManager) {
         super("remove_any_by_weapon_type", "удалить из коллекции один элемент, значение поля weaponType"
-                + " которого эквивалентно заданному", CommandRequirement.WEAPON, "server requests weapon value...");
+                + " которого эквивалентно заданному");
         this.collectionManager = collectionManager;
     }
 
@@ -30,7 +29,7 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
      */
     public ServerResponse execute(String argument, Object weapon) throws InvalidCommandArguments, ScriptException, InvalidInputException,
             IOException, ClassNotFoundException {
-        if (!argument.isEmpty() || weapon == null) {
+        if (!argument.isEmpty() || weapon == null || weapon.getClass() != Weapon.class) {
             throw new InvalidCommandArguments();
         }
         collectionManager.removeAnyByWeaponType((Weapon) weapon);

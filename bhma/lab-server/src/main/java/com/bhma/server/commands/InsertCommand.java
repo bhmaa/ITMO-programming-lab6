@@ -5,7 +5,6 @@ import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -18,8 +17,8 @@ public class InsertCommand extends Command {
     private final CollectionManager collectionManager;
 
     public InsertCommand(CollectionManager collectionManager) {
-        super("insert", "добавить новый элемент с заданным ключом", CommandRequirement.SPACE_MARINE,
-                "server requests space marine value...");
+        super("insert", "добавить новый элемент с заданным ключом"
+        );
         this.collectionManager = collectionManager;
     }
 
@@ -33,7 +32,7 @@ public class InsertCommand extends Command {
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws ScriptException, InvalidCommandArguments,
             NumberFormatException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
-        if (argument.isEmpty() || spaceMarine == null) {
+        if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }
         if (collectionManager.getCollection().containsKey(Long.valueOf(argument))) {

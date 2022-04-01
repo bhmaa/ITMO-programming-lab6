@@ -23,4 +23,12 @@ public class ServerResponse implements Serializable {
     public ExecuteCode getExecuteCode() {
         return executeCode;
     }
+
+    @Override
+    public String toString() {
+        return "ServerResponse{"
+                + " message='" + message + '\''
+                + ", executeCode=" + executeCode
+                + '}';
+    }
 }

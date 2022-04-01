@@ -2,7 +2,6 @@ package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -15,7 +14,7 @@ public class RemoveKeyCommand extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveKeyCommand(CollectionManager collectionManager) {
-        super("remove_key", "удалить элемент из коллекции по его ключу", CommandRequirement.NONE);
+        super("remove_key", "удалить элемент из коллекции по его ключу");
         this.collectionManager = collectionManager;
     }
 
@@ -26,9 +25,9 @@ public class RemoveKeyCommand extends Command {
      * @throws NumberFormatException if argument is not a number
      * @throws IllegalKeyException if there's no element with entered key
      */
-    public ServerResponse execute(String argument) throws InvalidCommandArguments,
+    public ServerResponse execute(String argument, Object object) throws InvalidCommandArguments,
             NumberFormatException, IllegalKeyException, IOException {
-        if (argument.isEmpty()) {
+        if (argument.isEmpty() || object != null) {
             throw new InvalidCommandArguments();
         }
         if (!collectionManager.containsKey(Long.valueOf(argument))) {

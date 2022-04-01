@@ -4,12 +4,11 @@ import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.server.util.CollectionCreator;
 import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.CommandManager;
-import com.bhma.server.util.ExecuteManager;
+import com.bhma.server.util.Receiver;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.DatagramChannel;
+import java.net.DatagramSocket;
 import java.util.StringJoiner;
 
 public final class Server {
@@ -30,12 +29,13 @@ public final class Server {
             System.out.println("no data file");
         } else {
             try {
+                DatagramSocket server = new DatagramSocket(PORT);
                 CollectionManager collectionManager = CollectionCreator.load(filename);
-                DatagramChannel channel = DatagramChannel.open();
-                channel.bind(new InetSocketAddress("127.0.0.1", PORT));
                 CommandManager commandManager = new CommandManager(collectionManager);
-                ExecuteManager executeManager = new ExecuteManager(commandManager, channel);
-                executeManager.start();
+                Receiver receiver = new Receiver(commandManager, server);
+                while (true) {
+                    receiver.receive();
+                }
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
             } catch (ClassNotFoundException e) {

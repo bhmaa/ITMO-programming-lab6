@@ -1,7 +1,6 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -15,7 +14,7 @@ public class InfoCommand extends Command {
 
     public InfoCommand(CollectionManager collectionManager) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации,"
-                + " количество элементов и т.д.)", CommandRequirement.NONE);
+                + " количество элементов и т.д.)");
         this.collectionManager = collectionManager;
     }
 
@@ -24,8 +23,8 @@ public class InfoCommand extends Command {
      * @param argument must be empty
      * @throws InvalidCommandArguments if argument isn't empty
      */
-    public ServerResponse execute(String argument) throws InvalidCommandArguments, IOException {
-        if (!argument.isEmpty()) {
+    public ServerResponse execute(String argument, Object object) throws InvalidCommandArguments, IOException {
+        if (!argument.isEmpty() || object != null) {
             throw new InvalidCommandArguments();
         }
         return new ServerResponse(collectionManager.collectionInfo(), ExecuteCode.VALUE);

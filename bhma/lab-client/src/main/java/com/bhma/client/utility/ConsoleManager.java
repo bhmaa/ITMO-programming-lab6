@@ -5,25 +5,25 @@ import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
-import com.bhma.common.util.ServerRequest;
 import com.bhma.common.util.ServerResponse;
 
 import java.io.IOException;
-import java.nio.channels.DatagramChannel;
+import java.net.SocketTimeoutException;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class ConsoleManager {
+    private HashMap<String, CommandRequirement> commands;
     private final InputManager inputManager;
     private final OutputManager outputManager;
     private final SpaceMarineFiller spaceMarineFiller;
-    private final DatagramChannel channel;
 
-    public ConsoleManager(InputManager inputManager, OutputManager outputManager, SpaceMarineFiller spaceMarineFiller,
-                          DatagramChannel channel) {
+    public ConsoleManager(HashMap<String, CommandRequirement> commands, InputManager inputManager, OutputManager outputManager,
+                          SpaceMarineFiller spaceMarineFiller) {
+        this.commands = commands;
         this.inputManager = inputManager;
         this.outputManager = outputManager;
         this.spaceMarineFiller = spaceMarineFiller;
-        this.channel = channel;
     }
 
     /**
@@ -32,7 +32,7 @@ public class ConsoleManager {
     public void start() throws IOException, ClassNotFoundException, InvalidInputException {
         boolean executeFlag = true;
         while (executeFlag) {
-            outputManager.print(">>");
+            outputManager.println("Forming a request. Type a command");
             String input = inputManager.read();
             if (!input.trim().isEmpty()) {
                 String inputCommand = input.split(" ")[0].toLowerCase(Locale.ROOT);
@@ -40,11 +40,26 @@ public class ConsoleManager {
                 if (input.split(" ").length > 1) {
                     argument = input.replaceFirst(inputCommand + " ", "");
                 }
-                Object answer = Sender.send(channel, new ClientRequest(inputCommand, argument));
-                if (answer instanceof ServerRequest) {
-                    answer = processServerRequest((ServerRequest) answer);
+                try {
+                    ClientRequest request = new ClientRequest(inputCommand, argument, checkObjectArgument(inputCommand));
+                    final int totalAttempts = 5;
+                    for (int attempt = 1; attempt <= totalAttempts; attempt++) {
+                        try {
+                            ServerResponse response = Requester.send(request);
+                            executeFlag = processServerResponse(response);
+                            break;
+                        } catch (SocketTimeoutException e) {
+                            outputManager.printlnImportantColorMessage("Cannot connect with server. Retrying attempt #"
+                                    + attempt + " now...", Color.RED);
+                            if (attempt == totalAttempts) {
+                                throw new SocketTimeoutException();
+                            }
+                        }
+                    }
+                } catch (ScriptException e) {
+                    inputManager.finishReadScript();
+                    outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
                 }
-                executeFlag = processServerResponse((ServerResponse) answer);
             } else {
                 outputManager.printlnColorMessage("Please type any command. To see list of command type \"help\"",
                         Color.RED);
@@ -52,24 +67,21 @@ public class ConsoleManager {
         }
     }
 
-    public Object processServerRequest(ServerRequest serverRequest) throws IOException {
-        CommandRequirement requirement = serverRequest.getCommandRequirement();
-        Object answer = null;
-        try {
+    public Object checkObjectArgument(String commandName) throws ScriptException, InvalidInputException {
+        Object object = null;
+        if (commands.containsKey(commandName)) {
+            CommandRequirement requirement = commands.get(commandName);
             if (requirement.equals(CommandRequirement.CHAPTER)) {
-                answer = Sender.send(channel, spaceMarineFiller.fillChapter());
+                object = spaceMarineFiller.fillChapter();
             }
             if (requirement.equals(CommandRequirement.SPACE_MARINE)) {
-                answer = Sender.send(channel, spaceMarineFiller.fillSpaceMarine());
+                object = spaceMarineFiller.fillSpaceMarine();
             }
             if (requirement.equals(CommandRequirement.WEAPON)) {
-                answer = Sender.send(channel, spaceMarineFiller.fillWeaponType());
+                object = spaceMarineFiller.fillWeaponType();
             }
-        } catch (ScriptException | InvalidInputException | ClassNotFoundException e) {
-            inputManager.finishReadScript();
-            outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
         }
-        return answer;
+        return object;
     }
 
     public boolean processServerResponse(ServerResponse serverResponse) {

@@ -2,7 +2,6 @@ package com.bhma.server.commands;
 
 import com.bhma.common.data.Chapter;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -14,8 +13,8 @@ public class CountByChapterCommand extends Command {
     private final CollectionManager collectionManager;
 
     public CountByChapterCommand(CollectionManager collectionManager) {
-        super("count_by_chapter", "вывести количество элементов, значение поля chapter которых равно заданному",
-                CommandRequirement.CHAPTER, "server requests a chapter value...");
+        super("count_by_chapter", "вывести количество элементов, значение поля chapter которых равно заданному"
+        );
         this.collectionManager = collectionManager;
     }
 
@@ -24,14 +23,10 @@ public class CountByChapterCommand extends Command {
      * @param argument must be empty
      * @throws InvalidCommandArguments if argument isn't empty
      */
-    public ServerResponse execute(String argument, Object object) throws InvalidCommandArguments {
-        if (!argument.isEmpty() || object == null) {
+    public ServerResponse execute(String argument, Object chapter) throws InvalidCommandArguments {
+        if (!argument.isEmpty() || chapter == null || chapter.getClass() != Chapter.class) {
             throw new InvalidCommandArguments();
         }
-        return new ServerResponse(String.valueOf(collectionManager.countByChapter((Chapter) object)), ExecuteCode.VALUE);
-    }
-
-    public ServerResponse execute(String argument) throws InvalidCommandArguments {
-        throw new InvalidCommandArguments();
+        return new ServerResponse(String.valueOf(collectionManager.countByChapter((Chapter) chapter)), ExecuteCode.VALUE);
     }
 }
