@@ -16,8 +16,7 @@ public class SpaceMarineFiller {
     private final SpaceMarineReader reader;
     private final SimpleSpaceMarineFiller simpleSpaceMarineFiller;
 
-    public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager,
-                             OutputManager outputManager) {
+    public SpaceMarineFiller(SpaceMarineReader reader, InputManager inputManager, OutputManager outputManager) {
         this.reader = reader;
         simpleSpaceMarineFiller = new SimpleSpaceMarineFiller(inputManager, outputManager);
     }

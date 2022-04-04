@@ -31,7 +31,7 @@ public class ReplaceIfLowerCommand extends Command {
      * @throws IllegalKeyException if there's no element with entered key in collection
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws InvalidCommandArguments, ScriptException,
-            NumberFormatException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
+            NumberFormatException, IllegalKeyException, IOException, ClassNotFoundException {
         if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }

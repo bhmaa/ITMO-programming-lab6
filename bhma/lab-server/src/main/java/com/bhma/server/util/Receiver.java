@@ -18,24 +18,23 @@ import java.net.InetAddress;
 import java.util.Optional;
 
 public class Receiver {
-    private static final int PORT = 9990;
-    private static final int BUFFER_SIZE = 2048;
-    private CommandManager commandManager;
-    private DatagramSocket server;
+    private final int bufferSize;
+    private final CommandManager commandManager;
+    private final DatagramSocket server;
 
-    public Receiver(CommandManager commandManager, DatagramSocket server) {
+    public Receiver(CommandManager commandManager, DatagramSocket server, int bufferSize) {
         this.commandManager = commandManager;
         this.server = server;
+        this.bufferSize = bufferSize;
     }
 
-    public void receive() throws IOException, ClassNotFoundException, InvalidInputException {
-        byte[] buffer = new byte[BUFFER_SIZE];
+    public void receive() throws IOException, ClassNotFoundException {
+        byte[] buffer = new byte[bufferSize];
         DatagramPacket request = new DatagramPacket(buffer, buffer.length);
         server.receive(request);
         ClientRequest clientRequest = (ClientRequest) Serializer.deserialize(buffer);
         InetAddress client = request.getAddress();
         int port = request.getPort();
-
         String inputCommand = clientRequest.getCommandName();
         String argument = clientRequest.getCommandArguments();
         Object objectArgument = clientRequest.getObjectArgument();
@@ -50,14 +49,11 @@ public class Receiver {
             } catch (JAXBException e) {
                 response = new ServerResponse("Error during converting data to file", ExecuteCode.ERROR);
             }
-            byte[] buf = Serializer.serialize(response);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);
-            server.send(packet);
         } else {
             response = new ServerResponse("Unknown command detected: " + inputCommand, ExecuteCode.ERROR);
-            byte[] buf = Serializer.serialize(response);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);
-            server.send(packet);
         }
+        byte[] buf = Serializer.serialize(response);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);
+        server.send(packet);
     }
 }

@@ -27,7 +27,7 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
      * @throws InvalidCommandArguments if argument isn't empty
      * @throws ScriptException if string entered in a file wasn't one of the values from enum WeaponType
      */
-    public ServerResponse execute(String argument, Object weapon) throws InvalidCommandArguments, ScriptException, InvalidInputException,
+    public ServerResponse execute(String argument, Object weapon) throws InvalidCommandArguments, ScriptException,
             IOException, ClassNotFoundException {
         if (!argument.isEmpty() || weapon == null || weapon.getClass() != Weapon.class) {
             throw new InvalidCommandArguments();

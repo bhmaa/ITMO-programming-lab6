@@ -22,7 +22,7 @@ public abstract class Command {
     }
 
     public abstract ServerResponse execute(String argument, Object object) throws InvalidCommandArguments,
-            ScriptException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException, JAXBException;
+            ScriptException, IllegalKeyException, IOException, ClassNotFoundException, JAXBException;
 
     public String getName() {
         return name;

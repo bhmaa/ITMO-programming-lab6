@@ -1,19 +1,25 @@
 package com.bhma.client;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
+import com.bhma.client.utility.Color;
 import com.bhma.client.utility.ConsoleManager;
 import com.bhma.client.utility.InputManager;
 import com.bhma.client.utility.OutputManager;
+import com.bhma.client.utility.Requester;
 import com.bhma.client.utility.SpaceMarineFiller;
 import com.bhma.client.utility.SpaceMarineReader;
 import com.bhma.common.exceptions.InvalidInputException;
-import com.bhma.client.utility.Color;
+import com.bhma.common.exceptions.NoConnectionException;
 import com.bhma.common.util.CommandRequirement;
 
 public final class Client {
+    private static final int SERVER_PORT = 9990;
+    private static final int TIMEOUT = 1000;
+    private static final int BUFFER_SIZE = 3048;
+    private static final int RECONNECTION_ATTEMPTS = 5;
+
     private Client() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
     }
@@ -37,15 +43,16 @@ public final class Client {
 
         OutputManager outputManager = new OutputManager(System.out);
         InputManager inputManager = new InputManager(System.in, outputManager);
+        Requester requester = new Requester(SERVER_PORT, TIMEOUT, BUFFER_SIZE, RECONNECTION_ATTEMPTS, outputManager);
         SpaceMarineReader spaceMarineReader = new SpaceMarineReader(inputManager);
         SpaceMarineFiller spaceMarineFiller = new SpaceMarineFiller(spaceMarineReader, inputManager, outputManager);
-        ConsoleManager consoleManager = new ConsoleManager(commands, inputManager, outputManager, spaceMarineFiller);
+        ConsoleManager consoleManager = new ConsoleManager(commands, inputManager, outputManager, spaceMarineFiller, requester);
         try {
             consoleManager.start();
         } catch (InvalidInputException e) {
             outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
-        } catch (SocketTimeoutException e) {
-            outputManager.printlnImportantColorMessage("It seems like server is not available now. Try latter", Color.RED);
+        } catch (NoConnectionException e) {
+            outputManager.printlnImportantColorMessage(e.getMessage(), Color.RED);
         } catch (IOException | ClassNotFoundException e) {
             outputManager.printlnImportantColorMessage("error with server connection", Color.RED);
         }

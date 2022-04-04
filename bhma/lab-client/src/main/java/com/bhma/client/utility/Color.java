@@ -13,4 +13,8 @@ public enum Color {
     public String toString() {
         return code;
     }
+
+    public String colorize(String message) {
+        return this.toString() + message + "\u001B[0m";
+    }
 }

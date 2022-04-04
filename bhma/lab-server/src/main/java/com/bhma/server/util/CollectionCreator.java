@@ -25,8 +25,7 @@ public final class CollectionCreator {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
         }
         if (file.exists()) {
-            System.out.println("The collection was successfully loaded from the file "
-                    + filePath);
+            System.out.println("The collection was successfully loaded from the file " + filePath);
         } else {
             System.out.println("No file with this name was found. A new empty collection has been created");
         }

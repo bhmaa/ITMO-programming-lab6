@@ -1,6 +1,5 @@
 package com.bhma.server;
 
-import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.server.util.CollectionCreator;
 import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.CommandManager;
@@ -13,6 +12,7 @@ import java.util.StringJoiner;
 
 public final class Server {
     private static final int PORT = 9990;
+    private static final int BUFFER_SIZE = 2048;
 
     private Server() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
@@ -32,12 +32,10 @@ public final class Server {
                 DatagramSocket server = new DatagramSocket(PORT);
                 CollectionManager collectionManager = CollectionCreator.load(filename);
                 CommandManager commandManager = new CommandManager(collectionManager);
-                Receiver receiver = new Receiver(commandManager, server);
+                Receiver receiver = new Receiver(commandManager, server, BUFFER_SIZE);
                 while (true) {
                     receiver.receive();
                 }
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
             } catch (ClassNotFoundException e) {
                 System.out.println("wrong data");
             } catch (JAXBException | IOException e) {

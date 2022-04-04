@@ -25,7 +25,7 @@ public class RemoveGreaterKeyCommand extends Command {
      * @throws ScriptException if entered in script element didn't meet the requirements
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws InvalidCommandArguments,
-            ScriptException, InvalidInputException, IOException, ClassNotFoundException {
+            ScriptException, IOException, ClassNotFoundException {
         if (!argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }

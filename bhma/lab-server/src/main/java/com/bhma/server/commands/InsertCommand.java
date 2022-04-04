@@ -31,7 +31,7 @@ public class InsertCommand extends Command {
      * @throws ScriptException if entered in script element didn't meet the requirements
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws ScriptException, InvalidCommandArguments,
-            NumberFormatException, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
+            NumberFormatException, IllegalKeyException, IOException, ClassNotFoundException {
         if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }

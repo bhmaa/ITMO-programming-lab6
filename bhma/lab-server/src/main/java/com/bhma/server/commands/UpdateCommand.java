@@ -32,7 +32,7 @@ public class UpdateCommand extends Command {
      * @throws IllegalKeyException     if there's no element with entered id
      */
     public ServerResponse execute(String argument, Object spaceMarine) throws ScriptException, NumberFormatException,
-            InvalidCommandArguments, IllegalKeyException, InvalidInputException, IOException, ClassNotFoundException {
+            InvalidCommandArguments, IllegalKeyException, IOException, ClassNotFoundException {
         if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();
         }

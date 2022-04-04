@@ -36,7 +36,7 @@ public class OutputManager {
     }
 
     public void printlnImportantColorMessage(String string, Color color) {
-        printlnImportantMessage(color.toString() + string + "\u001B[0m");
+        printlnImportantMessage(color.colorize(string));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.bhma.client.utility;
 
+import com.bhma.common.exceptions.NoConnectionException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.Serializer;
 import com.bhma.common.util.ServerResponse;
@@ -8,25 +9,44 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketTimeoutException;
 
 public final class Requester {
-    private static final int BUFFER_SIZE = 3048;
-    private static final int TIMEOUT = 1000;
-    private static final int SERVER_PORT = 9990;
+    private final int bufferSize;
+    private final int timeout;
+    private final int serverPort;
+    private final int reconnectionAttempts;
+    private final OutputManager outputManager;
 
-    private Requester() {
+    public Requester(int serverPort, int timeout, int bufferSize, int reconnectionAttempts, OutputManager outputManager) {
+        this.serverPort = serverPort;
+        this.timeout = timeout;
+        this.bufferSize = bufferSize;
+        this.reconnectionAttempts = reconnectionAttempts;
+        this.outputManager = outputManager;
     }
 
-    public static ServerResponse send(ClientRequest request) throws IOException, ClassNotFoundException {
+    public ServerResponse send(ClientRequest request) throws IOException, ClassNotFoundException, NoConnectionException {
         DatagramSocket client = new DatagramSocket();
-        client.setSoTimeout(TIMEOUT);
+        client.setSoTimeout(timeout);
         InetAddress address = InetAddress.getByName("localhost");
         byte[] buf = Serializer.serialize(request);
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, SERVER_PORT);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, serverPort);
         client.send(packet);
-        byte[] buffer = new byte[BUFFER_SIZE];
+        byte[] buffer = new byte[bufferSize];
         DatagramPacket response = new DatagramPacket(buffer, buffer.length);
-        client.receive(response);
+        for (int attempt = 1; attempt <= reconnectionAttempts; attempt++) {
+            try {
+                client.receive(response);
+                break;
+            } catch (SocketTimeoutException e) {
+                outputManager.printlnImportantColorMessage("Cannot connect with server. Retrying attempt #"
+                        + attempt + " now...", Color.RED);
+                if (attempt == reconnectionAttempts) {
+                    throw new NoConnectionException();
+                }
+            }
+        }
         return (ServerResponse) Serializer.deserialize(buffer);
     }
 }
