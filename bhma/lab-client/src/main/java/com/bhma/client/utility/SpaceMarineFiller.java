@@ -6,7 +6,7 @@ import com.bhma.common.data.Coordinates;
 import com.bhma.common.data.MeleeWeapon;
 import com.bhma.common.data.SpaceMarine;
 import com.bhma.common.data.Weapon;
-import com.bhma.common.exceptions.InvalidInputException;
+import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
 
 /**

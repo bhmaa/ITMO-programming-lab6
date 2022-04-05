@@ -1,4 +1,4 @@
-package com.bhma.common.exceptions;
+package com.bhma.client.exceptions;
 
 /**
  * throws if entered value was ctrl+d

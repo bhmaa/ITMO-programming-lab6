@@ -1,4 +1,4 @@
-package com.bhma.common.exceptions;
+package com.bhma.client.exceptions;
 
 public class NoConnectionException extends Exception {
     public String getMessage() {

@@ -3,7 +3,6 @@ package com.bhma.server.commands;
 import com.bhma.common.data.SpaceMarine;
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.exceptions.InvalidInputException;
 import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;

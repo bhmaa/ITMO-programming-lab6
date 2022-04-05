@@ -3,8 +3,8 @@ package com.bhma.client.utility;
 import com.bhma.common.data.AstartesCategory;
 import com.bhma.common.data.MeleeWeapon;
 import com.bhma.common.data.Weapon;
-import com.bhma.common.exceptions.IllegalValueException;
-import com.bhma.common.exceptions.InvalidInputException;
+import com.bhma.client.exceptions.IllegalValueException;
+import com.bhma.client.exceptions.InvalidInputException;
 
 import java.util.Locale;
 

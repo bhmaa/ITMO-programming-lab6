@@ -1,6 +1,6 @@
 package com.bhma.client.utility;
 
-import com.bhma.common.exceptions.NoConnectionException;
+import com.bhma.client.exceptions.NoConnectionException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.Serializer;
 import com.bhma.common.util.ServerResponse;

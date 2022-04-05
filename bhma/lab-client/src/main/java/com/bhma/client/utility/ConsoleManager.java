@@ -1,7 +1,7 @@
 package com.bhma.client.utility;
 
-import com.bhma.common.exceptions.InvalidInputException;
-import com.bhma.common.exceptions.NoConnectionException;
+import com.bhma.client.exceptions.InvalidInputException;
+import com.bhma.client.exceptions.NoConnectionException;
 import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.CommandRequirement;

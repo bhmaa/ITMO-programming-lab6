@@ -1,5 +1,7 @@
 package com.bhma.server;
 
+import com.bhma.common.exceptions.IllegalPortException;
+import com.bhma.common.util.PortChecker;
 import com.bhma.server.util.CollectionCreator;
 import com.bhma.server.util.CollectionManager;
 import com.bhma.server.util.CommandManager;
@@ -11,7 +13,6 @@ import java.net.DatagramSocket;
 import java.util.StringJoiner;
 
 public final class Server {
-    private static final int PORT = 9990;
     private static final int BUFFER_SIZE = 2048;
 
     private Server() {
@@ -19,28 +20,38 @@ public final class Server {
     }
 
     public static void main(String[] args) {
-        // LOAD FROM COMMAND LINE ARGS
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        for (String arg : args) {
-            stringJoiner.add(arg);
-        }
-        String filename = stringJoiner.toString();
-        if (filename.trim().isEmpty()) {
-            System.out.println("no data file");
-        } else {
+        if (args.length > 2) {
             try {
-                DatagramSocket server = new DatagramSocket(PORT);
-                CollectionManager collectionManager = CollectionCreator.load(filename);
-                CommandManager commandManager = new CommandManager(collectionManager);
-                Receiver receiver = new Receiver(commandManager, server, BUFFER_SIZE);
-                while (true) {
-                    receiver.receive();
+                // the port is indicated by the first word in the command line arguments
+                final int port = PortChecker.check(args[0]);
+                // the filename
+                StringJoiner stringJoiner = new StringJoiner(" ");
+                for (int i = 1; i < args.length; i++) {
+                    stringJoiner.add(args[i]);
                 }
-            } catch (ClassNotFoundException e) {
-                System.out.println("wrong data");
-            } catch (JAXBException | IOException e) {
-                System.out.println("Error during converting xml " + filename + " to java object");
+                final String filename = stringJoiner.toString().trim();
+                if (filename.isEmpty()) {
+                    System.out.println("no data file!");
+                } else {
+                    try {
+                        DatagramSocket server = new DatagramSocket(port);
+                        CollectionManager collectionManager = CollectionCreator.load(filename);
+                        CommandManager commandManager = new CommandManager(collectionManager);
+                        Receiver receiver = new Receiver(commandManager, server, BUFFER_SIZE);
+                        while (true) {
+                            receiver.receive();
+                        }
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("wrong data");
+                    } catch (JAXBException | IOException e) {
+                        System.out.println("Error during converting xml " + filename + " to java object");
+                    }
+                }
+            } catch (IllegalPortException e) {
+                System.out.println(e.getMessage());
             }
+        } else {
+            System.out.println("no datafile and port!");
         }
     }
 }

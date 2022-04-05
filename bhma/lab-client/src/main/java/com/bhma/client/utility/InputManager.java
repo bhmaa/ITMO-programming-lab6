@@ -1,6 +1,6 @@
 package com.bhma.client.utility;
 
-import com.bhma.common.exceptions.InvalidInputException;
+import com.bhma.client.exceptions.InvalidInputException;
 
 import java.io.File;
 import java.io.IOException;
