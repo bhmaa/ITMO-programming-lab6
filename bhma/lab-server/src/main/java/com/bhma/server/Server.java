@@ -12,18 +12,24 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.StringJoiner;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public final class Server {
     private static final int BUFFER_SIZE = 2048;
+    private static final Logger LOGGER = LogManager.getLogger(Server.class);
 
     private Server() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
     }
 
     public static void main(String[] args) {
-        if (args.length > 2) {
+        LOGGER.trace("the server is running");
+        if (args.length > 1) {
             try {
                 // the port is indicated by the first word in the command line arguments
                 final int port = PortChecker.check(args[0]);
+                LOGGER.info("set " + port + " port");
                 // the filename
                 StringJoiner stringJoiner = new StringJoiner(" ");
                 for (int i = 1; i < args.length; i++) {
@@ -31,27 +37,28 @@ public final class Server {
                 }
                 final String filename = stringJoiner.toString().trim();
                 if (filename.isEmpty()) {
-                    System.out.println("no data file!");
+                    LOGGER.error("no data file!");
                 } else {
                     try {
                         DatagramSocket server = new DatagramSocket(port);
-                        CollectionManager collectionManager = CollectionCreator.load(filename);
+                        CollectionManager collectionManager = CollectionCreator.load(filename, LOGGER);
                         CommandManager commandManager = new CommandManager(collectionManager);
-                        Receiver receiver = new Receiver(commandManager, server, BUFFER_SIZE);
+                        Receiver receiver = new Receiver(commandManager, server, BUFFER_SIZE, LOGGER);
                         while (true) {
                             receiver.receive();
                         }
                     } catch (ClassNotFoundException e) {
-                        System.out.println("wrong data");
+                        LOGGER.error("wrong data from client");
                     } catch (JAXBException | IOException e) {
-                        System.out.println("Error during converting xml " + filename + " to java object");
+                        LOGGER.error("Error during converting xml " + filename + " to java object");
                     }
                 }
             } catch (IllegalPortException e) {
-                System.out.println(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } else {
-            System.out.println("no datafile and port!");
+            LOGGER.error("no datafile and port!");
         }
+        LOGGER.trace("the server is shutting down");
     }
 }

@@ -8,6 +8,7 @@ import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.Serializer;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.commands.Command;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -20,11 +21,13 @@ public class Receiver {
     private final int bufferSize;
     private final CommandManager commandManager;
     private final DatagramSocket server;
+    private final Logger logger;
 
-    public Receiver(CommandManager commandManager, DatagramSocket server, int bufferSize) {
+    public Receiver(CommandManager commandManager, DatagramSocket server, int bufferSize, Logger logger) {
         this.commandManager = commandManager;
         this.server = server;
         this.bufferSize = bufferSize;
+        this.logger = logger;
     }
 
     public void receive() throws IOException, ClassNotFoundException {
@@ -34,6 +37,7 @@ public class Receiver {
         ClientRequest clientRequest = (ClientRequest) Serializer.deserialize(buffer);
         InetAddress client = request.getAddress();
         int port = request.getPort();
+        logger.info("received request from address " + client + ", port " + port);
         String inputCommand = clientRequest.getCommandName();
         String argument = clientRequest.getCommandArguments();
         Object objectArgument = clientRequest.getObjectArgument();
@@ -54,5 +58,6 @@ public class Receiver {
         byte[] buf = Serializer.serialize(response);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);
         server.send(packet);
+        logger.info("response sent to the address " + client + ", port " + port);
     }
 }

@@ -4,6 +4,7 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
+import org.apache.logging.log4j.Logger;
 
 public final class CollectionCreator {
     private CollectionCreator() {
@@ -15,7 +16,7 @@ public final class CollectionCreator {
      * @return new Collection Manager
      * @throws JAXBException if xml-file cannot be converted to java object
      */
-    public static CollectionManager load(String filePath) throws JAXBException, IOException {
+    public static CollectionManager load(String filePath, Logger logger) throws JAXBException, IOException {
         File file = new File(filePath);
         CollectionManager collectionManager;
         if (file.exists() && file.length() != 0) {
@@ -25,9 +26,9 @@ public final class CollectionCreator {
             collectionManager = new CollectionManager(new Hashtable<>(), filePath);
         }
         if (file.exists()) {
-            System.out.println("The collection was successfully loaded from the file " + filePath);
+            logger.info("The collection was successfully loaded from the file " + filePath);
         } else {
-            System.out.println("No file with this name was found. A new empty collection has been created");
+            logger.info("No file with this name was found. A new empty collection has been created");
         }
         return collectionManager;
     }
