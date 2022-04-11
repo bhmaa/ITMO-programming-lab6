@@ -6,11 +6,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.bhma.server.Server" level="trace" additivity="false">
+        <Logger name="com.bhma.server.Server" level="all" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="Console"/>
-        </Root>
     </Loggers>
 </Configuration>
