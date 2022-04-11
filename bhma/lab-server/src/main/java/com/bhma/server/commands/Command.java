@@ -2,7 +2,6 @@ package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ServerResponse;
 
 import javax.xml.bind.JAXBException;
@@ -21,7 +20,7 @@ public abstract class Command {
     }
 
     public abstract ServerResponse execute(String argument, Object object) throws InvalidCommandArguments,
-            ScriptException, IllegalKeyException, IOException, ClassNotFoundException, JAXBException;
+            IllegalKeyException, IOException, ClassNotFoundException, JAXBException;
 
     public String getName() {
         return name;

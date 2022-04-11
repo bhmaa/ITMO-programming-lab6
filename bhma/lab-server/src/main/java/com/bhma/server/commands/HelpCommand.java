@@ -5,15 +5,16 @@ import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringJoiner;
 
 /**
  * help command
  */
 public class HelpCommand extends Command {
-    private final ArrayList<Command> commands;
+    private final HashMap<String, Command> commands;
 
-    public HelpCommand(ArrayList<Command> commands) {
+    public HelpCommand(HashMap<String, Command> commands) {
         super("help", "вывести справку по доступным командам");
         this.commands = commands;
     }
@@ -29,9 +30,7 @@ public class HelpCommand extends Command {
         }
         StringJoiner message = new StringJoiner("\n");
         message.add("Список доступных команд:");
-        for (Command command : commands) {
-            message.add(command.getName() + ": " + command.getDescription());
-        }
+        commands.forEach((k, v) -> message.add(k + ": " + v.getDescription()));
         return new ServerResponse(message.toString(), ExecuteCode.VALUE);
     }
 }

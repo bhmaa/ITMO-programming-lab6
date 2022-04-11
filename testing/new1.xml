@@ -98,6 +98,24 @@
             </value>
         </entry>
         <entry>
+            <key>12</key>
+            <value>
+                <id>8</id>
+                <creationDate>2022-04-11T19:52:48.004+03:00</creationDate>
+                <name>efe</name>
+                <coordinates>
+                    <x>4.0</x>
+                    <y>2</y>
+                </coordinates>
+                <health>42.0</health>
+                <category>CHAPLAIN</category>
+                <weaponType>PLASMA_GUN</weaponType>
+                <chapter>
+                    <name>sfd</name>
+                </chapter>
+            </value>
+        </entry>
+        <entry>
             <key>33</key>
             <value>
                 <id>3</id>

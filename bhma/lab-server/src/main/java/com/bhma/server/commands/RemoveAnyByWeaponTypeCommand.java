@@ -2,7 +2,6 @@ package com.bhma.server.commands;
 
 import com.bhma.common.data.Weapon;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -24,10 +23,9 @@ public class RemoveAnyByWeaponTypeCommand extends Command {
      * removes one element from the collection which weapon type is equal to the entered one
      * @param argument must be empty
      * @throws InvalidCommandArguments if argument isn't empty
-     * @throws ScriptException if string entered in a file wasn't one of the values from enum WeaponType
      */
-    public ServerResponse execute(String argument, Object weapon) throws InvalidCommandArguments, ScriptException,
-            IOException, ClassNotFoundException {
+    public ServerResponse execute(String argument, Object weapon) throws InvalidCommandArguments, IOException,
+            ClassNotFoundException {
         if (!argument.isEmpty() || weapon == null || weapon.getClass() != Weapon.class) {
             throw new InvalidCommandArguments();
         }

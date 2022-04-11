@@ -2,7 +2,7 @@ package com.bhma.client.utility;
 
 import com.bhma.client.exceptions.IllegalValueException;
 import com.bhma.client.exceptions.InvalidInputException;
-import com.bhma.common.exceptions.ScriptException;
+import com.bhma.client.exceptions.ScriptException;
 
 public class SimpleSpaceMarineFiller {
     private final OutputManager outputManager;

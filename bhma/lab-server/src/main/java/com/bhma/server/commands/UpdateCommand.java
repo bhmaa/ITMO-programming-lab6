@@ -3,7 +3,6 @@ package com.bhma.server.commands;
 import com.bhma.common.data.SpaceMarine;
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -16,8 +15,7 @@ public class UpdateCommand extends Command {
     private final CollectionManager collectionManager;
 
     public UpdateCommand(CollectionManager collectionManager) {
-        super("update", "обновить значение элемента коллекции, id которого равен заданному"
-        );
+        super("update", "обновить значение элемента коллекции, id которого равен заданному");
         this.collectionManager = collectionManager;
     }
 
@@ -25,12 +23,11 @@ public class UpdateCommand extends Command {
      * updates element of collection whose id equal entered one
      *
      * @param argument must be a number
-     * @throws ScriptException         if entered in script element didn't meet the requirements
      * @throws NumberFormatException   if argument is not a number
      * @throws InvalidCommandArguments if argument is empty
      * @throws IllegalKeyException     if there's no element with entered id
      */
-    public ServerResponse execute(String argument, Object spaceMarine) throws ScriptException, NumberFormatException,
+    public ServerResponse execute(String argument, Object spaceMarine) throws NumberFormatException,
             InvalidCommandArguments, IllegalKeyException, IOException, ClassNotFoundException {
         if (argument.isEmpty() || spaceMarine == null || spaceMarine.getClass() != SpaceMarine.class) {
             throw new InvalidCommandArguments();

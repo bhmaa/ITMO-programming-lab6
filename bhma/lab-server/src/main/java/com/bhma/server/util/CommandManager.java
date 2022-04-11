@@ -17,33 +17,50 @@ import com.bhma.server.commands.ReplaceIfLowerCommand;
 import com.bhma.server.commands.ShowCommand;
 import com.bhma.server.commands.UpdateCommand;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * stores and generates an array list with all currently available commands by CollectionManager, SpaceMarineFiller, InputManager
  * and OutputManager values
  */
 public class CommandManager {
-    private final ArrayList<Command> commands = new ArrayList<>();
+   // private final ArrayList<Command> commands = new ArrayList<>();
+    private final HashMap<String, Command> commands = new HashMap<>();
 
     public CommandManager(CollectionManager collectionManager) {
-        commands.add(new AverageOfHealthCommand(collectionManager));
-        commands.add(new ClearCommand(collectionManager));
-        commands.add(new CountByChapterCommand(collectionManager));
-        commands.add(new ExitCommand(collectionManager));
-        commands.add(new InfoCommand(collectionManager));
-        commands.add(new InsertCommand(collectionManager));
-        commands.add(new RemoveAnyByWeaponTypeCommand(collectionManager));
-        commands.add(new RemoveGreaterKeyCommand(collectionManager));
-        commands.add(new RemoveKeyCommand(collectionManager));
-        commands.add(new RemoveLowerKeyCommand(collectionManager));
-        commands.add(new ReplaceIfLowerCommand(collectionManager));
-        commands.add(new ShowCommand(collectionManager));
-        commands.add(new UpdateCommand(collectionManager));
-        commands.add(new ExecuteScriptCommand());
-        commands.add(new HelpCommand(commands));
+        AverageOfHealthCommand averageOfHealthCommand = new AverageOfHealthCommand(collectionManager);
+        commands.put(averageOfHealthCommand.getName(), averageOfHealthCommand);
+        ClearCommand clearCommand = new ClearCommand(collectionManager);
+        commands.put(clearCommand.getName(), clearCommand);
+        CountByChapterCommand countByChapterCommand = new CountByChapterCommand(collectionManager);
+        commands.put(countByChapterCommand.getName(), clearCommand);
+        ExitCommand exitCommand = new ExitCommand(collectionManager);
+        commands.put(exitCommand.getName(), exitCommand);
+        InfoCommand infoCommand = new InfoCommand(collectionManager);
+        commands.put(infoCommand.getName(), infoCommand);
+        InsertCommand insertCommand = new InsertCommand(collectionManager);
+        commands.put(insertCommand.getName(), insertCommand);
+        RemoveAnyByWeaponTypeCommand removeAnyByWeaponTypeCommand = new RemoveAnyByWeaponTypeCommand(collectionManager);
+        commands.put(removeAnyByWeaponTypeCommand.getName(), removeAnyByWeaponTypeCommand);
+        RemoveGreaterKeyCommand removeGreaterKeyCommand = new RemoveGreaterKeyCommand(collectionManager);
+        commands.put(removeGreaterKeyCommand.getName(), removeGreaterKeyCommand);
+        RemoveKeyCommand removeKeyCommand = new RemoveKeyCommand(collectionManager);
+        commands.put(removeKeyCommand.getName(), removeKeyCommand);
+        RemoveLowerKeyCommand removeLowerKeyCommand = new RemoveLowerKeyCommand(collectionManager);
+        commands.put(removeLowerKeyCommand.getName(), removeLowerKeyCommand);
+        ReplaceIfLowerCommand replaceIfLowerCommand = new ReplaceIfLowerCommand(collectionManager);
+        commands.put(replaceIfLowerCommand.getName(), replaceIfLowerCommand);
+        ShowCommand showCommand = new ShowCommand(collectionManager);
+        commands.put(showCommand.getName(), showCommand);
+        UpdateCommand updateCommand = new UpdateCommand(collectionManager);
+        commands.put(updateCommand.getName(), updateCommand);
+        ExecuteScriptCommand executeScriptCommand = new ExecuteScriptCommand();
+        commands.put(executeScriptCommand.getName(), executeScriptCommand);
+        HelpCommand helpCommand = new HelpCommand(commands);
+        commands.put(helpCommand.getName(), helpCommand);
     }
 
-    public ArrayList<Command> getCommands() {
+    public HashMap<String, Command> getCommands() {
         return commands;
     }
 }

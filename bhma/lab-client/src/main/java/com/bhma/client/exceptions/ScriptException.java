@@ -1,4 +1,4 @@
-package com.bhma.common.exceptions;
+package com.bhma.client.exceptions;
 
 public class ScriptException extends Exception {
     private final String message;

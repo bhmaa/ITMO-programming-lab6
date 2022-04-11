@@ -1,9 +1,9 @@
 package com.bhma.common.exceptions;
 
-public class IllegalPortException extends Exception {
+public class IllegalAddressException extends Exception {
     private final String message;
 
-    public IllegalPortException(String message) {
+    public IllegalAddressException(String message) {
         this.message = message;
     }
 

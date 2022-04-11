@@ -2,7 +2,6 @@ package com.bhma.server.util;
 
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
-import com.bhma.common.exceptions.ScriptException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.Serializer;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Optional;
 
 public class Receiver {
     private final int bufferSize;
@@ -42,12 +40,11 @@ public class Receiver {
         String argument = clientRequest.getCommandArguments();
         Object objectArgument = clientRequest.getObjectArgument();
         ServerResponse response;
-        Optional<Command> optional = commandManager.getCommands().stream().filter(v -> v.getName().equals(inputCommand)).findFirst();
-        if (optional.isPresent()) {
-            Command command = optional.get();
+        if (commandManager.getCommands().containsKey(inputCommand)) {
+            Command command = commandManager.getCommands().get(inputCommand);
             try {
                 response = command.execute(argument, objectArgument);
-            } catch (ScriptException | InvalidCommandArguments | IllegalKeyException e) {
+            } catch (InvalidCommandArguments | IllegalKeyException e) {
                 response = new ServerResponse(e.getMessage(), ExecuteCode.ERROR);
             } catch (JAXBException e) {
                 response = new ServerResponse("Error during converting data to file", ExecuteCode.ERROR);

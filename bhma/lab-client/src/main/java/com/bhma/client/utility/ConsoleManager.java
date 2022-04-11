@@ -2,7 +2,7 @@ package com.bhma.client.utility;
 
 import com.bhma.client.exceptions.InvalidInputException;
 import com.bhma.client.exceptions.NoConnectionException;
-import com.bhma.common.exceptions.ScriptException;
+import com.bhma.client.exceptions.ScriptException;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
@@ -31,7 +31,7 @@ public class ConsoleManager {
     /**
      * starts read commands and execute it while it is not an exit command
      */
-    public void start() throws IOException, ClassNotFoundException, InvalidInputException, NoConnectionException {
+    public void start() throws IOException, ClassNotFoundException, InvalidInputException, NoConnectionException, InterruptedException {
         boolean executeFlag = true;
         while (executeFlag) {
             outputManager.print(">");
