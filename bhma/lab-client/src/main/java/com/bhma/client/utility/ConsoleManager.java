@@ -34,7 +34,6 @@ public class ConsoleManager {
     public void start() throws IOException, ClassNotFoundException, InvalidInputException, NoConnectionException, InterruptedException {
         boolean executeFlag = true;
         while (executeFlag) {
-            outputManager.print(">");
             String input = inputManager.read();
             if (!input.trim().isEmpty()) {
                 String inputCommand = input.split(" ")[0].toLowerCase(Locale.ROOT);

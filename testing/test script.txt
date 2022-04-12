@@ -6,10 +6,10 @@ name10
 -9
 10
 58
-dgdd
+chaplain
 HEAVY_BOLTGUN
 
 chaptername10
 chapterworld10
-execute_script test.txt
+execute_script testing/test.txt
 show
