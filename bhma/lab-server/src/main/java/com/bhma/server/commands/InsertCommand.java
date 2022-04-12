@@ -3,6 +3,7 @@ package com.bhma.server.commands;
 import com.bhma.common.data.SpaceMarine;
 import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -15,7 +16,7 @@ public class InsertCommand extends Command {
     private final CollectionManager collectionManager;
 
     public InsertCommand(CollectionManager collectionManager) {
-        super("insert", "добавить новый элемент с заданным ключом");
+        super("insert", "добавить новый элемент с заданным ключом", CommandRequirement.SPACE_MARINE);
         this.collectionManager = collectionManager;
     }
 

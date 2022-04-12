@@ -1,6 +1,7 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -13,8 +14,8 @@ public class ShowCommand extends Command {
     private final CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
-        super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении"
-        );
+        super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении",
+                CommandRequirement.NONE);
         this.collectionManager = collectionManager;
     }
 

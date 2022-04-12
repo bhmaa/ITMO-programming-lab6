@@ -44,7 +44,7 @@ public class ConsoleManager {
                 }
                 try {
                     ClientRequest request = new ClientRequest(inputCommand, argument, getObjectArgument(inputCommand));
-                    ServerResponse response = requester.send(request);
+                    ServerResponse response = (ServerResponse) requester.send(request);
                     executeFlag = processServerResponse(response);
                 } catch (ScriptException e) {
                     inputManager.finishReadScript();

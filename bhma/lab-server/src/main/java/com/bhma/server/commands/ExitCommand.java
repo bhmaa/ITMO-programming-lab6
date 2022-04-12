@@ -1,6 +1,7 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -15,7 +16,7 @@ public class ExitCommand extends Command {
     private final CollectionManager collectionManager;
 
     public ExitCommand(CollectionManager collectionManager) {
-        super("exit", "завершить программу (без сохранения в файл)");
+        super("exit", "завершить программу (без сохранения в файл)", CommandRequirement.NONE);
         this.collectionManager = collectionManager;
     }
 

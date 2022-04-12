@@ -1,5 +1,6 @@
 package com.bhma.server.util;
 
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.server.commands.AverageOfHealthCommand;
 import com.bhma.server.commands.ClearCommand;
 import com.bhma.server.commands.Command;
@@ -16,7 +17,6 @@ import com.bhma.server.commands.RemoveLowerKeyCommand;
 import com.bhma.server.commands.ReplaceIfLowerCommand;
 import com.bhma.server.commands.ShowCommand;
 import com.bhma.server.commands.UpdateCommand;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,8 +24,8 @@ import java.util.HashMap;
  * and OutputManager values
  */
 public class CommandManager {
-   // private final ArrayList<Command> commands = new ArrayList<>();
     private final HashMap<String, Command> commands = new HashMap<>();
+    private final HashMap<String, CommandRequirement> requirements = new HashMap<>();
 
     public CommandManager(CollectionManager collectionManager) {
         AverageOfHealthCommand averageOfHealthCommand = new AverageOfHealthCommand(collectionManager);
@@ -58,9 +58,15 @@ public class CommandManager {
         commands.put(executeScriptCommand.getName(), executeScriptCommand);
         HelpCommand helpCommand = new HelpCommand(commands);
         commands.put(helpCommand.getName(), helpCommand);
+
+        commands.forEach((k, v) -> requirements.put(k, v.getRequirement()));
     }
 
     public HashMap<String, Command> getCommands() {
         return commands;
+    }
+
+    public HashMap<String, CommandRequirement> getRequirements() {
+        return requirements;
     }
 }

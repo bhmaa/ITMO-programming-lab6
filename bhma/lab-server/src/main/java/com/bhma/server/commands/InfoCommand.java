@@ -1,6 +1,7 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.util.CollectionManager;
@@ -14,7 +15,7 @@ public class InfoCommand extends Command {
 
     public InfoCommand(CollectionManager collectionManager) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации,"
-                + " количество элементов и т.д.)");
+                + " количество элементов и т.д.)", CommandRequirement.NONE);
         this.collectionManager = collectionManager;
     }
 

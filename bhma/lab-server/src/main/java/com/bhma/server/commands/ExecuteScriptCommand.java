@@ -1,6 +1,7 @@
 package com.bhma.server.commands;
 
 import com.bhma.common.exceptions.InvalidCommandArguments;
+import com.bhma.common.util.CommandRequirement;
 import com.bhma.common.util.ExecuteCode;
 import com.bhma.common.util.ServerResponse;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.io.IOException;
 public class ExecuteScriptCommand extends Command {
 
     public ExecuteScriptCommand() {
-        super("execute_script", "считать и исполнить скрипт из указанного файла");
+        super("execute_script", "считать и исполнить скрипт из указанного файла", CommandRequirement.NONE);
     }
 
     /**

@@ -4,6 +4,8 @@ import com.bhma.common.exceptions.IllegalKeyException;
 import com.bhma.common.exceptions.InvalidCommandArguments;
 import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.ExecuteCode;
+import com.bhma.common.util.PullingRequest;
+import com.bhma.common.util.PullingResponse;
 import com.bhma.common.util.Serializer;
 import com.bhma.common.util.ServerResponse;
 import com.bhma.server.commands.Command;
@@ -32,25 +34,30 @@ public class Receiver {
         byte[] buffer = new byte[bufferSize];
         DatagramPacket request = new DatagramPacket(buffer, buffer.length);
         server.receive(request);
-        ClientRequest clientRequest = (ClientRequest) Serializer.deserialize(buffer);
+        Object received = Serializer.deserialize(buffer);
         InetAddress client = request.getAddress();
         int port = request.getPort();
         logger.info("received request from address " + client + ", port " + port);
-        String inputCommand = clientRequest.getCommandName();
-        String argument = clientRequest.getCommandArguments();
-        Object objectArgument = clientRequest.getObjectArgument();
-        ServerResponse response;
-        if (commandManager.getCommands().containsKey(inputCommand)) {
-            Command command = commandManager.getCommands().get(inputCommand);
-            try {
-                response = command.execute(argument, objectArgument);
-            } catch (InvalidCommandArguments | IllegalKeyException e) {
-                response = new ServerResponse(e.getMessage(), ExecuteCode.ERROR);
-            } catch (JAXBException e) {
-                response = new ServerResponse("Error during converting data to file", ExecuteCode.ERROR);
-            }
+        Object response;
+        if (received instanceof PullingRequest) {
+            response = new PullingResponse(commandManager.getRequirements());
         } else {
-            response = new ServerResponse("Unknown command detected: " + inputCommand, ExecuteCode.ERROR);
+            ClientRequest clientRequest = (ClientRequest) received;
+            String inputCommand = clientRequest.getCommandName();
+            String argument = clientRequest.getCommandArguments();
+            Object objectArgument = clientRequest.getObjectArgument();
+            if (commandManager.getCommands().containsKey(inputCommand)) {
+                Command command = commandManager.getCommands().get(inputCommand);
+                try {
+                    response = command.execute(argument, objectArgument);
+                } catch (InvalidCommandArguments | IllegalKeyException e) {
+                    response = new ServerResponse(e.getMessage(), ExecuteCode.ERROR);
+                } catch (JAXBException e) {
+                    response = new ServerResponse("Error during converting data to file", ExecuteCode.ERROR);
+                }
+            } else {
+                response = new ServerResponse("Unknown command detected: " + inputCommand, ExecuteCode.ERROR);
+            }
         }
         byte[] buf = Serializer.serialize(response);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);

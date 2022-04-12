@@ -1,9 +1,7 @@
 package com.bhma.client.utility;
 
 import com.bhma.client.exceptions.NoConnectionException;
-import com.bhma.common.util.ClientRequest;
 import com.bhma.common.util.Serializer;
-import com.bhma.common.util.ServerResponse;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,13 +24,24 @@ public final class Requester {
         this.outputManager = outputManager;
     }
 
-    public ServerResponse send(ClientRequest request) throws IOException, ClassNotFoundException, NoConnectionException,
+    public Object send(Object request) throws IOException, ClassNotFoundException, NoConnectionException,
             InterruptedException {
         DatagramChannel client = DatagramChannel.open().bind(null);
         client.configureBlocking(false);
         byte[] bytesSending = Serializer.serialize(request);
         ByteBuffer wrapperSending = ByteBuffer.wrap(bytesSending);
-        client.send(wrapperSending, serverAddress);
+        for (int attempt = 1; attempt <= reconnectionAttempts; attempt++) {
+            if (client.send(wrapperSending, serverAddress) == bytesSending.length) {
+                break;
+            } else {
+                outputManager.printlnImportantColorMessage("Cannot send request to the server. Retrying attempt #"
+                        + attempt + " now...", Color.RED);
+                if (attempt == reconnectionAttempts) {
+                    throw new NoConnectionException();
+                }
+                Thread.sleep(timeout);
+            }
+        }
         byte[] bytesReceiving = new byte[bufferSize];
         ByteBuffer wrapperReceiving = ByteBuffer.wrap(bytesReceiving);
         for (int attempt = 1; attempt <= reconnectionAttempts; attempt++) {
@@ -40,13 +49,13 @@ public final class Requester {
             if (client.receive(wrapperReceiving) != null) {
                 break;
             } else {
-                outputManager.printlnImportantColorMessage("Cannot connect with server. Retrying attempt #"
+                outputManager.printlnImportantColorMessage("Cannot receive response from server. Retrying attempt #"
                         + attempt + " now...", Color.RED);
                 if (attempt == reconnectionAttempts) {
                     throw new NoConnectionException();
                 }
             }
         }
-        return (ServerResponse) Serializer.deserialize(bytesReceiving);
+        return Serializer.deserialize(bytesReceiving);
     }
 }
