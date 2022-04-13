@@ -31,10 +31,10 @@ public class Receiver {
     }
 
     public void receive() throws IOException, ClassNotFoundException {
-        byte[] buffer = new byte[bufferSize];
-        DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+        byte[] bytesReceiving = new byte[bufferSize];
+        DatagramPacket request = new DatagramPacket(bytesReceiving, bytesReceiving.length);
         server.receive(request);
-        Object received = Serializer.deserialize(buffer);
+        Object received = Serializer.deserialize(bytesReceiving);
         InetAddress client = request.getAddress();
         int port = request.getPort();
         logger.info("received request from address " + client + ", port " + port);
@@ -60,8 +60,8 @@ public class Receiver {
                 response = new ServerResponse("Unknown command detected: " + inputCommand, ExecuteCode.ERROR);
             }
         }
-        byte[] buf = Serializer.serialize(response);
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, client, port);
+        byte[] bytesSending = Serializer.serialize(response);
+        DatagramPacket packet = new DatagramPacket(bytesSending, bytesSending.length, client, port);
         server.send(packet);
         logger.info("response sent to the address " + client + ", port " + port);
     }
