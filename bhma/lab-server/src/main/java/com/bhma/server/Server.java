@@ -30,7 +30,7 @@ public final class Server {
             try {
                 //the host name is indicated by the first string in the command line arguments, the port - by second
                 final InetSocketAddress address = Checker.checkAddress(args[0], args[1]);
-                LOGGER.info("set " + address + " address");
+                LOGGER.info(() -> "set " + address + " address");
                 // the filename is indicated by the third string in the command line arguments
                 final String filename = args[2].trim();
                 if (filename.isEmpty()) {
@@ -47,8 +47,7 @@ public final class Server {
                     } catch (ClassNotFoundException e) {
                         LOGGER.error("wrong data from client");
                     } catch (JAXBException | IOException e) {
-                        LOGGER.error("Error during converting xml " + filename + " to java object");
-                        e.printStackTrace();
+                        LOGGER.error(() -> "Error during converting xml " + filename + " to java object", e);
                     }
                 }
             } catch (IllegalAddressException e) {
