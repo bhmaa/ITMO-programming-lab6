@@ -50,6 +50,7 @@ public class Receiver {
                 Command command = commandManager.getCommands().get(inputCommand);
                 try {
                     response = command.execute(argument, objectArgument);
+                    commandManager.getSaveCommand().execute("", null);
                 } catch (InvalidCommandArguments | IllegalKeyException e) {
                     response = new ServerResponse(e.getMessage(), ExecuteCode.ERROR);
                 } catch (JAXBException e) {
