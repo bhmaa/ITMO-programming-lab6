@@ -46,8 +46,10 @@ public final class Server {
                         }
                     } catch (ClassNotFoundException e) {
                         LOGGER.error("wrong data from client");
-                    } catch (JAXBException | IOException e) {
+                    } catch (JAXBException e) {
                         LOGGER.error(() -> "Error during converting xml " + filename + " to java object", e);
+                    } catch (IOException e) {
+                        LOGGER.error(e);
                     }
                 }
             } catch (IllegalAddressException e) {
