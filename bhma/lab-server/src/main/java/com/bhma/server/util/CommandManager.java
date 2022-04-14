@@ -35,7 +35,7 @@ public class CommandManager {
         ClearCommand clearCommand = new ClearCommand(collectionManager);
         commands.put(clearCommand.getName(), clearCommand);
         CountByChapterCommand countByChapterCommand = new CountByChapterCommand(collectionManager);
-        commands.put(countByChapterCommand.getName(), clearCommand);
+        commands.put(countByChapterCommand.getName(), countByChapterCommand);
         ExitCommand exitCommand = new ExitCommand(collectionManager);
         commands.put(exitCommand.getName(), exitCommand);
         InfoCommand infoCommand = new InfoCommand(collectionManager);
@@ -62,7 +62,6 @@ public class CommandManager {
         commands.put(helpCommand.getName(), helpCommand);
 
         commands.forEach((k, v) -> requirements.put(k, v.getRequirement()));
-
         saveCommand = new SaveCommand(collectionManager);
     }
 

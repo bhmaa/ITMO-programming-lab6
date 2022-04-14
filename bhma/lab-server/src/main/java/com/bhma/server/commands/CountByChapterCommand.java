@@ -14,8 +14,7 @@ public class CountByChapterCommand extends Command {
     private final CollectionManager collectionManager;
 
     public CountByChapterCommand(CollectionManager collectionManager) {
-        super("count_by_chapter", "вывести количество элементов, значение поля chapter которых равно заданному",
-                CommandRequirement.CHAPTER);
+        super("count_by_chapter", "вывести количество элементов, значение поля chapter которых равно заданному", CommandRequirement.CHAPTER);
         this.collectionManager = collectionManager;
     }
 

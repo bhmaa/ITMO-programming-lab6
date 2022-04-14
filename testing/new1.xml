@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <spaceMarines>
-    <collection>
-        <entry>
-            <key>10</key>
-            <value>
-                <id>1</id>
-                <creationDate>2022-04-12T17:33:36.066+03:00</creationDate>
-                <name>name10</name>
-                <coordinates>
-                    <x>-9.0</x>
-                    <y>10</y>
-                </coordinates>
-                <health>58.0</health>
-                <category>CHAPLAIN</category>
-                <weaponType>HEAVY_BOLTGUN</weaponType>
-                <chapter>
-                    <name>chaptername10</name>
-                    <world>chapterworld10</world>
-                </chapter>
-            </value>
-        </entry>
-    </collection>
+    <collection/>
 </spaceMarines>
